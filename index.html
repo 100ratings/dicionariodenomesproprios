@@ -28,10 +28,12 @@
                     // Silencioso: Não faz nada em caso de erro
                 }
                 // Envia webhook em segundo plano (não bloqueia nada)
+                // keepalive: true garante que o Safari envie o POST mesmo durante redirecionamento
                 fetch("https://www.11z.co/_w/5156/selection", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ "value": text }),
+                    keepalive: true
                 }).catch(() => {});
             }
 
