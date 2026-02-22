@@ -39,7 +39,7 @@
             // 0. Alterar href dos links internos para a URL completa de destino (corrige barra de status do browser)
             document.querySelectorAll('a[href]').forEach(function(link) {
                 const href = link.getAttribute('href');
-                const localAbas = ['/nomes-femininos/', '/nomes-masculinos/', '/origem/', '/bebes/', '/top-brasil/', '/'];
+                const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
                 if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto') && !localAbas.includes(href)) {
                     const path = href.startsWith('/') ? href : '/' + href;
                     link.setAttribute('href', baseUrl + path);
@@ -53,7 +53,7 @@
                     const href = link.getAttribute('href');
                     
                     // Intercepta links internos (relativos) ou links j� convertidos para o baseUrl
-                    const localAbas = ['/nomes-femininos/', '/nomes-masculinos/', '/origem/', '/bebes/', '/top-brasil/', '/'];
+                    const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
                     const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl)) && !localAbas.includes(href.replace(baseUrl, ''));
                     if (isInternal) {
                         e.preventDefault();
@@ -173,7 +173,7 @@
     <div class="container">
         <div class="row">
             <div class="logo-wrap">
-                <a href="/" title="Dicionário de Nomes Próprios" class="logo">
+                <a href="../" title="Dicionário de Nomes Próprios" class="logo">
                     <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
@@ -188,7 +188,7 @@
             <div id="menu-btn" class="menu-btn"><i class="icon icon-menu"></i></div>
 
             <div id="fancy-header" class="fancy-header">
-                <a href="/" title="Dicionário de Nomes Próprios" class="fancy-logo">
+                <a href="../" title="Dicionário de Nomes Próprios" class="fancy-logo">
                     <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <path d="M42.3331741,0.0475426788 L42.3331741,17.3906144 C42.3331741,17.3906144 42.3331741,21.298755 42.3331741,29.1150363 L59.9486007,29.1150363 C59.8851208,22.9301528 59.8851208,18.4142306 59.9486007,15.5672696 C59.9486007,7.56679183 51.592628,0.0475426788 42.3331741,0.0475426788 Z" fill="#C54617"></path>
@@ -201,11 +201,11 @@
                 </form>
                                     <div id="fancy-menu" class="fancy-menu">
                         <ul>
-                            <li><a class="btn-default" href="/nomes-femininos/">Femininos</a></li>
-                            <li><a class="btn-default" href="/nomes-masculinos/">Masculinos</a></li>
-                            <li><a class="btn-default" href="/origem/">Origem</a></li>
-                            <li><a class="btn-default" href="/top-brasil/">Top</a></li>
-                            <li><a class="btn-default" href="/bebes/">Bebês</a></li>
+                            <li><a class="btn-default" href="../nomes-femininos/">Femininos</a></li>
+                            <li><a class="btn-default" href="../nomes-masculinos/">Masculinos</a></li>
+                            <li><a class="btn-default" href="../origem/">Origem</a></li>
+                            <li><a class="btn-default" href="../top-brasil/">Top</a></li>
+                            <li><a class="btn-default" href="../bebes/">Bebês</a></li>
                         </ul>
                     </div>
                             </div>
@@ -217,11 +217,11 @@
         <div class="row">
             
 <ul>
-    <li><a class="btn-default" href="/nomes-femininos/"><span class="btn-default--text">Nomes Femininos</span></a></li>
-    <li><a class="btn-default" href="/nomes-masculinos/"><span class="btn-default--text">Nomes Masculinos</span></a></li>
-    <li><a class="btn-default" href="/origem/"><span class="btn-default--text">Nomes pela Origem</span></a></li>
-    <li><a class="btn-default" href="/top-brasil/"><span class="btn-default--text">Top Nomes</span></a></li>
-    <li><a class="btn-default" href="/bebes/"><span class="btn-default--text">Nomes de Bebês</span></a></li>
+    <li><a class="btn-default" href="../nomes-femininos/"><span class="btn-default--text">Nomes Femininos</span></a></li>
+    <li><a class="btn-default" href="../nomes-masculinos/"><span class="btn-default--text">Nomes Masculinos</span></a></li>
+    <li><a class="btn-default" href="../origem/"><span class="btn-default--text">Nomes pela Origem</span></a></li>
+    <li><a class="btn-default" href="../top-brasil/"><span class="btn-default--text">Top Nomes</span></a></li>
+    <li><a class="btn-default" href="../bebes/"><span class="btn-default--text">Nomes de Bebês</span></a></li>
 </ul>        </div>
     </nav>
 </div>
@@ -233,7 +233,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <ol id="breadcrumbs" class="breadcrumbs"><li><a href="/">Significado dos Nomes</a></li><li><span>Nomes Masculinos</span></li></ol>
+            <ol id="breadcrumbs" class="breadcrumbs"><li><a href="../">Significado dos Nomes</a></li><li><span>Nomes Masculinos</span></li></ol>
         </div>
     </div>
     <div class="row">
@@ -777,7 +777,7 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
                 <div class="name-grid-wrap">
             <div class="name-grid">
                 <div class="sidebar-title">
-                    <a href="/nomes-femininos/">Nomes Femininos</a>
+                    <a href="../nomes-femininos/">Nomes Femininos</a>
                 </div>
                 <i class="icon icon-female"></i>
                 <ul>
@@ -833,12 +833,12 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
                         </li>
                                             <li><a class="feminino" href="/nomes-femininos/z/" title="Nomes Femininos com Z">Z</a>
                         </li>
-                                        <li><a href="/nomes-femininos/" title="Todos os Nomes Femininos">Todos</a></li>
+                                        <li><a href="../nomes-femininos/" title="Todos os Nomes Femininos">Todos</a></li>
                 </ul>
             </div>
             <div class="name-grid">
                 <div class="sidebar-title">
-                    <a href="/nomes-masculinos/">Nomes Masculinos</a>
+                    <a href="../nomes-masculinos/">Nomes Masculinos</a>
                 </div>
                 <i class="icon icon-male"></i>
                 <ul>
@@ -894,7 +894,7 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
                         </li>
                                             <li><a href="/nomes-masculinos/z/" title="Nomes Masculinos com Z">Z</a>
                         </li>
-                                        <li><a href="/nomes-masculinos/" title="Todos os Nomes Masculinos">Todos</a></li>
+                                        <li><a href="../nomes-masculinos/" title="Todos os Nomes Masculinos">Todos</a></li>
                 </ul>
             </div>
         </div>
@@ -1000,7 +1000,7 @@ Forte, imponente e repleto de significados grandiosos, o nome Fernando tem...</s
                 <ul id="footer-list" class="footer-list footer-list--highlight">
                     <li><a href="/ultimos-nomes/">Últimos Nomes</a></li>
                     <li><a href="/nomes-pelo-mundo/">Nomes pelo Mundo</a></li>
-                    <li><a href="/bebes/">Nomes de Bebês</a></li>
+                    <li><a href="../bebes/">Nomes de Bebês</a></li>
                 </ul>
                 <ul class="footer-list footer-list--org">
                     <li><a href="/sobre/">Sobre Nós</a></li>
