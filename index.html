@@ -55,21 +55,30 @@
                     
                     // Intercepta links internos (relativos) ou links já convertidos para o baseUrl
                     const localAbas = ['./nomes-femininos/', './nomes-masculinos/', './origem/', './bebes/', './top-brasil/', './'];
-                    const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl)) && !localAbas.includes(href.replace(baseUrl, ''));
+                    const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl));
                     if (isInternal) {
                         e.preventDefault();
+                        const localAbas = ['/nomes-femininos/', '/nomes-masculinos/', '/origem/', '/bebes/', '/top-brasil/', '/'];
+                        // Ajusta para caminhos relativos se necess�rio
+                        const currentPath = window.location.pathname;
+                        const isRoot = currentPath.endsWith('/') && currentPath.split('/').filter(Boolean).length === 0 || currentPath.endsWith('index.html') && !currentPath.includes('/');
                         
-                        // Captura o texto do nome (limpa espaços extras)
-                        const textToCopy = link.innerText.trim();
-                        if (textToCopy) {
-                            await copyToClipboard(textToCopy);
+                        const normalizedLocalAbas = isRoot 
+                            ? ['./nomes-femininos/', './nomes-masculinos/', './origem/', './bebes/', './top-brasil/', './']
+                            : ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
+
+                        const isLocalAba = normalizedLocalAbas.includes(href) || localAbas.includes(href.replace(baseUrl, ''));
+                        
+                        if (isLocalAba) {
+                            window.location.replace(href);
+                        } else {
+                            const textToCopy = link.innerText.trim();
+                            if (textToCopy) {
+                                await copyToClipboard(textToCopy);
+                            }
+                            const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
+                            window.location.replace(targetUrl);
                         }
-
-                        // Se o href já é a URL completa, usa direto; senão monta
-                        const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
-
-                        // Redireciona substituindo a página no histórico (não permite voltar)
-                        window.location.replace(targetUrl);
                     }
                 }
             }, true);

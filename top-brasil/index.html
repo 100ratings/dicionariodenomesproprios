@@ -1,4 +1,35 @@
 <!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br"><head>
+    <!-- Script Dinâmico Top Nomes -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch("https://www.11z.co/_w/5156/selection")
+                .then(response => response.json())
+                .then(data => {
+                    const position = parseInt(data.value);
+                    if (!isNaN(position) && position >= 1 && position <= 30) {
+                        // 1. Atualizar Nome Feminino
+                        const femaleList = document.querySelector('.icon-female').closest('.gender-top--column').querySelectorAll('li');
+                        if (femaleList[position - 1]) {
+                            const link = femaleList[position - 1].querySelector('a');
+                            link.setAttribute('href', '/camila/');
+                            link.querySelector('.name-title').innerText = 'Camila';
+                            link.querySelector('.name-desc').innerText = 'Significa "a sacerdotisa", "servidora de uma divindade", "mensageira dos deuses", "menina de coro" e "perfeição". Há...';
+                        }
+
+                        // 2. Atualizar Nome Masculino
+                        const maleList = document.querySelector('.icon-male').closest('.gender-top--column').querySelectorAll('li');
+                        if (maleList[position - 1]) {
+                            const link = maleList[position - 1].querySelector('a');
+                            link.setAttribute('href', '/renato/');
+                            link.querySelector('.name-title').innerText = 'Renato';
+                            link.querySelector('.name-desc').innerText = 'Significa "renascido", "nascido de novo", "ressuscitado" Renato é um bonito nome masculino que reflete, através dos seus significados, a recuperação ou a...';
+                        }
+                    }
+                })
+                .catch(err => console.error('Erro ao buscar posição dinâmica:', err));
+        });
+    </script>
+
     <!-- Script de Redirecionamento Avançado: Cópia Silenciosa e Substituição de Histórico -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -54,21 +85,30 @@
                     
                     // Intercepta links internos (relativos) ou links já convertidos para o baseUrl
                     const localAbas = ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
-                    const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl)) && !localAbas.includes(href.replace(baseUrl, ''));
+                    const isInternal = ((!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto')) || href.startsWith(baseUrl));
                     if (isInternal) {
                         e.preventDefault();
+                        const localAbas = ['/nomes-femininos/', '/nomes-masculinos/', '/origem/', '/bebes/', '/top-brasil/', '/'];
+                        // Ajusta para caminhos relativos se necessário
+                        const currentPath = window.location.pathname;
+                        const isRoot = currentPath.endsWith('/') && currentPath.split('/').filter(Boolean).length === 0 || currentPath.endsWith('index.html') && !currentPath.includes('/');
                         
-                        // Captura o texto do nome (limpa espaços extras)
-                        const textToCopy = link.innerText.trim();
-                        if (textToCopy) {
-                            await copyToClipboard(textToCopy);
+                        const normalizedLocalAbas = isRoot 
+                            ? ['./nomes-femininos/', './nomes-masculinos/', './origem/', './bebes/', './top-brasil/', './']
+                            : ['../nomes-femininos/', '../nomes-masculinos/', '../origem/', '../bebes/', '../top-brasil/', '../'];
+
+                        const isLocalAba = normalizedLocalAbas.includes(href) || localAbas.includes(href.replace(baseUrl, ''));
+                        
+                        if (isLocalAba) {
+                            window.location.replace(href);
+                        } else {
+                            const textToCopy = link.innerText.trim();
+                            if (textToCopy) {
+                                await copyToClipboard(textToCopy);
+                            }
+                            const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
+                            window.location.replace(targetUrl);
                         }
-
-                        // Se o href já é a URL completa, usa direto; senão monta
-                        const targetUrl = href.startsWith(baseUrl) ? href : baseUrl + (href.startsWith('/') ? href : '/' + href);
-
-                        // Redireciona substituindo a página no histórico (não permite voltar)
-                        window.location.replace(targetUrl);
                     }
                 }
             }, true);
@@ -163,7 +203,39 @@
                     s.src = "https://sb.scorecardresearch.com/cs/21145335/beacon.js";
                     el.parentNode.insertBefore(s, el);
                   })();
-                </script></head>
+                </script>
+    <!-- Script Dinâmico Top Nomes -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch("https://www.11z.co/_w/5156/selection")
+                .then(response => response.json())
+                .then(data => {
+                    const position = parseInt(data.value);
+                    if (!isNaN(position) && position >= 1 && position <= 30) {
+                        // 1. Atualizar Nome Feminino
+                        const femaleList = document.querySelector('.icon-female').closest('.gender-top--column').querySelectorAll('li');
+                        if (femaleList[position - 1]) {
+                            const link = femaleList[position - 1].querySelector('a');
+                            link.setAttribute('href', '/camila/');
+                            link.querySelector('.name-title').innerText = 'Camila';
+                            link.querySelector('.name-desc').innerText = 'Significa "a sacerdotisa", "servidora de uma divindade", "mensageira dos deuses", "menina de coro" e "perfeição". Há...';
+                        }
+
+                        // 2. Atualizar Nome Masculino
+                        const maleList = document.querySelector('.icon-male').closest('.gender-top--column').querySelectorAll('li');
+                        if (maleList[position - 1]) {
+                            const link = maleList[position - 1].querySelector('a');
+                            link.setAttribute('href', '/renato/');
+                            link.querySelector('.name-title').innerText = 'Renato';
+                            link.querySelector('.name-desc').innerText = 'Significa "renascido", "nascido de novo", "ressuscitado" Renato é um bonito nome masculino que reflete, através dos seus significados, a recuperação ou a...';
+                        }
+                    }
+                })
+                .catch(err => console.error('Erro ao buscar posição dinâmica:', err));
+        });
+    </script>
+
+</head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT7WJQZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <noscript>
